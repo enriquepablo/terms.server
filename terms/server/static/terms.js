@@ -89,7 +89,7 @@
     }
 
     Definition.prototype.notify = function (val, child_mode, vars) {
-        if (this.val.val() == '---') {
+        if (this.type.elem.val() == '---') {
             this.submitter.elem.hide();
         } else {
             this.load_schema();
@@ -99,6 +99,10 @@
 
     Definition.prototype.load_schema = function () {
         $('div#to-answer').dform('/schema/' + this.type.elem.val());
+    };
+
+    Definition.prototype.to_trm = function () {
+        return this.val.val() + ' is a ' + this.type.elem.val();
     };
 
     function Fact (parent) {
@@ -235,11 +239,8 @@
 
     var kb = {
         tell_name: function (totell) {
-            var type = totell.type.elem.val();
-            var name = totell.val.val();
-            $.post('/terms/' + name + '/' + type, function (d) {
-                update_answer(eval(d));
-            });
+            var trm = totell.to_trm();
+            ws.send(trm);
         },
         tell_fact: function (totell) {
             var trm = totell.to_trm();

@@ -78,6 +78,7 @@ def serve():
     app.get('/static/<filepath:path>')(server.static)
     app.get('/admin')(server.admin)
     app.get('/terms/<type_name>')(server.get_terms)
+    app.post('/terms/<term>/<type>')(server.post_terms)
     app.get('/subterms/<superterm>')(server.get_subterms)
     app.get('/verb/<name>')(server.get_verb)
     app.get('/facts/<facts>')(server.get_facts)
