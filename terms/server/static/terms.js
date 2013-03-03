@@ -44,7 +44,9 @@
             }
         });
         this.elem.mouseenter(function (e) {
-            that.opts.show();
+            if (that.opts) {
+                that.opts.show();
+            }
         });
     };
 
@@ -90,8 +92,13 @@
         if (this.val.val() == '---') {
             this.submitter.elem.hide();
         } else {
+            this.load_schema();
             this.submitter.elem.show();
         }
+    };
+
+    Definition.prototype.load_schema = function () {
+        $('div#to-answer').dform('/schema/' + this.type.elem.val());
     };
 
     function Fact (parent) {
@@ -236,9 +243,7 @@
         },
         tell_fact: function (totell) {
             var trm = totell.to_trm();
-            $.post('/facts/' + trm, function (d) {
-                update_answer(eval(d));
-            });
+            ws.send(trm);
         },
         ask_fact: function (toask) {
             var trm = toask.to_trm();
@@ -284,12 +289,18 @@
     var elems = {
     };
 
+    var ws = null;
+
     $(document).ready(function () {
         elems.to_tell_name = $('#to-tell-name');
         elems.to_tell_fact = $('#to-tell-fact');
         elems.to_ask = $('#to-ask');
         elems.to_answer = $('#to-answer');
         initialize();
+        ws = new WebSocket("ws://localhost:8080/websocket");
+        ws.onmessage = function (evt) {
+            elems.to_answer.html(evt.data);
+        };
     });
 
 })(jQuery);

@@ -1,12 +1,22 @@
+#from gevent import monkey
+#monkey.patch_all()
+
+import os.path
 import sys
+from ConfigParser import ConfigParser
+from functools import partial
+from optparse import OptionParser
 from io import StringIO
 
-from bottle import Bottle, run
+from bottle import Bottle
 
 from repoze.who.middleware import PluggableAuthenticationMiddleware
 from repoze.who.plugins.basicauth import BasicAuthPlugin
 from repoze.who.plugins.auth_tkt import AuthTktCookiePlugin
 from repoze.who.plugins.htpasswd import HTPasswdPlugin
+
+from gevent.pywsgi import WSGIServer
+from geventwebsocket import WebSocketHandler
 
 from terms.server.web import TermsServer
 
@@ -14,7 +24,7 @@ from terms.server.web import TermsServer
 io = StringIO()
 salt = 'aa'
 for name, password in [('admin', 'admin'), ('chris', 'chris')]:
-    io.write('%s:%s\n' % (name, password))
+    io.write(('%s:%s\n' % (name, password)).decode('ascii'))
 io.seek(0)
 
 
@@ -53,7 +63,7 @@ def get_config(cmd_line=True):
         name = args[0] if args else name
         if opt.config:
             config.read([opt.config])
-    return config[name]
+    return partial(config.get, name)
 
 
 def serve():
@@ -64,12 +74,14 @@ def serve():
     app = Bottle()
 
     app.get('/')(server.index)
+    app.get('/websocket')(server.ws)
     app.get('/static/<filepath:path>')(server.static)
     app.get('/admin')(server.admin)
     app.get('/terms/<type_name>')(server.get_terms)
     app.get('/subterms/<superterm>')(server.get_subterms)
     app.get('/verb/<name>')(server.get_verb)
     app.get('/facts/<facts>')(server.get_facts)
+    app.get('/schema/<name>')(server.get_schema)
     app.get('/<person>')(server.home)
 
     middleware = PluggableAuthenticationMiddleware(
@@ -81,6 +93,11 @@ def serve():
         default_request_classifier,
         default_challenge_decider,
         log_stream=log_stream,
-        log_level=config['loglevel']
+        log_level=config('loglevel')
         )
-    run(middleware, host=config['http_host'], port=int(config['http_port']))
+
+    server = WSGIServer((config('http_host'),
+                         int(config('http_port'))),
+                        middleware,
+                        handler_class=WebSocketHandler)
+    server.serve_forever()

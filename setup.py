@@ -49,11 +49,9 @@ setup(
         'coverage',
     ],
     extras_require = {
-        'PG': ['psycopg2 == 2.4.5',],
         },
     install_requires = [
         'distribute',
-        'Terms',
         'bottle',
         'repoze.who',
         'gevent',
