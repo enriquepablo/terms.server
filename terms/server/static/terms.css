@@ -48,7 +48,7 @@ div#to-ask {
     margin-top: 50px;
 }
 
-div#to-answer {
+div#portlet-list {
     margin-top: 50px;
 }
 
@@ -107,4 +107,31 @@ table#resp th {
 table#resp td {
     padding: 5px;
     text-align: center;
+}
+
+div#overlay {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    height: 70%;
+    display: none;
+    z-index: 5000;
+    background-color: #eee;
+}
+
+div#overlay-content {
+    padding: 20px;
+    text-align: left;
+}
+
+div#minimize {
+    margin: 5px;
+    text-align: right;
+}
+
+div#overlay input,
+div#overlay label {
+    margin: 0.5em;
+    display: block;
 }

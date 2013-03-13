@@ -92,17 +92,12 @@
         if (this.type.elem.val() == '---') {
             this.submitter.elem.hide();
         } else {
-            this.load_schema();
             this.submitter.elem.show();
         }
     };
 
-    Definition.prototype.load_schema = function () {
-        $('div#to-answer').dform('/schema/' + this.type.elem.val());
-    };
-
     Definition.prototype.to_trm = function () {
-        return this.val.val() + ' is a ' + this.type.elem.val();
+        return this.val.val() + ':' + this.type.elem.val();
     };
 
     function Fact (parent) {
@@ -237,10 +232,46 @@
         return trm
     };
 
+    function Portlet (title, elem) {
+        this.title = title;
+        this.elem = elem;
+        this.title_elem = $('<div/>').addClass('portlet').html(title);
+        elems.portlet_list.append(this.title_elem);
+        var that = this;
+        this.title_elem.click(function (e) {
+            that.maximize();
+        });
+    }
+
+    Portlet.prototype.maximize = function () {
+        elems.overlay_content.html(this.elem);
+        elems.overlay.show();
+    };
+
     var kb = {
         tell_name: function (totell) {
             var trm = totell.to_trm();
-            ws.send(trm);
+            var names = trm.split(':');
+            var url = '/terms/' + names[0] + '/' + names[1];
+            $.post(url, function () {
+                $.get('/schema/' + names[1], function (d) {
+                    var fields = eval(d);
+                    fields.push({type: 'submit'});
+                    var f = {'html': fields};
+                    var form = $('<form/>').dform(f);
+                    var action = '/data/' + names[0];
+                    form.submit(function (e) {
+                        e.preventDefault();
+                        var tosend = $(this).serialize();
+                        alert(tosend);
+                        $.post(action, tosend, function(data){
+                            new Portlet(names[0], $('<span/>').html(data));
+                        });
+                        return false;
+                    });
+                    new Portlet(trm, form);
+                });
+            });
         },
         tell_fact: function (totell) {
             var trm = totell.to_trm();
@@ -249,7 +280,7 @@
         ask_fact: function (toask) {
             var trm = toask.to_trm();
             $.get('/facts/' + trm, function (d) {
-                update_answer(eval(d));
+                new_answer(trm, eval(d));
             });
         }
     };
@@ -263,11 +294,14 @@
             var fact = new Fact(null);
             elems.to_ask.html(fact.elem);
         });
+        $('span#minimize-overlay').click(function (e) {
+            elems.overlay.hide();
+        });
     }
 
-    function update_answer (d) {
+    function new_answer (title, d) {
         if (typeof d === 'string') {
-              elems.to_answer.html(d);
+              new Portlet(title, d);
             } else {
               var tab = $('<table id="resp"></table>');
               var head = $('<tr></tr>');
@@ -283,7 +317,7 @@
                   row.append('<td>' + res[c] + '</td>');
                 }
               }
-              elems.to_answer.html(tab);
+              new Portlet(title, tab);
           }
     }
 
@@ -296,11 +330,13 @@
         elems.to_tell_name = $('#to-tell-name');
         elems.to_tell_fact = $('#to-tell-fact');
         elems.to_ask = $('#to-ask');
-        elems.to_answer = $('#to-answer');
+        elems.portlet_list = $('div#portlet-list');
+        elems.overlay = $('div#overlay');
+        elems.overlay_content = $('div#overlay-content');
         initialize();
         ws = new WebSocket("ws://localhost:8080/websocket");
         ws.onmessage = function (evt) {
-            elems.to_answer.html(evt.data);
+            new Portlet(evt.data, $('<span/>'));
         };
     });
 

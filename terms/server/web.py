@@ -1,5 +1,6 @@
 import sys
 import os.path
+import json
 from bottle import request, abort, redirect, static_file
 
 
@@ -65,28 +66,44 @@ class TermsServer(object):
         conn = Client((self.config('kb_host'),
                        int(self.config('kb_port'))))
         conn.send_bytes(q)
-        terms = conn.recv_bytes()
+        recv, resp = '', ''
+        while recv != 'END':
+            resp = recv
+            recv = conn.recv_bytes()
         conn.close()
-        return terms
+        return resp
 
     def get_terms(self, type_name):
-        msg = ('_metadata:getwords:' + type_name)
+        msg = '_metadata:getwords:' + type_name
+        return self.ask_kb(msg)
+
+    def post_terms(self, term, type):
+        msg = '%s is a %s.' % (term, type)
         return self.ask_kb(msg)
 
     def get_subterms(self, superterm):
-        msg = ('_metadata:getsubwords:' + superterm)
+        msg = '_metadata:getsubwords:' + superterm
         return self.ask_kb(msg)
 
     def get_verb(self, name):
-        msg = ('_metadata:getverb:' + name)
+        msg = '_metadata:getverb:' + name
         return self.ask_kb(msg)
 
     def get_facts(self, facts):
         msg = facts + '?'
         return self.ask_kb(msg)
 
+    def post_fact(self, facts):
+        msg = facts + '.'
+        return self.ask_kb(msg)
+
     def get_schema(self, name):
         msg = '_schema_get:' + name
+        return self.ask_kb(msg)
+
+    def post_data(self, name):
+        data = json.dumps({k: v for k, v in request.POST.items()})
+        msg = '_data_set:%s:%s' % (name, data)
         return self.ask_kb(msg)
 
     def home(self, person):
@@ -101,7 +118,11 @@ class TermsServer(object):
         while True:
             try:
                 message = wsock.receive()
+            except WebSocketError:
+                message = None
+            if message is None:
+                wsock.close()
+                break
+            else:
                 worker = TermsWorker(wsock, wslock, message, self.config)
                 worker.start()
-            except WebSocketError:
-                break
