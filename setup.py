@@ -56,5 +56,6 @@ setup(
         'repoze.who',
         'gevent',
         'gevent-websocket',
+        'py-bcrypt',
     ],
 )

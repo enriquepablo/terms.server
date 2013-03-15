@@ -13,32 +13,22 @@ from bottle import Bottle
 from repoze.who.middleware import PluggableAuthenticationMiddleware
 from repoze.who.plugins.basicauth import BasicAuthPlugin
 from repoze.who.plugins.auth_tkt import AuthTktCookiePlugin
-from repoze.who.plugins.htpasswd import HTPasswdPlugin
 
 from gevent.pywsgi import WSGIServer
 from geventwebsocket import WebSocketHandler
 
 from terms.server.web import TermsServer
+from terms.server.auth import TermsAuthPlugin
+from terms.server.views import init_fact_views
 
 
-io = StringIO()
-salt = 'aa'
-for name, password in [('admin', 'admin'), ('chris', 'chris')]:
-    io.write(('%s:%s\n' % (name, password)).decode('ascii'))
-io.seek(0)
-
-
-def cleartext_check(password, hashed):
-    return password == hashed
-htpasswd = HTPasswdPlugin(io, cleartext_check)
 basicauth = BasicAuthPlugin('repoze.who')
 auth_tkt = AuthTktCookiePlugin('secret', 'auth_tkt')
 #redirector = RedirectorPlugin('/login.html')
 #redirector.classifications = {IChallenger: ['browser']}  # only for browser
 identifiers = [('auth_tkt', auth_tkt),
                ('basicauth', basicauth)]
-authenticators = [('auth_tkt', auth_tkt),
-                  ('htpasswd', htpasswd)]
+authenticators = [('auth_tkt', auth_tkt)]
 challengers = [('basicauth', basicauth)]
 mdproviders = []
 
@@ -86,6 +76,11 @@ def serve():
     app.get('/schema/<name>')(server.get_schema)
     app.post('/data/<name>')(server.post_data)
     app.get('/<person>')(server.home)
+
+    init_fact_views()
+
+    termsauth = TermsAuthPlugin(config)
+    authenticators.append(('termsauth', termsauth))
 
     middleware = PluggableAuthenticationMiddleware(
         app,

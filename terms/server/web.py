@@ -1,7 +1,9 @@
 import sys
 import os.path
 import json
+import re
 from bottle import request, abort, redirect, static_file
+from terms.server.registry import apply_fact
 
 
 STATIC = os.path.join(os.path.dirname(sys.modules['terms.server'].__file__),
@@ -12,6 +14,7 @@ from threading import Thread, Lock
 from multiprocessing.connection import Client
 
 from geventwebsocket import WebSocketError
+
 
 
 class TermsWorker(Thread):
@@ -33,7 +36,7 @@ class TermsWorker(Thread):
         #totell = self.totell.decode('ascii')
         kb.send_bytes(self.totell)
         for fact in iter(kb.recv_bytes, 'END'):
-            toweb = self.web_transform(fact)
+            toweb = apply_fact(self.config, fact)
             try:
                 with self.wslock:
                     self.wsock.send(toweb.encode('ascii'))
@@ -63,6 +66,9 @@ class TermsServer(object):
         return static_file(filepath, root=STATIC)
 
     def ask_kb(self, q):
+        '''
+        ask kb synchronously
+        '''
         conn = Client((self.config('kb_host'),
                        int(self.config('kb_port'))))
         conn.send_bytes(q)
