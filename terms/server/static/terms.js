@@ -144,7 +144,7 @@
                 }
                 for (var arg in this.args) {
                     var aval = this.args[arg].val.to_trm();
-                    if (aval === '---') {
+                    if ((aval === '---') || (!aval)) {
                         if (this.parent === null) {
                             this.asker.elem.hide();
                             this.teller.elem.hide();
@@ -221,6 +221,7 @@
     };
 
     Fact.prototype.to_trm = function () {
+        if (!this.subject) { return; }
         var trm = '(';
         trm += this.verb.elem.val() + ' ';
         trm += this.subject.elem.val();
@@ -234,7 +235,7 @@
 
     function Portlet (title, elem) {
         this.title = title;
-        this.elem = elem;
+        this.elem = $(elem);
         this.title_elem = $('<div/>').addClass('portlet').html(title);
         elems.portlet_list.append(this.title_elem);
         var that = this;
@@ -324,6 +325,12 @@
     var elems = {
     };
 
+    function process_data (obj) {
+        if (obj['type'] == 'html') {
+            return obj['data'];
+        }
+    }
+
     var ws = null;
 
     $(document).ready(function () {
@@ -336,7 +343,9 @@
         initialize();
         ws = new WebSocket("ws://localhost:8080/websocket");
         ws.onmessage = function (evt) {
-            new Portlet(evt.data, $('<span/>'));
+            var data = JSON.parse(evt.data);
+            html = process_data(data);
+            new Portlet(data['title'], html);
         };
     });
 

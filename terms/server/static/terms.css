@@ -135,3 +135,11 @@ div#overlay label {
     margin: 0.5em;
     display: block;
 }
+
+div#portlet-list {
+    text-align: left;
+}
+
+div#portlet {
+    margin-top: 5px;
+}

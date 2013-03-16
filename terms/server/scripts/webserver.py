@@ -77,7 +77,7 @@ def serve():
     app.post('/data/<name>')(server.post_data)
     app.get('/<person>')(server.home)
 
-    init_fact_views()
+    init_fact_views(config)
 
     termsauth = TermsAuthPlugin(config)
     authenticators.append(('termsauth', termsauth))

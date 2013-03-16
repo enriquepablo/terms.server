@@ -1,4 +1,6 @@
 import re
+from multiprocessing.connection import Client
+
 
 def parens(expr):
     """
@@ -48,6 +50,8 @@ def deconstruct_fact(f):
         else:
             simple += part
     m = fact_pattern.match(simple)
+    if not m:
+        return {}
     fact = {'verb': m.group(1)}
     fact['mods'] = {}
     fact['mods']['subject'] = m.group(2)
@@ -92,12 +96,18 @@ def cover(f1, f2, match=None):
     return match
 
 
-def register(sen1):
-    s1 = deconstruct_fact(sen1)
-    def wrapper(fun):
-        def inner(kb, sen2):
-            s2 = deconstruct_fact(sen2)
-            vrs = cover(s1, s2)
-            return fun(**vrs)
-        return inner
-    return wrapper
+def ask_kb(config, q):
+    '''
+    ask kb synchronously
+    '''
+    conn = Client((config('kb_host'),
+                    int(config('kb_port'))))
+    conn.send_bytes(q)
+    recv, resp = '', ''
+    while recv != 'END':
+        resp = recv
+        recv = conn.recv_bytes()
+    conn.close()
+    return resp
+
+

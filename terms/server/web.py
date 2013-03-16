@@ -15,6 +15,7 @@ from multiprocessing.connection import Client
 
 from geventwebsocket import WebSocketError
 
+from terms.server.utils import ask_kb
 
 
 class TermsWorker(Thread):
@@ -25,10 +26,6 @@ class TermsWorker(Thread):
         self.wslock = wslock
         self.totell = totell + '.'
         self.config = config
-        self.init_actions()
-
-    def init_actions(self):
-        '''get_actions from plugins'''
 
     def run(self):
         kb = Client((self.config('kb_host'),
@@ -43,9 +40,6 @@ class TermsWorker(Thread):
             except WebSocketError:
                 break
         kb.close()
-
-    def web_transform(self, fact):
-        return fact
 
 
 class TermsServer(object):
@@ -65,52 +59,38 @@ class TermsServer(object):
     def static(self, filepath):
         return static_file(filepath, root=STATIC)
 
-    def ask_kb(self, q):
-        '''
-        ask kb synchronously
-        '''
-        conn = Client((self.config('kb_host'),
-                       int(self.config('kb_port'))))
-        conn.send_bytes(q)
-        recv, resp = '', ''
-        while recv != 'END':
-            resp = recv
-            recv = conn.recv_bytes()
-        conn.close()
-        return resp
-
     def get_terms(self, type_name):
         msg = '_metadata:getwords:' + type_name
-        return self.ask_kb(msg)
+        return ask_kb(self.config, msg)
 
     def post_terms(self, term, type):
         msg = '%s is a %s.' % (term, type)
-        return self.ask_kb(msg)
+        return ask_kb(self.config, msg)
 
     def get_subterms(self, superterm):
         msg = '_metadata:getsubwords:' + superterm
-        return self.ask_kb(msg)
+        return ask_kb(self.config, msg)
 
     def get_verb(self, name):
         msg = '_metadata:getverb:' + name
-        return self.ask_kb(msg)
+        return ask_kb(self.config, msg)
 
     def get_facts(self, facts):
         msg = facts + '?'
-        return self.ask_kb(msg)
+        return ask_kb(self.config, msg)
 
     def post_fact(self, facts):
         msg = facts + '.'
-        return self.ask_kb(msg)
+        return ask_kb(self.config, msg)
 
     def get_schema(self, name):
         msg = '_schema_get:' + name
-        return self.ask_kb(msg)
+        return ask_kb(self.config, msg)
 
     def post_data(self, name):
         data = json.dumps({k: v for k, v in request.POST.items()})
         msg = '_data_set:%s:%s' % (name, data)
-        return self.ask_kb(msg)
+        return ask_kb(self.config, msg)
 
     def home(self, person):
         ''''''
