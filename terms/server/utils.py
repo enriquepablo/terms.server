@@ -109,5 +109,3 @@ def ask_kb(config, q):
         recv = conn.recv_bytes()
     conn.close()
     return resp
-
-

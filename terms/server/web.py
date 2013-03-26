@@ -15,6 +15,8 @@ from multiprocessing.connection import Client
 
 from geventwebsocket import WebSocketError
 
+from terms.server import schemata
+from terms.server.pluggable import load_plugins
 from terms.server.utils import ask_kb
 
 
@@ -46,6 +48,8 @@ class TermsServer(object):
 
     def __init__(self, config):
         self.config = config
+        load_plugins(config)
+        schemata.init_session(config)
 
     def index(self):
         username = request.environ.get('REMOTE_USER')
@@ -83,14 +87,20 @@ class TermsServer(object):
         msg = facts + '.'
         return ask_kb(self.config, msg)
 
-    def get_schema(self, name):
-        msg = '_schema_get:' + name
-        return ask_kb(self.config, msg)
+    def get_schema(self, noun):
+        try:
+            return schemata.get_schema(noun)
+        except schemata.SchemaNotFound:
+            return ''
 
-    def post_data(self, name):
-        data = json.dumps({k: v for k, v in request.POST.items()})
-        msg = '_data_set:%s:%s' % (name, data)
-        return ask_kb(self.config, msg)
+    def get_data(self, name, noun):
+        try:
+            return schemata.get_data(name, noun)
+        except schemata.SchemaNotFound:
+            return ''
+
+    def post_data(self, name, noun):
+        return schemata.set_data(name, noun, request.POST)
 
     def home(self, person):
         ''''''

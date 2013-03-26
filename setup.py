@@ -49,6 +49,7 @@ setup(
         'coverage',
     ],
     extras_require = {
+        'PG': ['psycopg2 == 2.4.5',],
         },
     install_requires = [
         'distribute',
@@ -57,5 +58,8 @@ setup(
         'gevent',
         'gevent-websocket',
         'py-bcrypt',
+        'sqlalchemy',
+        'colanderalchemy',
+        'deform',
     ],
 )

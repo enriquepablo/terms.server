@@ -19,7 +19,6 @@ from geventwebsocket import WebSocketHandler
 
 from terms.server.web import TermsServer
 from terms.server.auth import TermsAuthPlugin
-from terms.server.views import init_fact_views
 
 
 basicauth = BasicAuthPlugin('repoze.who')
@@ -73,11 +72,10 @@ def serve():
     app.get('/verb/<name>')(server.get_verb)
     app.get('/facts/<facts>')(server.get_facts)
     app.post('/facts/<facts>')(server.post_fact)
-    app.get('/schema/<name>')(server.get_schema)
-    app.post('/data/<name>')(server.post_data)
+    app.get('/schema/<noun>')(server.get_schema)
+    app.get('/data/<name>/<noun>')(server.get_data)
+    app.post('/data/<name>/<noun>')(server.post_data)
     app.get('/<person>')(server.home)
-
-    init_fact_views(config)
 
     termsauth = TermsAuthPlugin(config)
     authenticators.append(('termsauth', termsauth))

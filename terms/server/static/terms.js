@@ -257,19 +257,22 @@
             $.post(url, function () {
                 $.get('/schema/' + names[1], function (d) {
                     var fields = eval(d);
-                    fields.push({type: 'submit'});
-                    var f = {'html': fields};
-                    var form = $('<form/>').dform(f);
-                    var action = '/data/' + names[0];
-                    form.submit(function (e) {
-                        e.preventDefault();
-                        var tosend = $(this).serialize();
-                        alert(tosend);
-                        $.post(action, tosend, function(data){
-                            new Portlet(names[0], $('<span/>').html(data));
+                    if (fields === undefined) {
+                        var form = 'OK';
+                    } else {
+                        fields.push({type: 'submit'});
+                        var f = {'html': fields};
+                        var form = $('<form/>').dform(f);
+                        var action = '/data/' + names[0] + '/' + names[1];
+                        form.submit(function (e) {
+                            e.preventDefault();
+                            var tosend = $(this).serialize();
+                            $.post(action, tosend, function(data){
+                                new Portlet(names[0], $('<span/>').html(data));
+                            });
+                            return false;
                         });
-                        return false;
-                    });
+                    }
                     new Portlet(trm, form);
                 });
             });
