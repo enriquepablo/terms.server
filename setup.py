@@ -59,7 +59,7 @@ setup(
         'gevent-websocket',
         'py-bcrypt',
         'sqlalchemy',
-        'colanderalchemy',
+        'colanderalchemy==0.2a1',
         'deform',
     ],
 )

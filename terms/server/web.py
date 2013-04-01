@@ -67,8 +67,12 @@ class TermsServer(object):
         msg = '_metadata:getwords:' + type_name
         return ask_kb(self.config, msg)
 
-    def post_terms(self, term, type):
-        msg = '%s is a %s.' % (term, type)
+    def post_terms(self, term, ttype):
+        msg = '%s is a %s.' % (term, ttype)
+        try:
+            schemata.create_data(term, ttype)
+        except schemata.SchemaNotFound:
+            pass
         return ask_kb(self.config, msg)
 
     def get_subterms(self, superterm):
@@ -87,20 +91,20 @@ class TermsServer(object):
         msg = facts + '.'
         return ask_kb(self.config, msg)
 
-    def get_schema(self, noun):
+    def get_schema(self, name):
         try:
-            return schemata.get_schema(noun)
+            return schemata.get_data(name, mode='edit')
         except schemata.SchemaNotFound:
             return ''
 
-    def get_data(self, name, noun):
+    def get_data(self, name):
         try:
-            return schemata.get_data(name, noun)
+            return schemata.get_data(name, mode='view')
         except schemata.SchemaNotFound:
             return ''
 
-    def post_data(self, name, noun):
-        return schemata.set_data(name, noun, request.POST)
+    def post_data(self, name):
+        return schemata.set_data(name, request.POST)
 
     def home(self, person):
         ''''''

@@ -255,15 +255,16 @@
             var names = trm.split(':');
             var url = '/terms/' + names[0] + '/' + names[1];
             $.post(url, function () {
-                $.get('/schema/' + names[1], function (d) {
-                    var fields = eval(d);
-                    if (fields === undefined) {
+                $.get('/schema/' + names[0], function (d) {
+                    if (!d) {
                         var form = 'OK';
                     } else {
-                        fields.push({type: 'submit'});
-                        var f = {'html': fields};
-                        var form = $('<form/>').dform(f);
-                        var action = '/data/' + names[0] + '/' + names[1];
+                        var form = $(d);
+                    }
+                    var portlet = new Portlet(trm, form);
+                    if (form !== 'OK') {
+                        form = portlet.elem;
+                        var action = '/data/' + names[0];
                         form.submit(function (e) {
                             e.preventDefault();
                             var tosend = $(this).serialize();
@@ -273,7 +274,6 @@
                             return false;
                         });
                     }
-                    new Portlet(trm, form);
                 });
             });
         },
