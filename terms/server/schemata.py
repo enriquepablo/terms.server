@@ -71,7 +71,6 @@ def init_session(config):
     if Session is None:
         address = '%s/%s' % (config('dbms'), config('dbname'))
         engine = create_engine(address)
-        Base.metadata.create_all(engine)
         session_factory = sessionmaker(bind=engine)
         Session = scoped_session(session_factory)
 

@@ -1,4 +1,6 @@
 
+from sqlalchemy import String, Integer, Column, Sequence
+from sqlalchemy.ext.declarative import declarative_base
 from importlib import import_module
 import terms.server.schemata
 
@@ -15,3 +17,17 @@ def load_plugins(config):
         schemata = import_module(plugin + '.schemata')
         terms.server.schemata.__dict__.update(schemata.__dict__)
         import_module(plugin + '.views')
+
+
+class Base(object):
+    pass
+
+Base = declarative_base(cls=Base)
+
+
+class ImportRegistry(Base):
+    id = Column(Integer, Sequence('importregistry_id_seq'), primary_key=True)
+    name = Column(String, index=True)
+
+    def __init__(self, name):
+        self.name = name
