@@ -97,7 +97,7 @@
     };
 
     Definition.prototype.to_trm = function () {
-        return this.val.val() + ':' + this.type.elem.val();
+        return this.val.val() + ' is a ' + this.type.elem.val();
     };
 
     function Fact (parent) {
@@ -252,7 +252,7 @@
     var kb = {
         tell_name: function (totell) {
             var trm = totell.to_trm();
-            var names = trm.split(':');
+            var names = trm.split(' is a ');
             var url = '/terms/' + names[0] + '/' + names[1];
             $.post(url, function () {
                 $.get('/schema/' + names[0], function (d) {
