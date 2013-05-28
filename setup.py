@@ -42,6 +42,7 @@ setup(
     entry_points = {
         'console_scripts': [
             'webserver = terms.server.scripts.webserver:serve',
+            'initterms = terms.server.scripts.initialize:init_terms',
         ],
     },
     tests_require = [
@@ -59,7 +60,7 @@ setup(
         'gevent-websocket',
         'py-bcrypt',
         'sqlalchemy',
-        'colanderalchemy==0.2a1',
+        'colanderalchemy==0.2.0',
         'deform',
     ],
 )

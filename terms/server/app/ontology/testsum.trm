@@ -1,0 +1,10 @@
+
+hasmoney is exists, subj a person, what a number.
+
+buys is exists, subj a person, what a number.
+
+(hasmoney Person1, what N1)
+<-
+N2 = sum(N1, 2)
+->
+(buys Person1, what N2).

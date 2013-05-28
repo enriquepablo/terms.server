@@ -25,5 +25,3 @@ def apply_fact(config, fact):
 from threading import local
 
 localdata = local()
-
-# en local se meten los datos en traansito pendientes de aprobacioon

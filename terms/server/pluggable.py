@@ -11,6 +11,11 @@ def get_plugin_names(config):
     return plugins
 
 
+def get_plugins(config):
+    names = get_plugin_names(config)
+    return [import_module(p) for p in names]
+
+
 def load_plugins(config):
     plugins = get_plugin_names(config)
     for plugin in plugins:
@@ -26,6 +31,7 @@ Base = declarative_base(cls=Base)
 
 
 class ImportRegistry(Base):
+    __tablename__ = 'importregistrys'
     id = Column(Integer, Sequence('importregistry_id_seq'), primary_key=True)
     name = Column(String, index=True)
 
