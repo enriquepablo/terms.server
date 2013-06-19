@@ -12,13 +12,13 @@ def register(fact_pattern):
 
 
 def apply_fact(config, fact):
-    data = {'title': fact, 'type': 'html', 'data': 'OK'}
+    data = {'fact': fact, 'html': 'OK'}
     fdict = utils.deconstruct_fact(fact)
     if fdict:
         for pattern in registry:
             match = utils.cover(pattern[0], fdict)
             if match:
-                data.update(pattern[1](config, match))
+                data['html'] = pattern[1](config, match)
     return dumps(data)
 
 

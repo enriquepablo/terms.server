@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="mod-entry.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "ModEntry"}
+            }
+        },
+        "label": {
+            "prototype": "montage/ui/dynamic-text.reel",
+            "properties": {
+                "element": {"#": "label"}
+            },
+            "bindings": {
+                "value": {"<-": "@owner.mod.label"}
+            }
+        },
+        "val": {
+            "prototype": "ui/mod-val.reel",
+            "properties": {
+                "element": {"#": "val"}
+            },
+            "bindings": {
+                "wordType": {"<-": "@owner.mod.wordType"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="ModEntry" class="ModEntry">
+        <span data-montage-id="label"></span>
+        <div data-montage-id="val"></div>
+    </div>
+</body>
+</html>

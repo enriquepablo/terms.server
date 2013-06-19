@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="verb.css">
+    <script type="text/montage-serialization">
+    {
+        "owner": {
+            "properties": {
+                "element": {"#": "verb"},
+                "select": {"@": "select"},
+                "word": {"@": "word"}
+            }
+        },
+        "word": {
+            "prototype": "ui/word.reel"
+        },
+        "select": {
+            "prototype": "montage/ui/select.reel",
+            "properties": {
+                "element": {"#": "word"}
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <div data-montage-id="verb" class="Verb">
+        <select data-montage-id="word">
+        </select>
+    </div>
+</body>
+</html>

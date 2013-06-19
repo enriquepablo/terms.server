@@ -1,7 +1,7 @@
 
 import bcrypt
 
-from terms.server.schemata import get_sa_data
+from terms.server.schemata import get_data
 
 class TermsAuthPlugin(object):
 
@@ -16,7 +16,7 @@ class TermsAuthPlugin(object):
         except KeyError:
             return None
 
-        data = get_sa_data(login, 'person')
+        data = get_data(login, 'person')
         hashed = data['password']
 
         if bcrypt.hashpw(password, hashed) == hashed:

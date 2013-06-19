@@ -62,5 +62,6 @@ setup(
         'sqlalchemy',
         'colanderalchemy==0.2.0',
         'deform',
+        'mako',
     ],
 )

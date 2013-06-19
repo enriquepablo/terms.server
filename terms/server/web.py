@@ -91,21 +91,6 @@ class TermsServer(object):
         msg = facts + '.'
         return ask_kb(self.config, msg)
 
-    def get_schema(self, name):
-        try:
-            return schemata.get_data(name, mode='edit')
-        except schemata.SchemaNotFound:
-            return ''
-
-    def get_data(self, name):
-        try:
-            return schemata.get_data(name, mode='view')
-        except schemata.SchemaNotFound:
-            return ''
-
-    def post_data(self, name):
-        return schemata.set_data(name, request.POST)
-
     def home(self, person):
         ''''''
 

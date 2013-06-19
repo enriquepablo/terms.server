@@ -1,0 +1,14 @@
+{
+    "name": "terms",
+    "version": "0.1.0",
+    "dependencies": {
+        "montage": "*"
+    },
+    "devDependencies": {
+        "montage-testing": "~0.1.2"
+    },
+    "exclude": [
+        "run-tests.html",
+        "test"
+    ]
+}

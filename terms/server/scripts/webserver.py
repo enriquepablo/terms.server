@@ -72,9 +72,6 @@ def serve():
     app.get('/verb/<name>')(server.get_verb)
     app.get('/facts/<facts>')(server.get_facts)
     app.post('/facts/<facts>')(server.post_fact)
-    app.get('/schema/<name>')(server.get_schema)
-    app.get('/data/<name>')(server.get_data)
-    app.post('/data/<name>')(server.post_data)
     app.get('/<person>')(server.home)
 
     termsauth = TermsAuthPlugin(config)

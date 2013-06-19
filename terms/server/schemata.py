@@ -33,12 +33,6 @@ class Base(object):
         data = {k: getattr(self, k) for k in keys}
         return json.dumps(data)
 
-    def html(self):
-        keys = self.__class__.__table__.columns.keys()
-        html = ['<h1>%s</h1><p>%s</p>' % (k, getattr(self, k))
-                for k in keys if k not in ('_id', 'ntype', 'id')]
-        return '\n'.join(html)
-
 Base = declarative_base(cls=Base)
 
 
@@ -79,52 +73,32 @@ class SchemaNotFound(Exception):
     pass
 
 
-def get_sa_schema(noun):
+def get_schema(noun, form=False):
     noun = noun.title()
+    if form:
+        noun += 'Schema'
     schema = globals().get(noun, None)
     if schema:
         return schema
     raise SchemaNotFound(noun)
 
 
-def get_schema(noun, data=None):
-    schema_name = noun.title() + 'Schema'
-    schema = globals().get(schema_name, None)
-    if schema is None:
-        raise SchemaNotFound(noun)
-    form = Form(schema, buttons=('submit',))
-    if data is None:
-        return form.render()
-    else:
-        appstruct = schema.dictify(data)
-        return form.render(appstruct)
+def get_form(name):
+    data = get_data(name)
+    schema = get_schema(data.ntype, form=True)
+    form = Form(schema)
+    appstruct = schema.dictify(data)
+    return form.render(appstruct)
 
 
 def create_data(name, ttype):
-    schema = get_sa_schema(ttype)
+    schema = get_schema(ttype)
     data = schema(_id=name)
     session = Session()
     session.add(data)
     session.commit()
 
 
-def get_sa_data(name, _commit=True):
+def get_data(name):
     session = Session()
     return session.query(Schema).filter_by(_id=name).one()
-
-
-def get_data(name, mode='view'):
-    data = get_sa_data(name)
-    if mode == 'view':
-        return data.html()
-    elif mode == 'edit':
-        noun = data.ntype
-        return get_schema(noun, data)
-
-
-def set_data(name, kwargs):
-    data = get_sa_data(name, _commit=False)
-    data.edit(**kwargs)
-    session = Session()
-    session.commit()
-    return 'OK'
