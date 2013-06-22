@@ -2,12 +2,20 @@ import sys
 import os.path
 import json
 import re
+import pkg_resources
 from bottle import request, abort, redirect, static_file
 from terms.server.registry import apply_fact
+
+from mako.template import Template
 
 
 STATIC = os.path.join(os.path.dirname(sys.modules['terms.server'].__file__),
                       'static')
+
+
+def get_template(name):
+    template = pkg_resources.resource_string(__name__, name)
+    return Template(template)
 
 
 from threading import Thread, Lock
@@ -23,20 +31,26 @@ from terms.server.registry import localdata
 
 class TermsWorker(Thread):
 
-    def __init__(self, wsock, wslock, totell, config):
+    def __init__(self, wsock, wslock, totell, config, user):
         super(TermsWorker, self).__init__()
         self.wsock = wsock
         self.wslock = wslock
         msg = json.loads(totell)
-        self.fact = msg['fact'] + '.'
-        self.data = msg['data'] or None
+        self.fact = msg['fact']
+        self.data = msg['data']
         self.config = config
+        self.user = user
 
     def run(self):
         kb = Client((self.config('kb_host'),
                      int(self.config('kb_port'))))
         #totell = self.totell.decode('ascii')
-        kb.send_bytes(self.fact)
+        fact = self.fact
+        localdata.data = self.data
+        localdata.user = self.user
+        if self.user != 'admin':
+            fact = '(wants %s, do %s).' % (self.user, fact)
+        kb.send_bytes(fact)
         for fact in iter(kb.recv_bytes, 'END'):
             toweb = apply_fact(self.config, fact)
             try:
@@ -59,9 +73,6 @@ class TermsServer(object):
         if not username:
             abort(401)
         redirect('/' + username)
-
-    def admin(self):
-        return static_file('index.html', root=STATIC, mimetype='text/html')
 
     def static(self, filepath):
         return static_file(filepath, root=STATIC)
@@ -96,9 +107,12 @@ class TermsServer(object):
 
     def home(self, person):
         ''''''
+        template = get_template('static/index.html')
+        return template.render(user=person)
 
     def ws(self):
         wsock = request.environ.get('wsgi.websocket')
+        user = request.environ.get('REMOTE_USER')
         if not wsock:
             abort(400)
         wslock = Lock()
@@ -112,5 +126,5 @@ class TermsServer(object):
                 wsock.close()
                 break
             else:
-                worker = TermsWorker(wsock, wslock, message, self.config)
+                worker = TermsWorker(wsock, wslock, message, self.config, user)
                 worker.start()

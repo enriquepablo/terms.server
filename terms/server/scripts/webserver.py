@@ -65,7 +65,6 @@ def serve():
     app.get('/')(server.index)
     app.get('/websocket')(server.ws)
     app.get('/static/<filepath:path>')(server.static)
-    app.get('/admin')(server.admin)
     app.get('/terms/<type_name>')(server.get_terms)
     app.post('/terms/<term>/<ttype>')(server.post_terms)
     app.get('/subterms/<superterm>')(server.get_subterms)

@@ -102,3 +102,10 @@ def create_data(name, ttype):
 def get_data(name):
     session = Session()
     return session.query(Schema).filter_by(_id=name).one()
+
+
+def set_data(name, data):
+    session = Session()
+    item = session.query(Schema).filter_by(_id=name).one()
+    item.edit(**data)
+    session.commit()

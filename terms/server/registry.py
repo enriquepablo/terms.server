@@ -18,11 +18,10 @@ def apply_fact(config, fact):
         for pattern in registry:
             match = utils.cover(pattern[0], fdict)
             if match:
-                data['html'] = pattern[1](config, match)
+                data['html'] = pattern[1](config, match, fact)
     return dumps(data)
 
 
 from threading import local
 
 localdata = local()
-localdata.saves = {}

@@ -53,8 +53,16 @@
             ]
         },
 
-        subject: Control.chain( "$subject", "content", "control", "toTerms" ),
+        _subject: Control.chain( "$subject", "content", "control", "toTerms" ),
         verb: Control.chain( "$verb", "toTerms" ),
+
+        subject: function (value) {
+            if (this.factLevel > 0 || window.username === 'admin') {
+                return this._subject(value);
+            } else {
+                return window.username;
+            }
+        },
 
         initialize: function () {
             var self = this;
@@ -112,11 +120,15 @@
                 if (o[0].endsWith('_')) {
                     continue;
                 } else if (o[0] === 'subj') {
-                    subj = Word.create().type(o[1]);
-                    this.$subject().content(subj);
-                    subj.change(function (e) {
-                        self.handleModChange(e);
-                    });
+                    if (this.factLevel() !== 0 || window.username === 'admin') {
+                        subj = Word.create().type(o[1]);
+                        this.$subject().content(subj);
+                        subj.change(function (e) {
+                            self.handleModChange(e);
+                        });
+                    } else {
+                        this.$subject().content(window.username);
+                    }
                 } else {
                     if (o[2]) {
                         mod = Mod.create()
@@ -222,9 +234,9 @@
 
         initialize: function () {
             var self = this;
-            this.ws = new WebSocket("ws://localhost:8080/websocket");
+            this.ws(new WebSocket("ws://localhost:8080/websocket"));
         
-            this.ws.onmessage = function (e) {
+            this.ws().onmessage = function (e) {
                 var data = JSON.parse(e.data);
                 var tile = Tile.create()
                                .title(data['fact'] + '.')
@@ -278,8 +290,8 @@
 
         tellFact: function () {
             var trm = this.toTerms();
-            var tosend = JSON.stringify({fact: trm, data: {}});
-            this.ws.send(tosend);
+            var tosend = JSON.stringify({fact: trm, data: []});
+            this.ws().send(tosend);
         },
 
         tellName: function () {
@@ -292,11 +304,13 @@
             });
         },
 
-        handleAssertForm: function (form) {
-            var data = $(form).serialize();
-            var assertion = data.assertion;
+        handleAssertForm: function (form, event) {
+            event.preventDefault();
+            var $form = $(form);
+            var assertion = $form.find('button[name="assertion"]').val();
+            var data = $form.serializeArray();
             var tosend = JSON.stringify({fact: assertion, data: data});
-            this.ws.send(tosend);
+            this.ws().send(tosend);
             return false;
         },
 

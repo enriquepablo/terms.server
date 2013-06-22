@@ -16,9 +16,10 @@ class TermsAuthPlugin(object):
         except KeyError:
             return None
 
-        data = get_data(login, 'person')
-        hashed = data['password']
+        data = get_data(login)
+        hashed = data.password
 
-        if bcrypt.hashpw(password, hashed) == hashed:
+        #if bcrypt.hashpw(password, hashed) == hashed:
+        if password == hashed:
             return login
         return None
