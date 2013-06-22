@@ -83,10 +83,10 @@ def get_schema(noun, form=False):
     raise SchemaNotFound(noun)
 
 
-def get_form(name):
+def get_form(name, buttons):
     data = get_data(name)
     schema = get_schema(data.ntype, form=True)
-    form = Form(schema)
+    form = Form(schema, buttons=buttons)
     appstruct = schema.dictify(data)
     return form.render(appstruct)
 

@@ -8,6 +8,7 @@ from terms.server.schemata import get_data, Session, get_form
 import pkg_resources
 
 from mako.template import Template
+from deform import Button
 
 
 def get_template(name):
@@ -28,8 +29,9 @@ def view(config, match):
 @register('(edit Person1, what Content1)')
 def edit(config, match):
     name = match['Content1']
-    form = get_form(name)
     assertion = '(save %(Person1)s, what %(Content1)s)' % match
+    btn = Button(name='assertion', title=assertion, value=assertion)
+    form = get_form(name, buttons=(btn,))
     template = get_template('templates/edit.html')
     return template.render(form=form,
                            assertion=assertion)

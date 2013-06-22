@@ -278,7 +278,8 @@
 
         tellFact: function () {
             var trm = this.toTerms();
-            this.ws.send(trm);
+            var tosend = JSON.stringify({fact: trm, data: {}});
+            this.ws.send(tosend);
         },
 
         tellName: function () {
@@ -289,6 +290,14 @@
             $.post(url, function (data) {
                 self.nameTold(data);
             });
+        },
+
+        handleAssertForm: function (form) {
+            var data = $(form).serialize();
+            var assertion = data.assertion;
+            var tosend = JSON.stringify({fact: assertion, data: data});
+            this.ws.send(tosend);
+            return false;
         },
 
         nameTold: function (data) {

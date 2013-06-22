@@ -18,6 +18,7 @@ from geventwebsocket import WebSocketError
 from terms.server import schemata
 from terms.server.pluggable import load_plugins
 from terms.server.utils import ask_kb
+from terms.server.registry import localdata
 
 
 class TermsWorker(Thread):
@@ -26,14 +27,16 @@ class TermsWorker(Thread):
         super(TermsWorker, self).__init__()
         self.wsock = wsock
         self.wslock = wslock
-        self.totell = totell + '.'
+        msg = json.loads(totell)
+        self.fact = msg['fact'] + '.'
+        self.data = msg['data'] or None
         self.config = config
 
     def run(self):
         kb = Client((self.config('kb_host'),
                      int(self.config('kb_port'))))
         #totell = self.totell.decode('ascii')
-        kb.send_bytes(self.totell)
+        kb.send_bytes(self.fact)
         for fact in iter(kb.recv_bytes, 'END'):
             toweb = apply_fact(self.config, fact)
             try:

@@ -25,3 +25,4 @@ def apply_fact(config, fact):
 from threading import local
 
 localdata = local()
+localdata.saves = {}
