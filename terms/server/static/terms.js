@@ -17,6 +17,8 @@
 
         _type: Control.property(),
 
+        _subtype: Control.property(),
+
         toTerms: function () {
             return this.val();
         },
@@ -34,11 +36,25 @@
             return this;
         },
 
+        subtype: function (name) {
+            if (name === undefined) {
+                return this._subtype();
+            } else {
+                var self = this;
+                $.getJSON('/subterms/' + name, function (names) {
+                    self.loadOptions(names);
+                });
+                this._type('verb');
+                this._subtype(name);
+            }
+            return this;
+        },
+
         loadOptions: function (names) {
             this.append(Option.create('---'));
             if (window.kb.building() === 'question') {
-                this.append(Option.create('new variable'));
                 if (this.type() !== 'verb') {
+                    this.append(Option.create('new variable'));
                     var vr = this.type().charAt(0).toUpperCase() + this.type().substr(1) + '1';
                     this.append(Option.create(vr));
                 }
@@ -80,13 +96,29 @@
 
         tag: "span",
 
-        factLevel: Control.property(),
+        _factLevel: Control.property(),
+
+        factLevel: function (level) {
+            if (level === undefined) {
+                return this._factLevel();
+            } else {
+                if (level === 0 &&
+                    window.kb.building() === 'fact' &&
+                    window.username !== 'admin') {
+                    this.$verb().subtype('content-action');
+                } else {
+                    this.$verb().type('verb');
+                }
+                this._factLevel(level);
+                return this;
+            }
+        },
 
         inherited: {
             content: [
                 '(',
                 {ref: "subject", html: "<span/>"},
-                {ref: "verb", control: Word, type: "verb"},
+                {ref: "verb", control: Word},
                 {ref: "mods", html: "<span/>"},
                 ')'
             ]
