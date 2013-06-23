@@ -3,6 +3,10 @@
     display: none;
 }
 
+body {
+    background-color: #f2f59f;
+}
+
 
 body, button, select {
     font-family: 'Inconsolata', serif;
@@ -43,6 +47,59 @@ span.Mod > span.value > select {
     color: #117733;
 }
 
+
+div.anchor {
+    background-color: #d0daee;
+    width: 300px;
+    height: auto;
+    padding: 8px;
+    border-top: 2px solid #ddd;
+    border-left: 2px solid #ddd;
+    border-bottom: 2px solid #666;
+    border-right: 2px solid #666;
+    border-radius: 2px;
+    margin: 2px;
+}
+
+div.anchor:hover {
+    background-color: #bfc9dd;
+    border-bottom: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    border-top: 2px solid #666;
+    border-left: 2px solid #666;
+}
+
+div.divtitle {
+    text-align: left;
+}
+
+span.title {
+    width: 90px;
+}
+
+div.divcloser {
+    float: right;
+    text-align: right;
+    vertical-align: top;
+    min-width: 1.2em;
+}
+
+span.closer {
+    display:inline-block;
+    text-align: center;
+    font-weight: 800;
+    cursor: default; 
+    background-color: #aaaaf0; 
+    color: rgb(251, 199, 20); 
+    border-radius: 11px;
+    width: 1.1em;
+    text-shadow: 1px 1px #5555a0;
+    border-left: 1px solid #ffffff;
+    border-top: 1px solid #ffffff;
+    border-right: 1px solid #5555a0;
+    border-bottom: 1px solid #5555a0;
+}
+
 .portlet-background {
     opacity: 0.7;
     position: fixed;
@@ -72,10 +129,11 @@ span.Mod > span.value > select {
     position: fixed; 
     top: 45px; 
     right: 45px; 
-    width: 1.1em; 
+    width: 1.1em;
     text-align: center; 
     background-color: #aaaaf0; 
     color: rgb(251, 199, 20); 
+    font-weight: 800;
     border-radius: 11px;
     text-shadow: 1px 1px #5555a0;
     border-left: 1px solid #ffffff;
@@ -85,7 +143,7 @@ span.Mod > span.value > select {
     z-index: 10000;
 } 
  
-.portlet-closer:hover {
+.portlet-closer:hover, span.closer:hover {
     color: #F05555; 
     text-shadow: -1px -1px #ffffff;
     border-left: 1px solid #5555a0;

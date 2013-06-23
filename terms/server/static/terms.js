@@ -349,8 +349,12 @@
         inherited: {
             content: [
                 {ref: 'anchor', control: Control, content: [
-                    {ref: 'title', html: '<span/>', class: 'TileTitle'},
-                    {ref: 'closer', html: '<span>X</span>', class: 'tile-closer'}
+                    {ref: 'divcloser', control: Control, content: [
+                        {ref: 'closer', html: '<span>X</span>'}
+                    ]},
+                    {ref: 'divtitle', control: Control, content: [
+                        {ref: 'title', html: '<span/>'},
+                    ]}
                 ]},
                 {ref: 'portlet', control: Control, class: 'hidden', content: [
                     {ref: 'portletBackground', html: '<div/>', class: 'portlet-background'},
