@@ -39,19 +39,15 @@
         initialize: function () {
             var self = this;
             this.change(function (e) {
-                self.opts(self.find('option:selected').siblings());
-                self.opts().delay(1000).hide();
+                self.find('option:selected').siblings().hide();
             });
             this.mouseleave(function (e) {
                 if (self.val() !== '---') {
-                    self.opts(self.find('option:selected').siblings());
-                    self.opts().delay(1000).hide();
+                    self.find('option:selected').siblings().hide();
                 }
             });
             this.mouseenter(function (e) {
-                if (self.opts()) {
-                    self.opts().show();
-                }
+                self.find('option:selected').siblings().show();
             });
             return this;
         }
