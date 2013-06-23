@@ -14,6 +14,8 @@
         className: "Word",
 
         tag: "select",
+        
+        opts: Control.property(),
 
         toTerms: function () {
             return this.val();
@@ -28,9 +30,30 @@
         },
 
         loadOptions: function (names) {
+            this.append(Option.create('---'));
             for (var i=0, t=names.length; i<t; i++) {
                 this.append(Option.create(names[i]));
             }
+        },
+
+        initialize: function () {
+            var self = this;
+            this.change(function (e) {
+                self.opts(self.find('option:selected').siblings());
+                self.opts().delay(1000).hide();
+            });
+            this.mouseleave(function (e) {
+                if (self.val() !== '---') {
+                    self.opts(self.find('option:selected').siblings());
+                    self.opts().delay(1000).hide();
+                }
+            });
+            this.mouseenter(function (e) {
+                if (self.opts()) {
+                    self.opts().show();
+                }
+            });
+            return this;
         }
 
     });
