@@ -237,11 +237,13 @@
 
         inherited: {
             content: [
-                {ref: 'buttons', control: Control, content: [
-                    {ref: 'nameButton', html: '<button> new name </button>'},
-                    {ref: 'factButton', html: '<button> new fact </button>'},
+                {ref: 'buttonsRemote', control: Control, content: [
                     {ref: 'askButton', html: '<button> ask </button>', class: 'hidden'},
                     {ref: 'tellButton', html: '<button> tell </button>', class: 'hidden'}
+                ]},
+                {ref: 'buttons', control: Control, content: [
+                    {ref: 'nameButton', html: '<button> new name </button>'},
+                    {ref: 'factButton', html: '<button> new fact </button>'}
                 ]},
                 {ref: 'terms', html: '<div id="terms"/>'},
                 {ref: 'tiles', html: '<div id="tiles"/>'}

@@ -16,6 +16,10 @@ button, select {
     font-size: 1.1em;
 }
 
+.Control.buttonsRemote {
+    float: right;
+}
+
 div#terms {
     width: 100%;
     text-align: center;
