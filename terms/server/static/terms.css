@@ -12,6 +12,13 @@ button, select {
     font-size: 1.1em;
 }
 
+div#terms {
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 
 .portlet-background {
     opacity: 0.7;
