@@ -331,11 +331,12 @@
             content: [
                 {ref: 'anchor', control: Control, content: [
                     {ref: 'title', html: '<span/>', class: 'TileTitle'},
-                    {ref: 'closer', html: '<span>X</span>', class: 'TileCloser'}
+                    {ref: 'closer', html: '<span>X</span>', class: 'tile-closer'}
                 ]},
                 {ref: 'portlet', control: Control, class: 'hidden', content: [
-                    {ref: 'displayCloser', html: '<span>X</span>', class: 'DisplayCloser'},
-                    {ref: 'display', html: '<div/>', class: 'Display'}
+                    {ref: 'portletBackground', html: '<div/>', class: 'portlet-background'},
+                    {ref: 'displayCloser', html: '<span>X</span>', class: 'portlet-closer'},
+                    {ref: 'display', html: '<div/>', class: 'portlet-display'}
                 ]}
             ]
         },
