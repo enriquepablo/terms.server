@@ -14,31 +14,51 @@
         className: "Word",
 
         tag: "select",
-        
-        opts: Control.property(),
+
+        _type: Control.property(),
 
         toTerms: function () {
             return this.val();
         },
 
         type: function (name) {
-            var self = this;
-            $.getJSON('/terms/' + name, function (names) {
-                self.loadOptions(names);
-            });
+            if (name === undefined) {
+                return this._type();
+            } else {
+                var self = this;
+                $.getJSON('/terms/' + name, function (names) {
+                    self.loadOptions(names);
+                });
+                this._type(name);
+            }
             return this;
         },
 
         loadOptions: function (names) {
             this.append(Option.create('---'));
+            if (window.kb.building() === 'question') {
+                this.append(Option.create('new variable'));
+                if (this.type() !== 'verb') {
+                    var vr = this.type().charAt(0).toUpperCase() + this.type().substr(1) + '1';
+                    this.append(Option.create(vr));
+                }
+            }
             for (var i=0, t=names.length; i<t; i++) {
-                this.append(Option.create(names[i]));
+                if (names[i].toLowerCase() === names[i]) {
+                    this.append(Option.create(names[i]));
+                }
             }
         },
 
         initialize: function () {
             var self = this;
             this.change(function (e) {
+                if (self.val() === 'new variable') {
+                    var newvar = prompt('enter new variable');
+                    var opt = Option.create(newvar);
+                    self.find('option:selected').after(opt);
+                    self.val(newvar);
+                }
                 self.find('option:selected').siblings().hide();
             });
             this.mouseleave(function (e) {
@@ -76,7 +96,9 @@
         verb: Control.chain( "$verb", "toTerms" ),
 
         subject: function (value) {
-            if (this.factLevel > 0 || window.username === 'admin') {
+            if (this.factLevel > 0 ||
+                window.username === 'admin' ||
+                window.kb.building() === 'question') {
                 return this._subject(value);
             } else {
                 return window.username;
@@ -118,14 +140,9 @@
             if (this.factLevel() === 0) {
                 var tfact = this.toTerms();
                 if ( ! tfact.contains('---')) {
-                    kb.$askButton().removeClass('hidden');
-                    if (tfact === tfact.toLowerCase()) {
-                        kb.$tellButton().removeClass('hidden');
-                    } else {
-                        kb.$tellButton().class('hidden');
-                    }
+                    kb.$buttonsRemote().removeClass('hidden');
                 } else {
-                    kb.$askButton().class('hidden');
+                    kb.$buttonsRemote().class('hidden');
                 }
                 e.stopPropagation();
             }
@@ -136,10 +153,12 @@
             this.$mods().content('');
             for (var i=0, t=data.length; i<t ; i++) {
                 o = data[i];
-                if (o[0].endsWith('_')) {
+                if (o[0].charAt(o[0].length-1) === '_') {
                     continue;
                 } else if (o[0] === 'subj') {
-                    if (this.factLevel() !== 0 || window.username === 'admin') {
+                    if (this.factLevel() !== 0 ||
+                        window.username === 'admin' ||
+                        window.kb.building() === 'question') {
                         subj = Word.create().type(o[1]);
                         this.$subject().content(subj);
                         subj.change(function (e) {
@@ -235,6 +254,8 @@
 
         ws: Control.property(),
 
+        building: Control.property(),
+
         inherited: {
             content: [
                 {ref: 'buttonsRemote', control: Control, content: [
@@ -243,7 +264,8 @@
                 ]},
                 {ref: 'buttons', control: Control, content: [
                     {ref: 'nameButton', html: '<button> new name </button>'},
-                    {ref: 'factButton', html: '<button> new fact </button>'}
+                    {ref: 'factButton', html: '<button> new fact </button>'},
+                    {ref: 'qButton', html: '<button> new question </button>'}
                 ]},
                 {ref: 'terms', html: '<div id="terms"/>'},
                 {ref: 'tiles', html: '<div id="tiles"/>'}
@@ -266,11 +288,27 @@
             };
 
             this.$nameButton().click(function (e) {
+                self.$askButton().class('hidden');
+                self.$tellButton().removeClass('hidden');
+                self.$buttonsRemote().class('hidden');
+                self.building('name');
                 self.newName();
             });
 
             this.$factButton().click(function (e) {
+                self.$askButton().class('hidden');
+                self.$tellButton().removeClass('hidden');
+                self.$buttonsRemote().class('hidden');
+                self.building('fact');
                 self.newFact();
+            });
+
+            this.$qButton().click(function (e) {
+                self.$tellButton().class('hidden');
+                self.$askButton().removeClass('hidden');
+                self.$buttonsRemote().class('hidden');
+                self.building('question');
+                self.newQuestion();
             });
 
             this.$askButton().click(function (e) {
@@ -287,6 +325,10 @@
         },
 
         newFact: function () {
+            this.$terms().html(Fact.create().factLevel(0));
+        },
+
+        newQuestion: function () {
             this.$terms().html(Fact.create().factLevel(0));
         },
 
