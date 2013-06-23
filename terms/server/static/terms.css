@@ -49,6 +49,7 @@ span.Mod > span.value > select {
 
 
 div.anchor {
+    cursor: pointer; 
     background-color: #d0daee;
     width: 300px;
     height: auto;

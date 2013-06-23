@@ -365,28 +365,21 @@
         },
 
         title: Control.chain( '$title', 'html' ),
+        content: Control.chain( '$display', 'html' ),
 
         initialize: function () {
             var self = this;
             this.$closer().click(function (e) {
+                e.stopPropagation();
                 self.remove();
             });
             this.$displayCloser().click(function (e) {
+                e.stopPropagation();
                 self.$portlet().class('hidden');
             });
-        },
-
-        content: function (html) {
-            if (html !== undefined) {
-                var self = this;
-                this.$display().html(html);
-                this.$title().click(function (e) {
-                    self.$portlet().removeClass('hidden');
-                });
-                return this;
-            } else {
-                return this.$display().html();
-            }
+            this.click(function (e) {
+                self.$portlet().removeClass('hidden');
+            });
         }
 
     });
