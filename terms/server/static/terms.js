@@ -274,8 +274,32 @@
         handleKeypress: function (e) {
             if (this.newname() && (this.classname() !== '---')) {
                 kb.$tellButton().removeClass('hidden');
-                kb.$askButton().class('hidden');
+                kb.$askButtons().class('hidden');
             }
+        }
+
+    });
+
+    var Question = Control.sub({
+        
+        className: 'Question',
+
+        inherited: {
+            content: [
+                {ref: 'facts', html: '<div id="tiles"/>'}
+            ]
+        },
+
+        initialize: function () {
+            this.$facts().html(Fact.create().factLevel(0));
+        },
+
+        toTerms: function () {
+            var trm = [];
+            this.$facts().children().each(function (i, ch) {
+                trm.push($(ch).control().toTerms());
+            });
+            return trm.join('; ');
         }
 
     });
@@ -291,7 +315,10 @@
         inherited: {
             content: [
                 {ref: 'buttonsRemote', control: Control, content: [
-                    {ref: 'askButton', html: '<button> ask </button>', class: 'hidden'},
+                    {ref: 'askButtons', control: Control, class: 'hidden', content: [
+                        {ref: 'askButton', html: '<button> ask </button>'},
+                        {ref: 'newQFact', html: '<button> add fact </button>'}
+                    ]},
                     {ref: 'tellButton', html: '<button> tell </button>', class: 'hidden'}
                 ]},
                 {ref: 'buttons', control: Control, content: [
@@ -321,26 +348,14 @@
             };
 
             this.$nameButton().click(function (e) {
-                self.$askButton().class('hidden');
-                self.$tellButton().removeClass('hidden');
-                self.$buttonsRemote().class('hidden');
-                self.building('name');
                 self.newName();
             });
 
             this.$factButton().click(function (e) {
-                self.$askButton().class('hidden');
-                self.$tellButton().removeClass('hidden');
-                self.$buttonsRemote().class('hidden');
-                self.building('fact');
                 self.newFact();
             });
 
             this.$qButton().click(function (e) {
-                self.$tellButton().class('hidden');
-                self.$askButton().removeClass('hidden');
-                self.$buttonsRemote().class('hidden');
-                self.building('question');
                 self.newQuestion();
             });
 
@@ -351,18 +366,39 @@
             this.$tellButton().click(function (e) {
                 self.tell();
             });
+
+            this.$newQFact().click(function (e) {
+                self.newQFact();
+            });
         },
 
         newName: function () {
+            this.$askButtons().class('hidden');
+            this.$tellButton().removeClass('hidden');
+            this.$buttonsRemote().class('hidden');
+            this.building('name');
             this.$terms().html(NewName.create());
         },
 
         newFact: function () {
+            this.$askButtons().class('hidden');
+            this.$tellButton().removeClass('hidden');
+            this.$buttonsRemote().class('hidden');
+            this.building('fact');
             this.$terms().html(Fact.create().factLevel(0));
         },
 
         newQuestion: function () {
-            this.$terms().html(Fact.create().factLevel(0));
+            this.$tellButton().class('hidden');
+            this.$askButtons().removeClass('hidden');
+            this.$buttonsRemote().class('hidden');
+            this.building('question');
+            this.$terms().html(Question.create());
+        },
+
+        newQFact: function () {
+            this.$buttonsRemote().class('hidden');
+            this.tcontrol().$facts().append(Fact.create().factLevel(0));
         },
 
         ask: function () {
@@ -377,9 +413,9 @@
         },
 
         tell: function () {
-            if (this.tcontrol().className === 'Fact') {
+            if (window.kb.building() === 'fact') {
                 this.tellFact();
-            } else {
+            } else if (window.kb.building() === 'name') {
                 this.tellName();
             }
         },
