@@ -368,10 +368,10 @@
         ask: function () {
             var self = this,
                 toask = this.toTerms();
-            $.getJSON('/facts/' + toask, function (resp) {
+            $.get('/facts/' + toask, function (resp) {
                 var tile = Tile.create()
                                .title(toask + '?')
-                               .content(JSON.stringify(resp));
+                               .content(resp);
                 self.$tiles().append(tile);
             });
         },

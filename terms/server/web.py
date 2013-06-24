@@ -99,7 +99,11 @@ class TermsServer(object):
 
     def get_facts(self, facts):
         msg = facts + '?'
-        return ask_kb(self.config, msg)
+        template = get_template('static/question.html')
+        resp = ask_kb(self.config, msg)
+        resp = json.loads(resp)
+        return template.render(facts=facts,
+                               resp=resp)
 
     def post_fact(self, facts):
         msg = facts + '.'

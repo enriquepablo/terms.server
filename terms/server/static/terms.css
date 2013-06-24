@@ -156,4 +156,20 @@ span.closer {
     border-top: 1px solid #5555a0;
     border-right: 1px solid #ffffff;
     border-bottom: 1px solid #ffffff;
-} 
+}
+
+div.response {
+    width: 100%;
+    text-align: center;
+}
+
+div.response > table,
+div.response thead,
+div.response td {
+    text-align: center;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+    border: 2px solid rgb(251, 199, 20);
+}
