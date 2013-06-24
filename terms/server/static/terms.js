@@ -291,7 +291,7 @@
         },
 
         initialize: function () {
-            this.$facts().html(Fact.create().factLevel(0));
+            this.$facts().html(Fact.create().factLevel(0).css('display', 'block'));
         },
 
         toTerms: function () {
@@ -301,7 +301,6 @@
             });
             return trm.join('; ');
         }
-
     });
 
     var KB = Control.sub({
@@ -398,7 +397,11 @@
 
         newQFact: function () {
             this.$buttonsRemote().class('hidden');
-            this.tcontrol().$facts().append(Fact.create().factLevel(0));
+            this.tcontrol()
+                .$facts()
+                .append(Fact.create()
+                            .factLevel(0)
+                            .css('display', 'block'));
         },
 
         ask: function () {
