@@ -317,6 +317,7 @@
                                .title(data['fact'] + '.')
                                .content(data['html']);
                 self.$tiles().append(tile);
+                deform.processCallbacks();
             };
 
             this.$nameButton().click(function (e) {
