@@ -263,7 +263,10 @@
         initialize: function () {
             var self = this;
             this.$newname().keypress(function (e) {
-                self.handleKeypress(e);
+                self.handleChange(e);
+            });
+            this.$classname().change(function (e) {
+                self.handleChange(e);
             });
         },
 
@@ -271,10 +274,13 @@
             return this.newname() + ' is a ' + this.classname();
         },
 
-        handleKeypress: function (e) {
+        handleChange: function (e) {
             if (this.newname() && (this.classname() !== '---')) {
                 kb.$tellButton().removeClass('hidden');
                 kb.$askButtons().class('hidden');
+                kb.$buttonsRemote().removeClass('hidden');
+            } else {
+                kb.$buttonsRemote().class('hidden');
             }
         }
 

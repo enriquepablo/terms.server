@@ -30,3 +30,20 @@ DocumentSchema.get('id').widget = HiddenWidget()
 DocumentSchema.get('_id').widget = HiddenWidget()
 DocumentSchema.get('ntype').widget = HiddenWidget()
 DocumentSchema.get('body').widget = RichTextWidget()
+
+
+class Task(Schema):
+
+    name = Column(String())
+    description = Column(Text())
+
+TaskSchema = SQLAlchemySchemaNode(Task)
+
+TaskSchema.get('id').widget = HiddenWidget()
+TaskSchema.get('_id').widget = HiddenWidget()
+TaskSchema.get('ntype').widget = HiddenWidget()
+TaskSchema.get('description').widget = RichTextWidget()
+
+ProjectSchema = TaskSchema
+
+JobSchema = TaskSchema
