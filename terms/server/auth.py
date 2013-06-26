@@ -19,7 +19,6 @@ class TermsAuthPlugin(object):
         data = get_data(login)
         hashed = data.password
 
-        #if bcrypt.hashpw(password, hashed) == hashed:
-        if password == hashed:
+        if bcrypt.hashpw(password, hashed) == hashed:
             return login
         return None

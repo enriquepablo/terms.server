@@ -12,9 +12,9 @@ from terms.server.schemata import Schema
 
 class Person(Schema):
 
-    name = Column(String(20))
-    surname = Column(String(20))
-    password = Column(String(20))
+    name = Column(String())
+    surname = Column(String())
+    password = Column(String())
 
 PersonSchema = SQLAlchemySchemaNode(Person)
 

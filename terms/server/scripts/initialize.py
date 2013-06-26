@@ -27,24 +27,23 @@ def import_ontologies(config, session):
         files = [f for f in os.listdir(dirname) if f.endswith('.trm')]
         ordered = sorted(files, key=lambda x: int(x.split('.')[0]))
         for fname in ordered:
-            if fname.endswith('.trm'):
-                name = 'terms:' + fname[:-4]
-                try:
-                    session.query(ImportRegistry).filter(ImportRegistry.name==name).one()
-                except NoResultFound:
-                    path = os.path.join(dirname, fname)
-                    with open(path, 'r') as f:
-                        trms = f.read()
-                    sentences = trms.split('.')
-                    sentences = [sen.strip() + '.' for sen in sentences if sen.strip()]
-                    for sen in sentences:
-                        kb = Client((config('kb_host'), int(config('kb_port'))))
-                        kb.send_bytes(sen)
-                        for fact in iter(kb.recv_bytes, 'END'):
-                            pass
-                        kb.close()
-                    ir = ImportRegistry(name)
-                    session.add(ir)
+            name = 'terms:' + fname[:-4]
+            try:
+                session.query(ImportRegistry).filter(ImportRegistry.name==name).one()
+            except NoResultFound:
+                path = os.path.join(dirname, fname)
+                with open(path, 'r') as f:
+                    trms = f.read()
+                sentences = trms.split('.')
+                sentences = [sen.strip() + '.' for sen in sentences if sen.strip()]
+                for sen in sentences:
+                    kb = Client((config('kb_host'), int(config('kb_port'))))
+                    kb.send_bytes(sen)
+                    for fact in iter(kb.recv_bytes, 'END'):
+                        pass
+                    kb.close()
+                ir = ImportRegistry(name)
+                session.add(ir)
 
 
 def import_exec_globals(config, session):
