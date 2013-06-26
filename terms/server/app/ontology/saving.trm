@@ -1,4 +1,0 @@
-
-saves is content-action.
-(is-protected saves,  by edit-perm, for private).
-(is-protected saves, by manage-perm, for public).
