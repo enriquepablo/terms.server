@@ -105,7 +105,7 @@
                 if (level === 0 &&
                     window.kb.building() === 'fact' &&
                     window.username !== 'admin') {
-                    this.$verb().subtype('content-action');
+                    this.$verb().subtype('abs-person-action');
                 } else {
                     this.$verb().type('verb');
                 }

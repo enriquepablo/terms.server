@@ -1,0 +1,62 @@
+basic-wf is a workflow.
+
+basic-perm is a permission.
+add-perm is a permission.
+edit-perm is a permission.
+review-perm is a permission.
+
+(has-permission manager, which review-perm).
+(has-permission manager, which add-perm).
+(has-permission manager, which edit-perm).
+(has-permission manager, which basic-perm).
+
+reviewer is a role.
+(has-permission reviewer, which review-perm).
+(has-permission reviewer, which edit-perm).
+(has-permission reviewer, which basic-perm).
+
+editor is a role.
+(has-permission editor, which add-perm).
+(has-permission editor, which edit-perm).
+(has-permission editor, which basic-perm).
+
+visitor is a role.
+(has-permission visitor, which basic-perm).
+
+public is a status.
+private is a status.
+pending is a status.
+
+(is-protected view, by edit-perm, for private).
+(is-protected view, by basic-perm, for public).
+(is-protected edit, by edit-perm, for private).
+(is-protected edit, by manage-perm, for public).
+(is-protected saves, by edit-perm, for private).
+(is-protected saves, by manage-perm, for public).
+
+hide is abs-wf-action.
+(is-protected hide, by edit-perm, for public).
+
+submit is abs-wf-action.
+(is-protected submit, by edit-perm, for private).
+
+abs-review is abs-wf-action.
+(is-protected abs-review, by review-perm, for pending).
+publish is abs-review.
+reject is abs-review.
+
+hide-tr is a transition.
+(has-transition wf1, which hide-tr).
+(executed hide-tr, by hide, from public, to private).
+
+submit-tr is a transition.
+(has-transition wf1, which submit-tr).
+(executed submit-tr, by submit, from private, to pending).
+
+publish-tr is a transition.
+(has-transition wf1, which publish-tr).
+(executed publish-tr, by publish, from pending, to public).
+
+reject-tr is a transition.
+(has-transition wf1, which reject-tr).
+(executed reject-tr, by reject, from pending, to private).

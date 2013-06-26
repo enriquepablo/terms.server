@@ -1,0 +1,9 @@
+a person is a thing.
+
+abs-person-action is totell, subj a person.
+
+wants is now, subj a person, do a abs-person-action.
+
+initialize is abs-person-action, obj a thing.
+
+admin is a person.

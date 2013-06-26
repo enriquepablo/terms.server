@@ -24,7 +24,9 @@ def import_ontologies(config, session):
     '''
     for module in get_plugins(config):
         dirname = os.path.join(os.path.dirname(module.__file__), 'ontology')
-        for fname in sorted(os.listdir(dirname)):
+        files = [f for f in os.listdir(dirname) if f.endswith('.trm')]
+        ordered = sorted(files, key=lambda x: int(x.split('.')[0]))
+        for fname in ordered:
             if fname.endswith('.trm'):
                 name = 'terms:' + fname[:-4]
                 try:

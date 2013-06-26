@@ -1,0 +1,17 @@
+has-votes is unique, subj a task, many a number.
+
+votes is abs-content-action, for a number.
+
+(is-protected votes, by manage-perm, for task-closed).
+(is-protected votes, by edit-perm, for task-open).
+
+(votes Person1, what Content1, for V1);
+(has-votes Content1, many V2)
+<-
+condition &= V1 < 10
+
+condition &= count('(votes Person1, what Content1)') == 0
+
+V3 = V2 + V1
+->
+(has-votes Content1, many V2).
