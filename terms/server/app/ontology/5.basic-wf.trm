@@ -46,17 +46,17 @@ publish is abs-review.
 reject is abs-review.
 
 hide-tr is a transition.
-(has-transition wf1, which hide-tr).
+(has-transition basic-wf, which hide-tr).
 (executed hide-tr, by hide, from public, to private).
 
 submit-tr is a transition.
-(has-transition wf1, which submit-tr).
+(has-transition basic-wf, which submit-tr).
 (executed submit-tr, by submit, from private, to pending).
 
 publish-tr is a transition.
-(has-transition wf1, which publish-tr).
+(has-transition basic-wf, which publish-tr).
 (executed publish-tr, by publish, from pending, to public).
 
 reject-tr is a transition.
-(has-transition wf1, which reject-tr).
+(has-transition basic-wf, which reject-tr).
 (executed reject-tr, by reject, from pending, to private).
