@@ -31,7 +31,7 @@ from terms.server.registry import localdata
 
 class TermsWorker(Thread):
 
-    def __init__(self, wsock, wslock, totell, config, user):
+    def __init__(self, wsock, wslock, totell, config):
         super(TermsWorker, self).__init__()
         self.wsock = wsock
         self.wslock = wslock
@@ -39,7 +39,7 @@ class TermsWorker(Thread):
         self.fact = msg['fact']
         self.data = msg['data']
         self.config = config
-        self.user = user
+        self.user = request.environ.get('REMOTE_USER')
 
     def run(self):
         kb = Client((self.config('kb_host'),
@@ -48,9 +48,12 @@ class TermsWorker(Thread):
         fact = self.fact
         localdata.data = self.data
         localdata.user = self.user
-        if self.user != 'admin':
+        if self.user == 'admin':
+            fact += '.'
+        else:
             fact = '(wants %s, do %s).' % (self.user, fact)
         kb.send_bytes(fact)
+        kb.send_bytes('FINISH-TERMS')
         for fact in iter(kb.recv_bytes, 'END'):
             toweb = apply_fact(self.config, fact)
             try:
@@ -116,7 +119,6 @@ class TermsServer(object):
 
     def ws(self):
         wsock = request.environ.get('wsgi.websocket')
-        user = request.environ.get('REMOTE_USER')
         if not wsock:
             abort(400)
         wslock = Lock()
@@ -130,5 +132,5 @@ class TermsServer(object):
                 wsock.close()
                 break
             else:
-                worker = TermsWorker(wsock, wslock, message, self.config, user)
+                worker = TermsWorker(wsock, wslock, message, self.config)
                 worker.start()

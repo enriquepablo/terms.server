@@ -7,3 +7,7 @@ wants is now, subj a person, do a abs-person-action.
 initialize is abs-person-action, obj a thing.
 
 admin is a person.
+
+(wants Person1, do (initialize Person1, obj Thing1))
+->
+(initialize Person1, obj Thing1).

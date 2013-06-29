@@ -60,3 +60,5 @@ publish-tr is a transition.
 reject-tr is a transition.
 (has-transition basic-wf, which reject-tr).
 (executed reject-tr, by reject, from pending, to private).
+
+(is-assigned basic-wf, to content, in global).

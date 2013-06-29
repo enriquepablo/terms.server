@@ -59,8 +59,9 @@
                     this.append(Option.create(vr));
                 }
             }
+            var opts = [];
             for (var i=0, t=names.length; i<t; i++) {
-                if (names[i].toLowerCase() === names[i]) {
+                if (names[i].toLowerCase() === names[i] && names[i].substr(0, 4) !== 'abs-') {
                     this.append(Option.create(names[i]));
                 }
             }

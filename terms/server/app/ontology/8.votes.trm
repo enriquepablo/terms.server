@@ -3,7 +3,7 @@ has-votes is unique, subj a task, many a number.
 votes is abs-content-action, for a number.
 
 (is-protected votes, by manage-perm, for task-closed).
-(is-protected votes, by edit-perm, for task-open).
+(is-protected votes, by edit-perm, for public).
 
 (votes Person1, what Content1, for V1);
 (has-votes Content1, many V2)

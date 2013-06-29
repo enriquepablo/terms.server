@@ -26,6 +26,7 @@ def import_ontologies(config, session):
         dirname = os.path.join(os.path.dirname(module.__file__), 'ontology')
         files = [f for f in os.listdir(dirname) if f.endswith('.trm')]
         ordered = sorted(files, key=lambda x: int(x.split('.')[0]))
+        totell, names = '', []
         for fname in ordered:
             name = 'terms:' + fname[:-4]
             try:
@@ -33,17 +34,20 @@ def import_ontologies(config, session):
             except NoResultFound:
                 path = os.path.join(dirname, fname)
                 with open(path, 'r') as f:
-                    trms = f.read()
-                sentences = trms.split('.')
-                sentences = [sen.strip() + '.' for sen in sentences if sen.strip()]
-                for sen in sentences:
-                    kb = Client((config('kb_host'), int(config('kb_port'))))
-                    kb.send_bytes(sen)
-                    for fact in iter(kb.recv_bytes, 'END'):
-                        pass
-                    kb.close()
-                ir = ImportRegistry(name)
-                session.add(ir)
+                    totell += f.read()
+                names.append(ImportRegistry(name))
+        kb = Client((config('kb_host'), int(config('kb_port'))))
+        sentences = totell.split('.')
+        for sen in sentences:
+            sen = sen.strip()
+            if sen:
+                kb.send_bytes(sen + '.')
+        kb.send_bytes('FINISH-TERMS')
+        for fact in iter(kb.recv_bytes, 'END'):
+            print(fact)
+        kb.close()
+        for ir in names:
+            session.add(ir)
 
 
 def import_exec_globals(config, session):
@@ -68,8 +72,9 @@ def import_exec_globals(config, session):
                         eg = f.read()
                     kb = Client((config('kb_host'), int(config('kb_port'))))
                     kb.send_bytes('_exec_global:' + eg)
+                    kb.send_bytes('FINISH-TERMS')
                     for fact in iter(kb.recv_bytes, 'END'):
-                        pass
+                        print(fact)
                     kb.close()
                     ir = ImportRegistry(name)
                     session.add(ir)

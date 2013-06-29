@@ -103,6 +103,7 @@ def ask_kb(config, q):
     conn = Client((config('kb_host'),
                     int(config('kb_port'))))
     conn.send_bytes(q)
+    conn.send_bytes('FINISH-TERMS')
     recv, resp = '', ''
     while recv != 'END':
         resp = recv

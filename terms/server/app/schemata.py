@@ -44,6 +44,8 @@ TaskSchema.get('_id').widget = HiddenWidget()
 TaskSchema.get('ntype').widget = HiddenWidget()
 TaskSchema.get('description').widget = RichTextWidget()
 
+Project = Task
 ProjectSchema = TaskSchema
 
+Job = Task
 JobSchema = TaskSchema
