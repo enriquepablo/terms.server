@@ -91,6 +91,22 @@
 
     });
 
+    var WNumber = Control.sub({
+
+        className: "WNumber",
+
+        tag: "input",
+
+        initialize: function () {
+            this.prop('type', 'text').prop('size', '5');
+        },
+
+        toTerms: function () {
+            return this.val();
+        }
+
+    });
+
     var Fact = Control.sub({
     
         className: 'Fact',
@@ -206,6 +222,11 @@
                                  .label(o[0])
                                  .value(Fact.create()
                                             .factLevel(this.factLevel + 1));
+                        this.$mods().append(mod);
+                    } else if (o[1] === 'number') {
+                        mod = Mod.create()
+                                 .label(o[0])
+                                 .value(WNumber.create());
                         this.$mods().append(mod);
                     } else {
                         mod = Mod.create()
