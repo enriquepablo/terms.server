@@ -1,22 +1,30 @@
+
 has-votes is unique, subj a task, many a number.
 
 votes is abs-content-action, for a number.
 
+has-voted is onwards, subj a person, what a content.
+
 (is-protected votes, by manage-perm, for task-closed).
 (is-protected votes, by edit-perm, for public).
 
-(votes Person1, what Content1, for V1);
-(has-votes Content1, many V2)
+(votes Person1, what Task1, for V1);
+(has-votes Task1, many V2)
 <-
 condition &= V1 < 10
 
-condition &= count('(votes Person1, what Content1)') == 0
+condition &= count(compiler, '(has-voted Person1, what Task1)') == 0
 
 V3 = V2 + V1
 ->
-(has-votes Content1, many V2).
+(has-voted Person1, what Task1);
+(has-votes Task1, many V3).
 
-(wants Person1, do (votes Person1, for N1, what Content1));
-(votes Person1, what Content1)
+(wants Person1, do (votes Person1, for N1, what Task1));
+(votes Person1, what Task1)
 ->
-(votes Person1, what Content1, for N1).
+(votes Person1, what Task1, for N1).
+
+(initialize Person1, obj Task1)
+->
+(has-votes Task1, many 0).

@@ -52,7 +52,7 @@
 
         loadOptions: function (names) {
             this.append(Option.create('---'));
-            if (window.kb.building() === 'question') {
+            if (window.kb.building().startsWith('question')) {
                 if (this.type() !== 'verb') {
                     this.append(Option.create('new variable'));
                     var vr = this.type().charAt(0).toUpperCase() + this.type().substr(1) + '1';
@@ -147,7 +147,7 @@
         subject: function (value) {
             if (this.factLevel > 0 ||
                 window.username === 'admin' ||
-                window.kb.building() === 'question') {
+                window.kb.building().startsWith('question')) {
                 return this._subject(value);
             } else {
                 return window.username;
@@ -202,12 +202,12 @@
             this.$mods().content('');
             for (var i=0, t=data.length; i<t ; i++) {
                 o = data[i];
-                if (o[0].charAt(o[0].length-1) === '_') {
+                if (o[0].charAt(o[0].length-1) === '_' && window.kb.building() !=='question-past') {
                     continue;
                 } else if (o[0] === 'subj') {
                     if (this.factLevel() !== 0 ||
                         window.username === 'admin' ||
-                        window.kb.building() === 'question') {
+                        window.kb.building().startsWith('question')) {
                         subj = Word.create().type(o[1]);
                         this.$subject().content(subj);
                         subj.change(function (e) {
@@ -351,7 +351,8 @@
                 {ref: 'buttons', control: Control, content: [
                     {ref: 'nameButton', html: '<button> new name </button>'},
                     {ref: 'factButton', html: '<button> new fact </button>'},
-                    {ref: 'qButton', html: '<button> new question </button>'}
+                    {ref: 'pqButton', html: '<button> query the past </button>'},
+                    {ref: 'qButton', html: '<button> query </button>'}
                 ]},
                 {ref: 'terms', html: '<div id="terms"/>'},
                 {ref: 'tiles', html: '<div id="tiles"/>'}
@@ -382,8 +383,12 @@
                 self.newFact();
             });
 
+            this.$pqButton().click(function (e) {
+                self.newQuestion(false);
+            });
+
             this.$qButton().click(function (e) {
-                self.newQuestion();
+                self.newQuestion(true);
             });
 
             this.$askButton().click(function (e) {
@@ -415,11 +420,15 @@
             this.$terms().html(Fact.create().factLevel(0));
         },
 
-        newQuestion: function () {
+        newQuestion: function (present) {
             this.$tellButton().class('hidden');
             this.$askButtons().removeClass('hidden');
             this.$buttonsRemote().class('hidden');
-            this.building('question');
+            if (present) {
+                this.building('question');
+            } else {
+                this.building('question-past');
+            }
             this.$terms().html(Question.create());
         },
 
@@ -467,8 +476,9 @@
             });
         },
 
-        handleAssertForm: function (form, event) {
-            event.preventDefault();
+        handleAssertForm: function (form, e) {
+            window.tinymce.triggerSave();
+            e.preventDefault();
             var $form = $(form);
             var assertion = $form.find('button[name="assertion"]').val();
             var data = $form.serializeArray();

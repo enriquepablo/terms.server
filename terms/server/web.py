@@ -44,7 +44,6 @@ class TermsWorker(Thread):
     def run(self):
         kb = Client((self.config('kb_host'),
                      int(self.config('kb_port'))))
-        #totell = self.totell.decode('ascii')
         fact = self.fact
         localdata.data = self.data
         localdata.user = self.user
@@ -90,7 +89,12 @@ class TermsServer(object):
             schemata.create_data(term, ttype)
         except schemata.SchemaNotFound:
             pass
-        return ask_kb(self.config, msg)
+        resp = ask_kb(self.config, msg)
+        if resp == term:
+            un = request.environ.get('REMOTE_USER')
+            resp = ask_kb(self.config,
+                          '(wants %s, do (initialize %s, obj %s))' % (un, un, term))
+        return resp
 
     def get_subterms(self, superterm):
         msg = '_metadata:getsubwords:' + superterm
@@ -132,5 +136,5 @@ class TermsServer(object):
                 wsock.close()
                 break
             else:
-                worker = TermsWorker(wsock, wslock, message, self.config)
+                worker = TermsWorker(wsock, wslock, message, self.config)  # XXX very bad, we need a pool
                 worker.start()
