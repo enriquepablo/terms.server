@@ -13,7 +13,7 @@ has-voted is onwards, subj a person, what a content.
 <-
 condition &= V1 < 10
 
-condition &= count(compiler, '(has-voted Person1, what Task1)') == 0
+condition &= count(compiler, '(has-voted %(Person1)s, what %(Task1)s)' % match) == 0
 
 V3 = V2 + V1
 ->
