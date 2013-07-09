@@ -31,6 +31,9 @@ DocumentSchema.get('_id').widget = HiddenWidget()
 DocumentSchema.get('ntype').widget = HiddenWidget()
 DocumentSchema.get('body').widget = RichTextWidget()
 
+Folder = Document
+FolderSchema = DocumentSchema
+
 
 class Task(Schema):
 

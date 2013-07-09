@@ -2,16 +2,19 @@ basic-wf is a workflow.
 
 basic-perm is a permission.
 add-perm is a permission.
+move-perm is a permission.
 edit-perm is a permission.
 review-perm is a permission.
 
 (has-permission manager, which review-perm).
 (has-permission manager, which add-perm).
+(has-permission manager, which move-perm).
 (has-permission manager, which edit-perm).
 (has-permission manager, which basic-perm).
 
 reviewer is a role.
 (has-permission reviewer, which review-perm).
+(has-permission reviewer, which move-perm).
 (has-permission reviewer, which edit-perm).
 (has-permission reviewer, which basic-perm).
 

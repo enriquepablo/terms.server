@@ -449,6 +449,7 @@
                                .title(toask + '?')
                                .content(resp);
                 self.$tiles().append(tile);
+                $(tile.$display()).find('table.tablesorter').tablesorter();
             });
         },
 
@@ -460,8 +461,10 @@
             }
         },
 
-        tellFact: function () {
-            var trm = this.toTerms();
+        tellFact: function (trm) {
+            if (trm === undefined) {
+                trm = this.toTerms();
+            }
             var tosend = JSON.stringify({fact: trm, data: []});
             this.ws().send(tosend);
         },
@@ -520,6 +523,21 @@
 
         title: Control.chain( '$title', 'html' ),
         content: Control.chain( '$display', 'html' ),
+
+/*        content: function (value) {
+            var self = this;
+            if (value === undefined) {
+                return self.$display().html();
+            } else {
+                self.$display().html(value)
+                if (value === 'OK') {
+                    setTimeout(function () {
+                        self.remove();
+                    }, 5000)
+                }
+            }
+        },
+*/
 
         initialize: function () {
             var self = this;

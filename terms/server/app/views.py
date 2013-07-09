@@ -1,6 +1,7 @@
 # -*- encoding: utf8 -*-
 from json import loads, dumps
 import os.path
+from multiprocessing.connection import Client
 
 from terms.server.utils import ask_kb
 from terms.server.registry import register, localdata
@@ -31,7 +32,7 @@ def view(config, match, fact):
 def edit(config, match, fact):
     assertion = '(saves %(Person1)s, what %(Content1)s)' % match
     name = match['Content1']
-    btn = Button(name='assertion', title=assertion, value=assertion)
+    btn = Button(name='assertion', title='Save', value=assertion)
     form = get_form(name, buttons=(btn,))
     template = get_template('templates/edit.html')
     return template.render(form=form)
@@ -44,3 +45,21 @@ def saves(config, match, fact):
     data = {o['name']: o['value'] for o in data}
     set_data(name, data)
     return 'OK'
+
+
+@register('(list-folder Person1, what Folder1)')
+def list_folder(config, match, fact):
+    name = match['Folder1']
+    user = match['Person1']
+    kb = Client((config('kb_host'),
+                    int(config('kb_port'))))
+    q = '(is-placed Content1, in %s)?' % name
+    kb.send_bytes(q)
+    kb.send_bytes('FINISH-TERMS')
+    resp = []
+    for r in iter(kb.recv_bytes, 'END'):
+        resp = loads(r)
+    kb.close()
+    data = get_data(name)
+    template = get_template('templates/list-folder.html')
+    return template.render(contents=resp, data=data, user=user, name=name)

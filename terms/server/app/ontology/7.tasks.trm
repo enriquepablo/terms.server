@@ -29,7 +29,7 @@ a project is a task.
 
 a job is a task.
 
-is-working is abs-person-action, on a task.
+is-working is abs-person-action, on a job.
 
 (is-owned Task1, by Person1)
 ->
