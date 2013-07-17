@@ -3,7 +3,7 @@ a workflow is a thing.
 is-assigned is onwards, subj a workflow, to a noun, in a context.
 
 a role is a thing.
-has-role is abs-has-in-context, subj a person, which a role, where a context.
+has-role is onwards, subj a person, which a role, where a context.
 
 a permission is a thing.
 has-permission is onwards, subj a role, which a permission.

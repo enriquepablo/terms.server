@@ -31,15 +31,16 @@ from terms.server.registry import localdata
 
 class TermsWorker(Thread):
 
-    def __init__(self, wsock, wslock, totell, config):
+    def __init__(self, wsock, wslock, user, totell, tserver):
         super(TermsWorker, self).__init__()
         self.wsock = wsock
         self.wslock = wslock
         msg = json.loads(totell)
         self.fact = msg['fact']
         self.data = msg['data']
-        self.config = config
-        self.user = request.environ.get('REMOTE_USER')
+        self.config = tserver.config
+        self.tserver = tserver
+        self.user = user
 
     def run(self):
         kb = Client((self.config('kb_host'),
@@ -54,10 +55,11 @@ class TermsWorker(Thread):
         kb.send_bytes(fact)
         kb.send_bytes('FINISH-TERMS')
         for fact in iter(kb.recv_bytes, 'END'):
-            toweb = apply_fact(self.config, fact)
+            toweb = apply_fact(self.tserver, fact)
+            toweb = json.dumps(toweb).encode('ascii')
             try:
                 with self.wslock:
-                    self.wsock.send(toweb.encode('ascii'))
+                    self.wsock.send(toweb)
             except WebSocketError:
                 break
         kb.close()
@@ -67,6 +69,7 @@ class TermsServer(object):
 
     def __init__(self, config):
         self.config = config
+        self.wss = {}
         load_plugins(config)
         schemata.init_session(config)
 
@@ -118,14 +121,19 @@ class TermsServer(object):
 
     def home(self, person):
         ''''''
+        username = request.environ.get('REMOTE_USER')
+        if person != username:
+            abort(401)
         template = get_template('static/index.html')
         return template.render(user=person)
 
-    def ws(self):
+    def ws(self, person):
         wsock = request.environ.get('wsgi.websocket')
         if not wsock:
             abort(400)
         wslock = Lock()
+
+        self.wss[person] = (wslock, wsock)
 
         while True:
             try:
@@ -136,5 +144,5 @@ class TermsServer(object):
                 wsock.close()
                 break
             else:
-                worker = TermsWorker(wsock, wslock, message, self.config)  # XXX very bad, we need a pool
+                worker = TermsWorker(wsock, wslock, person, message, self)
                 worker.start()

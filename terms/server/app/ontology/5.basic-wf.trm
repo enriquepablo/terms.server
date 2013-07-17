@@ -34,8 +34,8 @@ pending is a status.
 (is-protected view, by basic-perm, for public).
 (is-protected edit, by edit-perm, for private).
 (is-protected edit, by manage-perm, for public).
-(is-protected saves, by edit-perm, for private).
-(is-protected saves, by manage-perm, for public).
+(is-protected save, by edit-perm, for private).
+(is-protected save, by manage-perm, for public).
 
 hide is abs-wf-action.
 (is-protected hide, by edit-perm, for public).

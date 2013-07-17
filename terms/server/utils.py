@@ -17,18 +17,20 @@ def parens(expr):
     depth = 0
     term = ''
     terms = []
+    expr = expr.strip()[1:-1]
     for c in expr:
         if c == '(':
-            if term:
+            depth += 1
+            if depth == 1 and term:
                 terms.append(term)
                 term = ''
-            depth += 1
-            if depth > 1:
-                term += c
+            term += c
         elif c == ')':
             depth -= 1
-            if depth > 0:
-                term += c
+            term += c
+            if depth == 0:
+                terms.append(term)
+                term = ''
         else:
             term += c
     terms.append(term)
@@ -52,7 +54,7 @@ def deconstruct_fact(f):
     m = fact_pattern.match(simple)
     if not m:
         return {}
-    fact = {'verb': m.group(1)}
+    fact = {'orig': f, 'verb': m.group(1)}
     fact['mods'] = {}
     fact['mods']['subject'] = m.group(2)
     if m.group(4):

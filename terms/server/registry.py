@@ -1,4 +1,3 @@
-from json import dumps
 from terms.server import utils
 
 registry = []
@@ -11,15 +10,15 @@ def register(fact_pattern):
     return wrapper
 
 
-def apply_fact(config, fact):
+def apply_fact(tserver, fact):
     data = {'fact': fact, 'html': 'OK'}
     fdict = utils.deconstruct_fact(fact)
     if fdict:
         for pattern in registry:
             match = utils.cover(pattern[0], fdict)
             if match:
-                data['html'] = pattern[1](config, match, fact)
-    return dumps(data)
+                data['html'] = pattern[1](tserver, match, fact)
+    return data
 
 
 from threading import local

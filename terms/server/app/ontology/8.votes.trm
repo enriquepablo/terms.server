@@ -1,30 +1,30 @@
 
-has-votes is unique, subj a task, many a number.
+job-has-votes is unique, subj a job, many a number.
 
-votes is abs-content-action, for a number.
+votes-job is abs-content-action, what a job, for a number.
 
-has-voted is onwards, subj a person, what a content.
+has-voted-job is onwards, subj a person, what a job.
 
-(is-protected votes, by manage-perm, for task-closed).
-(is-protected votes, by edit-perm, for public).
+(is-protected votes-job, by manage-perm, for task-closed).
+(is-protected votes-job, by edit-perm, for public).
 
-(votes Person1, what Task1, for V1);
-(has-votes Task1, many V2)
+(votes-job Person1, what Job1, for V1);
+(job-has-votes Job1, many V2)
 <-
 condition &= V1 < 10
 
-condition &= count(compiler, '(has-voted %(Person1)s, what %(Task1)s)' % match) == 0
+condition &= runtime.count('(has-voted-job %(Person1)s, what %(Job1)s)' % match) == 0
 
 V3 = V2 + V1
 ->
-(has-voted Person1, what Task1);
-(has-votes Task1, many V3).
+(has-voted-job Person1, what Job1);
+(job-has-votes Job1, many V3).
 
-(wants Person1, do (votes Person1, for N1, what Task1));
-(votes Person1, what Task1)
+(wants Person1, do (votes-job Person1, for N1, what Job1));
+(votes-job Person1, what Job1)
 ->
-(votes Person1, what Task1, for N1).
+(votes-job Person1, what Job1, for N1).
 
-(initialize Person1, obj Task1)
+(initialize Person1, obj Job1)
 ->
-(has-votes Task1, many 0).
+(job-has-votes Job1, many 0).

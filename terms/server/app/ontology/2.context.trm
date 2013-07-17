@@ -7,13 +7,6 @@ located is onwards, subj a thing, in a context.
 ->
 (located Thing1, in Context2).
 
-abs-has-in-context is onwards, subj a thing, which a thing, where a context.
-
-(Abs-has-in-contextVerb1 Thing1, which Thing2, where Context1);
-(located Context2, in Context1)
-->
-(Abs-has-in-contextVerb1 Thing1, which Thing2, where Context2).
-
 global is a context.
 
 (initialize Person1, obj Context1)

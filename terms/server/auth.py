@@ -20,5 +20,7 @@ class TermsAuthPlugin(object):
         hashed = data.password
 
         if bcrypt.hashpw(password, hashed) == hashed:
+            environ['REMOTE_USER'] = login
             return login
+        environ['REMOTE_USER'] = ''
         return None

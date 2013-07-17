@@ -63,7 +63,7 @@ def serve():
     app = Bottle()
 
     app.get('/')(server.index)
-    app.get('/websocket')(server.ws)
+    app.get('/<person>/websocket')(server.ws)
     app.get('/static/<filepath:path>')(server.static)
     app.get('/terms/<type_name>')(server.get_terms)
     app.post('/terms/<term>/<ttype>')(server.post_terms)

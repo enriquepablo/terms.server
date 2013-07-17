@@ -145,7 +145,7 @@
         verb: Control.chain( "$verb", "toTerms" ),
 
         subject: function (value) {
-            if (this.factLevel > 0 ||
+            if (this.factLevel() > 0 ||
                 window.username === 'admin' ||
                 window.kb.building().startsWith('question')) {
                 return this._subject(value);
@@ -205,7 +205,7 @@
                 if (o[0].charAt(o[0].length-1) === '_' && window.kb.building() !=='question-past') {
                     continue;
                 } else if (o[0] === 'subj') {
-                    if (this.factLevel() !== 0 ||
+                    if (this.factLevel() > 0 ||
                         window.username === 'admin' ||
                         window.kb.building().startsWith('question')) {
                         subj = Word.create().type(o[1]);
@@ -221,7 +221,7 @@
                         mod = Mod.create()
                                  .label(o[0])
                                  .value(Fact.create()
-                                            .factLevel(this.factLevel + 1));
+                                            .factLevel(this.factLevel() + 1));
                         this.$mods().append(mod);
                     } else if (o[1] === 'number') {
                         mod = Mod.create()
@@ -364,7 +364,7 @@
 
         initialize: function () {
             var self = this;
-            this.ws(new WebSocket("ws://localhost:8080/websocket"));
+            this.ws(new WebSocket("ws://localhost:8080/" + window.username + "/websocket"));
         
             this.ws().onmessage = function (e) {
                 var data = JSON.parse(e.data);
