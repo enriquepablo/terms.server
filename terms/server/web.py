@@ -56,7 +56,7 @@ class TermsWorker(Thread):
         kb.send_bytes('FINISH-TERMS')
         for fact in iter(kb.recv_bytes, 'END'):
             toweb = apply_fact(self.tserver, fact)
-            toweb = json.dumps(toweb).encode('ascii')
+            toweb = json.dumps(toweb).encode('utf8')
             try:
                 with self.wslock:
                     self.wsock.send(toweb)

@@ -75,7 +75,7 @@ def tell(tserver, match, fact):
         toweb = {'fact': fact, 'html': subview['html']}
         try:
             with tserver.wss[name][0]:
-                tserver.wss[name][1].send(dumps(toweb).encode('ascii'))
+                tserver.wss[name][1].send(dumps(toweb).encode('utf8'))
         except WebSocketError:
             pass
     return 'OK'
