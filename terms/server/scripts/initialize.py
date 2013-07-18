@@ -25,9 +25,8 @@ def import_ontologies(config, session):
     for module in get_plugins(config):
         dirname = os.path.join(os.path.dirname(module.__file__), 'ontology')
         files = [f for f in os.listdir(dirname) if f.endswith('.trm')]
-        ordered = sorted(files, key=lambda x: int(x.split('.')[0]))
         totell, names = '', []
-        for fname in ordered:
+        for fname in files:
             name = 'terms:' + fname[:-4]
             try:
                 session.query(ImportRegistry).filter(ImportRegistry.name==name).one()
@@ -37,11 +36,9 @@ def import_ontologies(config, session):
                     totell += f.read()
                 names.append(ImportRegistry(name))
         kb = Client((config('kb_host'), int(config('kb_port'))))
-        sentences = totell.split('.')
-        for sen in sentences:
-            sen = sen.strip()
+        for sen in totell.split():
             if sen:
-                kb.send_bytes(sen + '.')
+                kb.send_bytes(sen)
         kb.send_bytes('FINISH-TERMS')
         for fact in iter(kb.recv_bytes, 'END'):
             print(fact)

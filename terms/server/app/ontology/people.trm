@@ -1,0 +1,67 @@
+# Copyright (c) 2007-2012 by Enrique Pérez Arnaud <enriquepablo@gmail.com>
+#
+# This file is part of the terms project.
+# https://github.com/enriquepablo/terms
+#
+# The terms project is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# The terms project is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with any part of the terms project.
+# If not, see <http://www.gnu.org/licenses/>.
+<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/people.trm>
+{{{
+"author": "enrique perez arnaud"
+}}}
+
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/context.trm>.
+
+a group is a context.
+
+# a person is a thing:
+a person is a group.
+
+belongs is onwards, subj a person, to a group.
+
+# a primitive abstract verb that has a person subj,
+# and is told back when used in a new sentence
+abs-person-action is totell, subj a person.
+
+wants is now, subj a person, do a abs-person-action.
+
+abs-person-relation is unique, subj a person, u-what a thing.
+
+knows is abs-person-relation, u-what a person.
+
+likes is abs-person-relation.
+
+establish-relation is abs-person-action, which a verb, with a person.
+
+(wants Person1, do (establish-relation Person1, which Abs-person-relationVerb1, with Person2))
+->
+(Abs-person-relationVerb1 Person1, u-what Person2).
+
+tell is abs-person-action, who a person, what a exists.
+
+(wants Person1, do (tell Person1, who Person2, what Exists1));
+(knows Person2, u-what Person1)
+->
+(tell Person1, who Person2, what Exists1).
+
+admin is a person.
+
+initialize is abs-person-action, obj a thing.
+
+(wants Person1, do (initialize Person1, obj Thing1))
+<-
+condition &= runtime.count('(initialize Person2, obj %(Thing1)s, at_ T1)' % match) == 0
+condition &= runtime.count('(initialize Person2, obj %(Thing1)s)' % match) == 0
+->
+(initialize Person1, obj Thing1).

@@ -70,6 +70,7 @@ def list_folder(tserver, match, fact):
 def tell(tserver, match, fact):
     name = match['Person2']
     if name in tserver.wss:
+        template = get_template('templates/tell.html')
         subview = apply_fact(tserver, match['Exists1']['orig'])  ## XXX Security alert. the teller is not necessarily cleared for match['Exists1']['orig']
         toweb = {'fact': fact, 'html': subview['html']}
         try:

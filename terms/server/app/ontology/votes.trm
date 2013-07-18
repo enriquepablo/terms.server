@@ -1,0 +1,54 @@
+# Copyright (c) 2007-2012 by Enrique Pérez Arnaud <enriquepablo@gmail.com>
+#
+# This file is part of the terms project.
+# https://github.com/enriquepablo/terms
+#
+# The terms project is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# The terms project is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with any part of the terms project.
+# If not, see <http://www.gnu.org/licenses/>.
+<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/votes.trm>
+{{{
+"author": "enrique perez arnaud"
+}}}
+
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/tasks.trm>.
+
+job-has-votes is unique, subj a job, many a number.
+
+votes-job is abs-content-action, what a job, for a number.
+
+has-voted-job is onwards, subj a person, what a job.
+
+(is-protected votes-job, by manage-perm, for task-closed).
+(is-protected votes-job, by edit-perm, for public).
+
+(votes-job Person1, what Job1, for V1);
+(job-has-votes Job1, many V2)
+<-
+condition &= V1 < 10
+
+condition &= runtime.count('(has-voted-job %(Person1)s, what %(Job1)s)' % match) == 0
+
+V3 = V2 + V1
+->
+(has-voted-job Person1, what Job1);
+(job-has-votes Job1, many V3).
+
+(wants Person1, do (votes-job Person1, for N1, what Job1));
+(votes-job Person1, what Job1)
+->
+(votes-job Person1, what Job1, for N1).
+
+(initialize Person1, obj Job1)
+->
+(job-has-votes Job1, many 0).

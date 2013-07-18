@@ -1,9 +1,34 @@
+# Copyright (c) 2007-2012 by Enrique Pérez Arnaud <enriquepablo@gmail.com>
+#
+# This file is part of the terms project.
+# https://github.com/enriquepablo/terms
+#
+# The terms project is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# The terms project is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with any part of the terms project.
+# If not, see <http://www.gnu.org/licenses/>.
+<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/workflow.trm>
+{{{
+"author": "enrique perez arnaud"
+}}}
+
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/content.trm>.
+
 a workflow is a thing.
 
 is-assigned is onwards, subj a workflow, to a noun, in a context.
 
 a role is a thing.
-has-role is onwards, subj a person, which a role, where a context.
+has-role is onwards, subj a group, which a role, where a context.
 
 a permission is a thing.
 has-permission is onwards, subj a role, which a permission.
@@ -21,7 +46,8 @@ is-protected is onwards, subj a verb, by a permission, for a status.
 
 (wants Person1, do (Abs-content-actionVerb1 Person1, what Content1));
 (is-protected Abs-content-actionVerb2, by Permission1, for Status1);
-(has-role Person1, which Role1, where Context1);
+(belongs Person1, to Group1);
+(has-role Group1, which Role1, where Context1);
 (has-permission Role1, which Permission1);
 (has-status Content1, which Status1);
 (located Content1, in Context1);
