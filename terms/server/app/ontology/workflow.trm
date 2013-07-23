@@ -73,10 +73,6 @@ Content1 is a ContentNoun1
 ->
 (has-status Content1, which Status2).
 
-(initialize Person1, obj Context1)
-->
-(has-role Person1, which manager, where Context1).
-
 
 grant-role is abs-person-action, which a role, to a person, in a context.
 
@@ -85,3 +81,9 @@ grant-role is abs-person-action, which a role, to a person, in a context.
 (has-permission Role2, which manage-perm)
 ->
 (has-role Person2, which Role1, where Context1).
+
+
+(initialize Person1, obj Context1)
+->
+(located Context1, in global);
+(has-role Person1, which manager, where Context1).

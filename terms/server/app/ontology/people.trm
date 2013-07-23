@@ -23,8 +23,14 @@
 
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/context.trm>.
 
-a group is a context.
+a group is a thing.
 
+# perhaps a person is also a content
+# and there is a people context where all people are
+# where admin is manager
+# and they can only be there (finish any other "located person" fact)
+# and they have 2 states, active/inactive
+# then we have to check for active whenever someone wants to do something?
 a person is a group.
 
 belongs is onwards, subj a person, to a group.
@@ -39,7 +45,7 @@ abs-person-relation is unique, subj a person, u-what a thing.
 
 knows is abs-person-relation, u-what a person.
 
-likes is abs-person-relation.
+likes is knows.
 
 establish-relation is abs-person-action, which a verb, with a person.
 
@@ -54,6 +60,18 @@ tell is abs-person-action, who a person, what a exists.
 ->
 (tell Person1, who Person2, what Exists1).
 
+view-profile is abs-person-action, of a person.
+edit-profile is abs-person-action, of a person.
+
+(wants Person1, do (view-profile Person1, of Person2));
+(KnowsVerb1 Person2, u-what Person1)
+->
+(view-profile Person1, of Person2).
+
+(wants Person1, do (edit-profile Person1, of Person1))
+->
+(edit-profile Person1, of Person1).
+
 admin is a person.
 
 initialize is abs-person-action, obj a thing.
@@ -64,3 +82,15 @@ condition &= runtime.count('(initialize Person2, obj %(Thing1)s, at_ T1)' % matc
 condition &= runtime.count('(initialize Person2, obj %(Thing1)s)' % match) == 0
 ->
 (initialize Person1, obj Thing1).
+
+
+(initialize Person1, obj Group1)
+->
+(belongs Person1, to Group1);
+
+(initialize Person1, obj Person2)
+->
+(belongs Person2, to Person2);
+(likes Person2, what Person2);
+(knows Person1, what Person2);
+(knows Person2, what Person1).

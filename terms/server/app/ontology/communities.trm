@@ -21,8 +21,7 @@
 "author": "enrique perez arnaud"
 }}}
 
-import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/folder.trm>.
-import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/tasks.trm>.
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>.
 
 
 a community is a context:group:content.
@@ -61,11 +60,6 @@ V3 = V2 + V1
 ->
 (votes-poll Person1, what Poll1, for N1).
 
-(initialize Person1, obj Poll1)
-->
-(poll-has-votes Poll1, many 0);
-(has-threshold Poll1, many 1).
-
 has-consecuence is onwards, subj a poll, which a exists.
 
 (has-consecuence Poll1, which Exists1);
@@ -79,16 +73,15 @@ condition &= N1 < N2
 
 a membership-aplication is a poll.
 
-(wants Person1, do (put-in-context Person1, what Membership-application1, in Community1));
+(wants Person1, do (put-in-context Person1, what Membership-application1, in Community1))
 ->
 (located Membership-application1, in Community1);
 (has-consecuence Membership-application1, which (belongs Person1, to Community1)).
 
-
-(initialize Person1, obj Person2)
+(initialize Person1, obj Poll1)
 ->
-(knows Person1, what Person2);
-(knows Person2, what Person1).
+(poll-has-votes Poll1, many 0);
+(has-threshold Poll1, of 1).
 
 (initialize Person1, obj Community1)
 ->

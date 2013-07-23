@@ -21,9 +21,7 @@
 "author": "enrique perez arnaud"
 }}}
 
-import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/document.trm>.
-
-
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>.
 
 
 a folder is a content.

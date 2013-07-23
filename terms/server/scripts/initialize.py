@@ -23,28 +23,17 @@ def import_ontologies(config, session):
             put filename in importregistry
     '''
     for module in get_plugins(config):
-        dirname = os.path.join(os.path.dirname(module.__file__), 'ontology')
-        files = [f for f in os.listdir(dirname) if f.endswith('.trm')]
-        names = []
-        for fname in files:
-            totell = []
-            name = 'terms:' + fname[:-4]
-            try:
-                session.query(ImportRegistry).filter(ImportRegistry.name==name).one()
-            except NoResultFound:
-                names.append(ImportRegistry(name))
-                kb = Client((config('kb_host'), int(config('kb_port'))))
-                path = os.path.join(dirname, fname)
-                with open(path, 'r') as f:
-                    for line in f.readlines():
-                        if line:
-                            kb.send_bytes(line)
-                kb.send_bytes('FINISH-TERMS')
-                for fact in iter(kb.recv_bytes, 'END'):
-                    print(fact)
-                kb.close()
-        for ir in names:
-            session.add(ir)
+        fname = os.path.join(os.path.dirname(module.__file__), 'ontology', 'terms.trm')
+        totell = []
+        kb = Client((config('kb_host'), int(config('kb_port'))))
+        with open(fname, 'r') as f:
+            for line in f.readlines():
+                if line:
+                    kb.send_bytes(line)
+        kb.send_bytes('FINISH-TERMS')
+        for fact in iter(kb.recv_bytes, 'END'):
+            print(fact)
+        kb.close()
 
 
 def import_exec_globals(config, session):

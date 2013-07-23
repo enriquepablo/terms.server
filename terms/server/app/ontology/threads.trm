@@ -16,12 +16,25 @@
 # You should have received a copy of the GNU General Public License
 # along with any part of the terms project.
 # If not, see <http://www.gnu.org/licenses/>.
-<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/document.trm>
+<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/threads.trm>
 {{{
 "author": "enrique perez arnaud"
 }}}
 
-import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>.
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/community.trm>.
 
 
-a document is a content.
+a thread is a content.
+
+post is abs-content-action, what a thread, with a content, in-reply-to a content.
+
+(is-protected post, by basic-perm, for public).
+(is-protected post, by manage-perm, for private).
+
+(wants Person1, do (post Person1, what Thread1, with Content1, in-reply-to Content2));
+(post Person1, what Thread1);
+(is-owned Content1, by Person1);
+(located Thread1, in Community1);
+(belongs Person1, in Community1)
+->
+(post Person1, what Thread1, with Content1, in-reply-to Content2).

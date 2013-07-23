@@ -16,12 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with any part of the terms project.
 # If not, see <http://www.gnu.org/licenses/>.
-<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/document.trm>
+<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/terms.trm>
 {{{
 "author": "enrique perez arnaud"
 }}}
 
-import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>.
-
-
-a document is a content.
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/document.trm>.
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/folder.trm>.
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/tasks.trm>.
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/threads.trm>.
