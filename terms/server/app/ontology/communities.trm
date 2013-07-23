@@ -81,6 +81,7 @@ a membership-application is a poll.
 (initialize Person1, obj Poll1)
 ->
 (poll-has-votes Poll1, many 0);
+(has-status Poll1, which private);
 (has-threshold Poll1, of 1).
 
 (initialize Person1, obj Community1)
