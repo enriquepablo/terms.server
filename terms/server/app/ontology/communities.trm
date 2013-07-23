@@ -86,4 +86,4 @@ a membership-application is a poll.
 (initialize Person1, obj Community1)
 ->
 (belongs Person1, to Community1);
-(has-role Person1, which manager, in Community1).
+(has-role Person1, which manager, where Community1).

@@ -35,6 +35,6 @@ post is abs-content-action, what a thread, with a content, in-reply-to a content
 (post Person1, what Thread1);
 (is-owned Content1, by Person1);
 (located Thread1, in Community1);
-(belongs Person1, in Community1)
+(belongs Person1, to Community1)
 ->
 (post Person1, what Thread1, with Content1, in-reply-to Content2).
