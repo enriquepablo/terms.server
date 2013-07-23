@@ -86,7 +86,7 @@ condition &= runtime.count('(initialize Person2, obj %(Thing1)s)' % match) == 0
 
 (initialize Person1, obj Group1)
 ->
-(belongs Person1, to Group1);
+(belongs Person1, to Group1).
 
 (initialize Person1, obj Person2)
 ->
