@@ -71,7 +71,7 @@ condition &= N1 < N2
 (has-status Poll1, which private);
 (Exists1).
 
-a membership-aplication is a poll.
+a membership-application is a poll.
 
 (wants Person1, do (put-in-context Person1, what Membership-application1, in Community1))
 ->
