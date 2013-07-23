@@ -21,7 +21,7 @@
 "author": "enrique perez arnaud"
 }}}
 
-import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/community.trm>.
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/communities.trm>.
 
 
 a thread is a content.
