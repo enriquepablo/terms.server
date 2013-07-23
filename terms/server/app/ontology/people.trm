@@ -41,9 +41,9 @@ abs-person-action is totell, subj a person.
 
 wants is now, subj a person, do a abs-person-action.
 
-abs-person-relation is unique, subj a person, u-what a thing.
+abs-person-relation is onwards, subj a person, what a thing.
 
-knows is abs-person-relation, u-what a person.
+knows is abs-person-relation, what a person.
 
 likes is knows.
 
@@ -51,12 +51,12 @@ establish-relation is abs-person-action, which a verb, with a person.
 
 (wants Person1, do (establish-relation Person1, which Abs-person-relationVerb1, with Person2))
 ->
-(Abs-person-relationVerb1 Person1, u-what Person2).
+(Abs-person-relationVerb1 Person1, what Person2).
 
 tell is abs-person-action, who a person, what a exists.
 
 (wants Person1, do (tell Person1, who Person2, what Exists1));
-(knows Person2, u-what Person1)
+(knows Person2, what Person1)
 ->
 (tell Person1, who Person2, what Exists1).
 
@@ -64,7 +64,7 @@ view-profile is abs-person-action, of a person.
 edit-profile is abs-person-action, of a person.
 
 (wants Person1, do (view-profile Person1, of Person2));
-(KnowsVerb1 Person2, u-what Person1)
+(KnowsVerb1 Person2, what Person1)
 ->
 (view-profile Person1, of Person2).
 
