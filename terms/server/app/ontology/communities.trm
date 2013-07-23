@@ -68,7 +68,7 @@ has-consecuence is onwards, subj a poll, which a exists.
 <-
 condition &= N1 < N2
 ->
-(has-tatus Poll1, which private);
+(has-status Poll1, which private);
 (Exists1).
 
 a membership-aplication is a poll.
