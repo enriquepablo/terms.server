@@ -25,7 +25,7 @@ import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app
 
 a content is a thing.
 
-abs-content-action is abs-person-action, what a content.
-view is abs-content-action.
-edit is abs-content-action.
-save is abs-content-action.
+to abs-content-action is to abs-person-action, what a content.
+to view is to abs-content-action.
+to edit is to abs-content-action.
+to save is to abs-content-action.

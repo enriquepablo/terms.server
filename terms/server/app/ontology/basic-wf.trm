@@ -63,31 +63,31 @@ pending is a status.
 (is-protected save, by edit-perm, for private).
 (is-protected save, by manage-perm, for public).
 
-hide is abs-wf-action.
+to hide is to abs-wf-action.
 (is-protected hide, by edit-perm, for public).
 
-submit is abs-wf-action.
+to submit is to abs-wf-action.
 (is-protected submit, by edit-perm, for private).
 
-abs-review is abs-wf-action.
+to abs-review is to abs-wf-action.
 (is-protected abs-review, by review-perm, for pending).
-publish is abs-review.
-reject is abs-review.
+to publish is to abs-review.
+to reject is to abs-review.
 
 hide-tr is a transition.
 (has-transition basic-wf, which hide-tr).
-(executed hide-tr, by hide, from public, to private).
+(executed hide-tr, by hide, from public, towards private).
 
 submit-tr is a transition.
 (has-transition basic-wf, which submit-tr).
-(executed submit-tr, by submit, from private, to pending).
+(executed submit-tr, by submit, from private, towards pending).
 
 publish-tr is a transition.
 (has-transition basic-wf, which publish-tr).
-(executed publish-tr, by publish, from pending, to public).
+(executed publish-tr, by publish, from pending, towards public).
 
 reject-tr is a transition.
 (has-transition basic-wf, which reject-tr).
-(executed reject-tr, by reject, from pending, to private).
+(executed reject-tr, by reject, from pending, towards private).
 
-(is-assigned basic-wf, to content, in global).
+(is-assigned basic-wf, for content, in global).

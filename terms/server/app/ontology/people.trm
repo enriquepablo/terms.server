@@ -33,35 +33,35 @@ a group is a thing.
 # then we have to check for active whenever someone wants to do something?
 a person is a group.
 
-belongs is onwards, subj a person, to a group.
+to belongs is to onwards, subj a person, where a group.
 
 # a primitive abstract verb that has a person subj,
 # and is told back when used in a new sentence
-abs-person-action is totell, subj a person.
+to abs-person-action is to totell, subj a person.
 
-wants is now, subj a person, do a abs-person-action.
+to wants is to now, subj a person, do a abs-person-action.
 
-abs-person-relation is onwards, subj a person, what a thing.
+to abs-person-relation is to onwards, subj a person, what a thing.
 
-knows is abs-person-relation, what a person.
+to knows is to abs-person-relation, what a person.
 
-likes is knows.
+to likes is to knows.
 
-establish-relation is abs-person-action, which a verb, with a person.
+to establish-relation is to abs-person-action, which a verb, with a person.
 
 (wants Person1, do (establish-relation Person1, which Abs-person-relationVerb1, with Person2))
 ->
 (Abs-person-relationVerb1 Person1, what Person2).
 
-tell is abs-person-action, who a person, what a exists.
+to tell is to abs-person-action, who a person, what a exists.
 
 (wants Person1, do (tell Person1, who Person2, what Exists1));
 (knows Person2, what Person1)
 ->
 (tell Person1, who Person2, what Exists1).
 
-view-profile is abs-person-action, of a person.
-edit-profile is abs-person-action, of a person.
+to view-profile is to abs-person-action, of a person.
+to edit-profile is to abs-person-action, of a person.
 
 (wants Person1, do (view-profile Person1, of Person2));
 (KnowsVerb1 Person2, what Person1)
@@ -74,7 +74,7 @@ edit-profile is abs-person-action, of a person.
 
 admin is a person.
 
-initialize is abs-person-action, obj a thing.
+to initialize is to abs-person-action, obj a thing.
 
 (wants Person1, do (initialize Person1, obj Thing1))
 <-
@@ -86,11 +86,11 @@ condition &= runtime.count('(initialize Person2, obj %(Thing1)s)' % match) == 0
 
 (initialize Person1, obj Group1)
 ->
-(belongs Person1, to Group1).
+(belongs Person1, where Group1).
 
 (initialize Person1, obj Person2)
 ->
-(belongs Person2, to Person2);
+(belongs Person2, where Person2);
 (likes Person2, what Person2);
 (knows Person1, what Person2);
 (knows Person2, what Person1).

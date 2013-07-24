@@ -25,16 +25,16 @@ import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app
 
 
 
-is-owned is unique, subj a content, by a person.
+to is-owned is to unique, subj a content, by a person.
 
-gives is abs-person-action, to a person, what a content.
+to gives is to abs-person-action, for a person, what a content.
 
 (is-owned Content1, by Person1);
-(gives Person1, what Content1, to Person2)
+(gives Person1, what Content1, for Person2)
 ->
 (is-owned Content1, by Person2).
 
-put-in-context is abs-person-action, what a content, in a context.
+to put-in-context is to abs-person-action, what a content, in a context.
 
 (wants Person1, do (put-in-context Person1, what Content1, in Context1));
 (has-role Person1, which Role1, where Context1);
@@ -43,7 +43,7 @@ put-in-context is abs-person-action, what a content, in a context.
 ->
 (located Content1, in Context1).
 
-remove-from-context is abs-person-action, what a content, from a context.
+to remove-from-context is to abs-person-action, what a content, from a context.
 
 (wants Person1, do (remove-from-context Person1, what Content1, from Context1));
 (has-role Person1, which Role1, where Context1);

@@ -28,22 +28,22 @@ a task is a content:context.
 
 task-wf is a workflow.
 
-(is-assigned task-wf, to task, in global).
+(is-assigned task-wf, for task, in global).
 
 task-closed is a status.
 
-abs-task-action is abs-wf-action.
+to abs-task-action is to abs-wf-action.
 
-open-task is abs-task-action.
-close-task is abs-task-action.
+to open-task is to abs-task-action.
+to close-task is to abs-task-action.
 
 open-task-tr is a transition.
 (has-transition task-wf, which open-task-tr).
-(executed open-task-tr, by open-task, from task-closed, to public).
+(executed open-task-tr, by open-task, from task-closed, towards public).
 
 close-task-tr is a transition.
 (has-transition task-wf, which close-task-tr).
-(executed close-task-tr, by close-task, from public, to task-closed).
+(executed close-task-tr, by close-task, from public, towards task-closed).
 
 (is-protected open-task, by edit-perm, for task-closed).
 (is-protected close-task, by edit-perm, for public).
@@ -55,7 +55,7 @@ a project is a task.
 
 a job is a task.
 
-is-working is abs-person-action, on a job.
+to is-working is to abs-person-action, on a job.
 
 (is-owned Task1, by Person1)
 ->

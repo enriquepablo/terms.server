@@ -25,13 +25,13 @@ import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app
 
 a workflow is a thing.
 
-is-assigned is onwards, subj a workflow, to a noun, in a context.
+to is-assigned is to onwards, subj a workflow, for a noun, in a context.
 
 a role is a thing.
-has-role is onwards, subj a group, which a role, where a context.
+to has-role is to onwards, subj a group, which a role, where a context.
 
 a permission is a thing.
-has-permission is onwards, subj a role, which a permission.
+to has-permission is to onwards, subj a role, which a permission.
 
 manager is a role.
 manage-perm is a permission.
@@ -40,13 +40,13 @@ manage-perm is a permission.
 (has-role admin, which manager, where global).
 
 a status is a thing.
-has-status is unique, subj a content, which a status.
+to has-status is to unique, subj a content, which a status.
 
-is-protected is onwards, subj a verb, by a permission, for a status.
+to is-protected is to onwards, subj a verb, by a permission, for a status.
 
 (wants Person1, do (Abs-content-actionVerb1 Person1, what Content1));
 (is-protected Abs-content-actionVerb2, by Permission1, for Status1);
-(belongs Person1, to Group1);
+(belongs Person1, where Group1);
 (has-role Group1, which Role1, where Context1);
 (has-permission Role1, which Permission1);
 (has-status Content1, which Status1);
@@ -57,16 +57,16 @@ a Abs-content-actionVerb1 is a Abs-content-actionVerb2
 
 a transition is a thing.
 
-has-transition is onwards, subj a workflow, which a transition.
+to has-transition is to onwards, subj a workflow, which a transition.
 
-abs-wf-action is abs-content-action.
+to abs-wf-action is to abs-content-action.
 
-executed is onwards, subj a transition, by a verb, from a status, to a status.
+to executed is to onwards, subj a transition, by a verb, from a status, towards a status.
 
 (Abs-wf-actionVerb1 Person1, what Content1);
-(is-assigned Workflow1, to ContentNoun1, in Context1);
+(is-assigned Workflow1, for ContentNoun1, in Context1);
 (has-transition Workflow1, which Transition1);
-(executed Transition1, by Abs-wf-actionVerb1, from Status1, to Status2);
+(executed Transition1, by Abs-wf-actionVerb1, from Status1, towards Status2);
 (has-status Content1, which Status1);
 (located Content1, in Context1);
 Content1 is a ContentNoun1
@@ -74,9 +74,9 @@ Content1 is a ContentNoun1
 (has-status Content1, which Status2).
 
 
-grant-role is abs-person-action, which a role, to a person, in a context.
+to grant-role is to abs-person-action, which a role, for a person, in a context.
 
-(wants Person1, do (grant-role Person1, which Role1, in Context1, to Person2));
+(wants Person1, do (grant-role Person1, which Role1, in Context1, for Person2));
 (has-role Person1, which Role2, where Context1);
 (has-permission Role2, which manage-perm)
 ->
