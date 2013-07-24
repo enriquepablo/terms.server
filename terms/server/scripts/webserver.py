@@ -88,8 +88,10 @@ def serve():
         log_level=config('loglevel')
         )
 
-    server = WSGIServer((config('http_host'),
-                         int(config('http_port'))),
+    host = config('http_host')
+    port = int(config('http_port'))
+    server = WSGIServer((host, port),
                         middleware,
                         handler_class=WebSocketHandler)
+    print 'Listening for requests at %s:%d\n' % (host, port)
     server.serve_forever()
