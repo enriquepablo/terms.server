@@ -60,6 +60,7 @@
                 }
             }
             var opts = [];
+            names.sort();
             for (var i=0, t=names.length; i<t; i++) {
                 if (names[i].toLowerCase() === names[i] && names[i].substr(0, 4) !== 'abs-') {
                     this.append(Option.create(names[i]));

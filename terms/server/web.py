@@ -83,7 +83,7 @@ class TermsServer(object):
         return static_file(filepath, root=STATIC)
 
     def get_terms(self, type_name):
-        msg = '_metadata:getwords:' + type_name
+        msg = 'lexicon:get-words:' + type_name
         return ask_kb(self.config, msg)
 
     def post_terms(self, term, ttype):
@@ -100,11 +100,11 @@ class TermsServer(object):
         return resp
 
     def get_subterms(self, superterm):
-        msg = '_metadata:getsubwords:' + superterm
+        msg = 'lexicon:get-subwords:' + superterm
         return ask_kb(self.config, msg)
 
     def get_verb(self, name):
-        msg = '_metadata:getverb:' + name
+        msg = 'lexicon:get-verb:' + name
         return ask_kb(self.config, msg)
 
     def get_facts(self, facts):

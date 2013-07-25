@@ -55,10 +55,10 @@ to establish-relation is to abs-person-action, which a verb, with a person.
 
 to tell is to abs-person-action, who a person, what a exists.
 
-(wants Person1, do (tell Person1, who Person2, what Exists1));
-(knows Person2, what Person1)
+(wants Person1, do Tell1:(tell Person1, who Person2));
+(KnowsVerb1 Person2, what Person1)
 ->
-(tell Person1, who Person2, what Exists1).
+(Tell1).
 
 to view-profile is to abs-person-action, of a person.
 to edit-profile is to abs-person-action, of a person.

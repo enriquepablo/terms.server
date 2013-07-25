@@ -57,7 +57,7 @@ def import_exec_globals(config, session):
                     with open(path, 'r') as f:
                         eg = f.read()
                     kb = Client((config('kb_host'), int(config('kb_port'))))
-                    kb.send_bytes('_exec_global:' + eg)
+                    kb.send_bytes('compiler:exec_globals:' + eg)
                     kb.send_bytes('FINISH-TERMS')
                     for fact in iter(kb.recv_bytes, 'END'):
                         print(fact)
