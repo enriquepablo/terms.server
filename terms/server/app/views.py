@@ -66,12 +66,12 @@ def list_folder(tserver, match, fact):
     return template.render(contents=resp, data=data, user=user, name=name)
 
 
-@register('(tell Person1, who Person2, what Exists1)')
+@register('(tell Person1, who Person2, what Exist1)')
 def tell(tserver, match, fact):
     name = match['Person2']
     if name in tserver.wss:
         template = get_template('templates/tell.html')
-        subview = apply_fact(tserver, match['Exists1']['orig'])  ## XXX Security alert. the teller is not necessarily cleared for match['Exists1']['orig']
+        subview = apply_fact(tserver, match['Exist1']['orig'])  ## XXX Security alert. the teller is not necessarily cleared for match['Exists1']['orig']
         toweb = {'fact': fact, 'html': subview['html']}
         try:
             with tserver.wss[name][0]:
