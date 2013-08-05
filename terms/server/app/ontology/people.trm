@@ -33,15 +33,15 @@ a group is a thing.
 # then we have to check for active whenever someone wants to do something?
 a person is a group.
 
-to belongs is to onwards, subj a person, where a group.
+to belongs is to endure, subj a person, where a group.
 
 # a primitive abstract verb that has a person subj,
 # and is told back when used in a new sentence
-to abs-person-action is to totell, subj a person.
+to abs-person-action is to happen, subj a person.
 
-to wants is to now, subj a person, do a abs-person-action.
+to wants is to happen, subj a person, do a abs-person-action.
 
-to abs-person-relation is to onwards, subj a person, what a thing.
+to abs-person-relation is to endure, subj a person, what a thing.
 
 to knows is to abs-person-relation, what a person.
 
@@ -53,7 +53,7 @@ to establish-relation is to abs-person-action, which a verb, with a person.
 ->
 (Abs-person-relationVerb1 Person1, what Person2).
 
-to tell is to abs-person-action, who a person, what a exists.
+to tell is to abs-person-action, who a person, what a exist.
 
 (wants Person1, do Tell1:(tell Person1, who Person2));
 (KnowsVerb1 Person2, what Person1)

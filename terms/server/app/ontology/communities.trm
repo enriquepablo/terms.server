@@ -32,13 +32,13 @@ a community is a context:group:content.
 
 a poll is a content.
 
-to has-poll is to onwards, subj a community, which a poll.
+to has-poll is to endure, subj a community, which a poll.
 
-to has-threshold is to unique, subj a poll, of a number.
-to poll-has-votes is to unique, subj a poll, many a number.
+to has-threshold is to exclusive-endure, subj a poll, of a number.
+to poll-has-votes is to exclusive-endure, subj a poll, many a number.
 
 to votes-poll is to abs-content-action, what a poll, for a number.
-to has-voted-poll is to onwards, subj a person, what a poll.
+to has-voted-poll is to endure, subj a person, what a poll.
 
 (is-protected votes-poll, by manage-perm, for private).
 (is-protected votes-poll, by edit-perm, for public).
@@ -60,16 +60,16 @@ V3 = V2 + V1
 ->
 (Votes-poll1).
 
-to has-consecuence is to onwards, subj a poll, which a exists.
+to has-consecuence is to endure, subj a poll, which a exist.
 
-(has-consecuence Poll1, which Exists1);
+(has-consecuence Poll1, which Exist1);
 (has-threshold Poll1, of N1);
 (poll-has-votes Poll1, many N2)
 <-
 condition &= N1 < N2
 ->
 (has-status Poll1, which private);
-(Exists1).
+(Exist1).
 
 a membership-application is a poll.
 
