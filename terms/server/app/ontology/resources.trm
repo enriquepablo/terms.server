@@ -38,3 +38,6 @@ condition &= runtime.count('(be-booked %(Resource1)s, till {T3: (T3 > %(T1)d) & 
 condition &= runtime.count('(be-booked %(Resource1)s, from {T3: T3 < %(T1)d}, till {T4 | T4 > %(T2)d})' % match) == 0
 ->
 (be-booked Resource1, by Person1, from T1, till T2).
+
+(is-protected book, by manage-perm, for private).
+(is-protected book, by edit-perm, for public).
