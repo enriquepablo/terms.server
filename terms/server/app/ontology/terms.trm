@@ -25,3 +25,4 @@ import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/folder.trm>.
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/tasks.trm>.
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/threads.trm>.
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/resources.trm>.
