@@ -76,6 +76,7 @@ a membership-application is a poll.
 (wants Person1, do (put-in-context Person1, what Membership-application1, in Community1))
 ->
 (located Membership-application1, in Community1);
+(has-status Membership-application1, which pending);
 (has-consecuence Membership-application1, which (belongs Person1, where Community1)).
 
 (initialize Person1, obj Poll1)
