@@ -55,7 +55,7 @@ V3 = V2 + V1
 (has-voted-poll Person1, what Poll1);
 (poll-has-votes Poll1, many V3).
 
-(wants Person1, do Votes-poll1:(votes-poll Person1, for N1, what Poll1));
+(wants Person1, do Votes-poll1:(votes-poll Person1, what Poll1));
 (votes-poll Person1, what Poll1)
 ->
 (Votes-poll1).
