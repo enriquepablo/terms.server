@@ -7,16 +7,7 @@ from bottle import request, abort, redirect, static_file
 from terms.server.registry import apply_fact
 
 from mako.template import Template
-
-
-STATIC = os.path.join(os.path.dirname(sys.modules['terms.server'].__file__),
-                      'static')
-
-
-def get_template(name):
-    template = pkg_resources.resource_string(__name__, name)
-    return Template(template)
-
+from mako.lookup import TemplateLookup
 
 from threading import Thread, Lock
 from multiprocessing.connection import Client
@@ -27,6 +18,17 @@ from terms.server import schemata
 from terms.server.pluggable import load_plugins
 from terms.server.utils import ask_kb
 from terms.server.registry import localdata
+
+
+MODULE_DIR = os.path.dirname(sys.modules['terms.server'].__file__)
+STATIC = os.path.join(MODULE_DIR, 'static')
+TEMPLATES = os.path.join(MODULE_DIR, 'templates')
+
+template_lookup = TemplateLookup(directories=[TEMPLATES], module_directory='/tmp/mako_modules')
+
+def serve_template(templatename, **kwargs):
+    template = template_lookup.get_template(templatename)
+    return template.render(**kwargs)
 
 
 class TermsWorker(Thread):
@@ -109,11 +111,10 @@ class TermsServer(object):
 
     def get_facts(self, facts):
         msg = facts + '?'
-        template = get_template('static/question.html')
         resp = ask_kb(self.config, msg)
         resp = json.loads(resp)
-        return template.render(facts=facts,
-                               resp=resp)
+        return serve_template('question.html',
+                               facts=facts, resp=resp)
 
     def post_fact(self, facts):
         msg = facts + '.'
@@ -124,8 +125,7 @@ class TermsServer(object):
         username = request.environ.get('REMOTE_USER')
         if person != username:
             abort(401)
-        template = get_template('static/index.html')
-        return template.render(user=person)
+        return serve_template('index.html', user=person)
 
     def ws(self, person):
         wsock = request.environ.get('wsgi.websocket')

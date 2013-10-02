@@ -56,7 +56,6 @@ span.Mod > span.value > select {
 div.anchor {
     cursor: pointer; 
     background-color: #d0daee;
-    width: 300px;
     height: auto;
     padding: 8px;
     border-top: 2px solid #ddd;
@@ -126,7 +125,6 @@ span.closer {
     height: auto;
     z-index: 10000;
     background-color: #FAFFDF;
-    color: #113399;
     padding: 15px;
 }
 

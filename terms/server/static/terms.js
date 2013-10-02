@@ -356,7 +356,7 @@
                     {ref: 'qButton', html: '<button> query </button>'}
                 ]},
                 {ref: 'terms', html: '<div id="terms"/>'},
-                {ref: 'tiles', html: '<div id="tiles"/>'}
+                {ref: 'tiles', html: '<div id="tiles" class="clearfix"/>'}
             ]
         },
 
@@ -369,10 +369,16 @@
         
             this.ws().onmessage = function (e) {
                 var data = JSON.parse(e.data);
+                var content = data['html'];
                 var tile = Tile.create()
                                .title(data['fact'] + '.')
-                               .content(data['html']);
+                               .content(content);
                 self.$tiles().append(tile);
+                if (content === 'OK') {
+                    tile.delay(5000).fadeOut();
+                } else {
+                    tile.click();
+                }
                 deform.processCallbacks();
             };
 
@@ -502,7 +508,7 @@
 
     var Tile = Control.sub({
 
-        className: 'Tile',
+        className: 'Tile five columns',
 
         inherited: {
             content: [
