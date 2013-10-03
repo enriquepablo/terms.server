@@ -483,6 +483,10 @@
                 url = '/terms/' + name + '/' + classname;
             $.post(url, function (data) {
                 self.nameTold(data);
+                // initialize: username, ws. 
+                var init = '(initialize ' + window.username + ', obj ' + name + ')';
+                var tosend = JSON.stringify({fact: init, data: []});
+                self.ws().send(tosend);
             });
         },
 

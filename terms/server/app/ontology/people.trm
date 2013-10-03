@@ -62,6 +62,7 @@ to tell is to abs-person-action, who a person, what a exist.
 
 to view-profile is to abs-person-action, of a person.
 to edit-profile is to abs-person-action, of a person.
+to save-profile is to abs-person-action, of a person.
 
 (wants Person1, do (view-profile Person1, of Person2));
 (KnowsVerb1 Person2, what Person1)
@@ -71,6 +72,29 @@ to edit-profile is to abs-person-action, of a person.
 (wants Person1, do (edit-profile Person1, of Person1))
 ->
 (edit-profile Person1, of Person1).
+
+(wants Person1, do (save-profile Person1, of Person1))
+->
+(save-profile Person1, of Person1).
+
+(wants Person1, do (edit-profile Person1, of Person2))
+<-
+condition &= runtime.count('(edit-profile Person1, of %(Person2)s)' % match) == 0
+->
+(edit-profile Person1, of Person2).
+
+(wants Person1, do (save-profile Person1, of Person2))
+<-
+condition &= runtime.count('(save-profile Person1, of %(Person2)s)' % match) == 0
+->
+(save-profile Person1, of Person2).
+
+->
+(edit-profile Person1, of Person2).
+
+(wants Person1, do (save-profile Person1, of Person2))
+->
+(save-profile Person1, of Person2).
 
 admin is a person.
 

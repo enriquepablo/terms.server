@@ -6,11 +6,16 @@ from multiprocessing.connection import Client
 from terms.server.utils import ask_kb
 from terms.server.registry import register, localdata, apply_fact
 from terms.server.schemata import get_data, set_data, Session, get_form
+from terms.server.schemata import get_schema
 import pkg_resources
 
+from deform.exception import ValidationFailure
+from webob import Request
 from mako.template import Template
 from deform import Button
+from deform.widget import HiddenWidget
 from geventwebsocket import WebSocketError
+from deform import Form
 
 
 def get_template(name):
@@ -28,6 +33,13 @@ def view(tserver, match, fact):
     template = get_template('templates/%s_view.html' % data.ntype)
     return template.render(data=data)
 
+@register('(view-profile Person1, of Person2)')
+def view_profile(tserver, match, fact):
+    name = match['Person2']
+    data = get_data(name)
+    template = get_template('templates/profile_view.html')
+    return template.render(data=data)
+
 
 @register('(edit Person1, what Content1)')
 def edit(tserver, match, fact):
@@ -39,12 +51,46 @@ def edit(tserver, match, fact):
     return template.render(form=form)
 
 
+@register('(edit-profile Person1, of Person2)')
+def edit_profile(tserver, match, fact):
+    assertion = '(save-profile %(Person1)s, of %(Person2)s)' % match
+    name = match['Person2']
+    btn = Button(name='assertion', title='Save', value=assertion)
+
+    data = get_data(name)
+    schema = get_schema('person', form=True)
+    if data.password:
+        schema.get('password').widget = HiddenWidget()
+    appstruct = schema.dictify(data)
+
+    form = Form(schema, buttons=(btn,))
+    template = get_template('templates/edit.html')
+    return template.render(form=form.render(appstruct))
+
+
 @register('(save Person1, what Content1)')
 def save(tserver, match, fact):
     name = match['Content1']
     data = localdata.data or []
     data = {o['name']: o['value'] for o in data}
-    set_data(name, data)
+    if data:
+        set_data(name, data)
+    return 'OK'
+
+
+@register('(save-profile Person1, of Person2)')
+def save_profile(tserver, match, fact):
+    name = match['Person2']
+    data = localdata.data or []
+    schema = get_schema('person', form=True)
+    form = Form(schema)
+    try:
+        data = [(o['name'], o['value']) for o in data]
+        data = form.validate(data)
+    except ValidationFailure as e:
+        return form.render()
+    if data:
+        set_data(name, data)
     return 'OK'
 
 
