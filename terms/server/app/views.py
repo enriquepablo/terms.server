@@ -1,5 +1,5 @@
 # -*- encoding: utf8 -*-
-from json import loads, dumps
+import json
 import os.path
 from multiprocessing.connection import Client
 
@@ -28,10 +28,11 @@ def get_template(name):
 
 @register('(view Person1, what Content1)')
 def view(tserver, match, fact):
+    user = match['Person1']
     name = match['Content1']
     data = get_data(name)
     template = get_template('templates/%s_view.html' % data.ntype)
-    return template.render(data=data)
+    return template.render(data=data, name=name, user=user, ask_kb=ask_kb, config=tserver.config, json=json)
 
 @register('(view-profile Person1, of Person2)')
 def view_profile(tserver, match, fact):
@@ -98,15 +99,9 @@ def save_profile(tserver, match, fact):
 def list_folder(tserver, match, fact):
     name = match['Folder1']
     user = match['Person1']
-    kb = Client((tserver.config('kb_host'),
-                    int(tserver.config('kb_port'))))
     q = '(is-placed Content1, in %s)?' % name
-    kb.send_bytes(q)
-    kb.send_bytes('FINISH-TERMS')
-    resp = []
-    for r in iter(kb.recv_bytes, 'END'):
-        resp = loads(r)
-    kb.close()
+    resp = ask_kb(tserver.config, q)
+    resp = json.loads(resp)
     data = get_data(name)
     template = get_template('templates/list-folder.html')
     return template.render(contents=resp, data=data, user=user, name=name)
@@ -121,7 +116,7 @@ def tell(tserver, match, fact):
         toweb = {'fact': fact, 'html': subview['html']}
         try:
             with tserver.wss[name][0]:
-                tserver.wss[name][1].send(dumps(toweb).encode('utf8'))
+                tserver.wss[name][1].send(json.dumps(toweb).encode('utf8'))
         except WebSocketError:
             pass
     return 'OK'

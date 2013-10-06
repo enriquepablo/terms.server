@@ -1,4 +1,21 @@
-
-<%block name="header">
-  <h2>Project: ${data.name}</h2>
-</%block>
+<div class="clearfix">
+  <div class="five columns">
+    <h3>${data.title}</h3>
+    <p>${data.body}</p>
+  </div>
+  <%
+  resp = ask_kb(config, '(located Folder1, in %s)?' % name)
+  resp = json.loads(resp)
+  %>
+  <div class="five columns">
+    <h3>Folders</h3>
+      <ul>
+      % for folder in resp:
+        <li>${folder['Folder1']}</li>
+      % endfor
+      </ul>
+  </div>
+  <div class="five columns">
+    <h3>Members</h3>
+  </div>
+</div>

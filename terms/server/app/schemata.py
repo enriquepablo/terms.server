@@ -77,3 +77,16 @@ ProjectSchema = TaskSchema
 
 Job = Task
 JobSchema = TaskSchema
+
+
+class Community(Schema):
+
+    name = Column(String())
+    description = Column(Text())
+
+CommunitySchema = SQLAlchemySchemaNode(Community)
+
+CommunitySchema.get('id').widget = HiddenWidget()
+CommunitySchema.get('_id').widget = HiddenWidget()
+CommunitySchema.get('ntype').widget = HiddenWidget()
+CommunitySchema.get('description').widget = RichTextWidget()

@@ -69,13 +69,16 @@ to save-profile is to abs-person-action, of a person.
 ->
 (view-profile Person1, of Person2).
 
+
 (wants Person1, do (edit-profile Person1, of Person1))
 ->
 (edit-profile Person1, of Person1).
 
+
 (wants Person1, do (save-profile Person1, of Person1))
 ->
 (save-profile Person1, of Person1).
+
 
 (wants Person1, do (edit-profile Person1, of Person2))
 <-
@@ -83,18 +86,13 @@ condition &= runtime.count('(edit-profile Person1, of %(Person2)s)' % match) == 
 ->
 (edit-profile Person1, of Person2).
 
+
 (wants Person1, do (save-profile Person1, of Person2))
 <-
 condition &= runtime.count('(save-profile Person1, of %(Person2)s)' % match) == 0
 ->
 (save-profile Person1, of Person2).
 
-->
-(edit-profile Person1, of Person2).
-
-(wants Person1, do (save-profile Person1, of Person2))
-->
-(save-profile Person1, of Person2).
 
 admin is a person.
 
