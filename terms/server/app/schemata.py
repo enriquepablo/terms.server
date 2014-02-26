@@ -7,7 +7,7 @@ import bcrypt
 from sqlalchemy import Column, String, Text
 from colander import null
 from colanderalchemy import SQLAlchemySchemaNode
-from deform.widget import RichTextWidget, HiddenWidget, CheckedInputWidget
+from deform.widget import RichTextWidget, HiddenWidget, PasswordWidget
 
 from terms.server.schemata import Schema
 
@@ -25,11 +25,7 @@ PersonSchema.get('_id').widget = HiddenWidget()
 PersonSchema.get('ntype').widget = HiddenWidget()
 
 
-class PasswordWidget(CheckedInputWidget):
-    template = 'checked_password'
-    readonly_template = 'readonly/checked_password'
-    mismatch_message = 'Password did not match confirm'
-    size = None
+class PasswordWidget(PasswordWidget):
 
     def deserialize(self, field, pstruct):
         value = super(PasswordWidget, self).deserialize(field, pstruct)

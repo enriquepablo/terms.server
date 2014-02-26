@@ -15,7 +15,7 @@ from repoze.who.plugins.basicauth import BasicAuthPlugin
 from repoze.who.plugins.auth_tkt import AuthTktCookiePlugin
 
 from gevent.pywsgi import WSGIServer
-from geventwebsocket import WebSocketHandler
+from geventwebsocket.handler import WebSocketHandler
 
 from terms.server.web import TermsServer
 from terms.server.auth import TermsAuthPlugin

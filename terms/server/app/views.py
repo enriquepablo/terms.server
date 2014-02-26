@@ -64,6 +64,7 @@ def edit_profile(tserver, match, fact):
         schema.get('password').widget = HiddenWidget()
     appstruct = schema.dictify(data)
 
+    import pdb;pdb.set_trace()
     form = Form(schema, buttons=(btn,))
     template = get_template('templates/edit.html')
     return template.render(form=form.render(appstruct))
