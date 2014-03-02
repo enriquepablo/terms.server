@@ -29,7 +29,7 @@ div#terms {
 }
 
 
-span.subject {
+span.subject select {
     margin-right: 0.5em;
     font-size: 1.1em;
     font-weight: 600;
@@ -41,13 +41,7 @@ select.verb {
     color: #773311;
 }
 
-span.label {
-    margin-right: 0.4em;
-    margin-left: 0.4em;
-    color: #666;
-}
-
-span.Mod > span.value > select {
+span.Mod select {
     font-weight: 600;
     color: #117733;
 }
@@ -170,4 +164,34 @@ div.response td {
     padding-right: 1em;
     padding-bottom: 1em;
     border: 2px solid rgb(251, 199, 20);
+}
+
+
+div#terms span.word,
+div#terms span.paren,
+div#terms span.label {
+    font-size: 1.3em;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+div#terms span.subject span.word {
+    font-weight: 600;
+    color: #113399;
+}
+
+div#terms span.verb span.word {
+    font-weight: 600;
+    color: #773311;
+}
+
+span.label {
+    font-weight: 600;
+    color: #666;
+}
+
+div#terms span.value > span.word,
+div#terms span.value > span > span.word {
+    font-weight: 600;
+    color: #117733;
 }

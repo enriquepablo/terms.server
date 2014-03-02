@@ -60,8 +60,9 @@ setup(
         'gevent-websocket==0.9.3',
         'py-bcrypt==0.4',
         'sqlalchemy==0.9.3',
-        'colanderalchemy==0.2.0',
-        'deform==0.9.9',
+        'colander==1.0b1',
+        'colanderalchemy==0.3.0',
+        'deform==2.0a2',
         'mako==0.9.1',
     ],
 )

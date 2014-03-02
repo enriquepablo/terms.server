@@ -116,3 +116,5 @@ condition &= runtime.count('(initialize Person2, obj %(Thing1)s)' % match) == 0
 (likes Person2, what Person2);
 (knows Person1, what Person2);
 (knows Person2, what Person1).
+
+(initialize admin, obj admin).

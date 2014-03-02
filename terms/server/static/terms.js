@@ -13,7 +13,7 @@
 
         className: "Word",
 
-        tag: "select",
+        tag: "span",
 
         _type: Control.property(),
 
@@ -22,6 +22,18 @@
         toTerms: function () {
             return this.val();
         },
+
+        inherited: {
+            content: [
+                {ref: "toshow", html: '<span class="word" />'},
+                {ref: "toselect", html: "<select/>"},
+            ]
+        },
+
+        showing: Control.chain( "$toshow", "content" ),
+        append: Control.chain( "$toselect", "append" ),
+        val: Control.chain( "$toselect", "val" ),
+        selection: Control.chain( "$toselect", "content" ),
 
         type: function (name) {
             if (name === undefined) {
@@ -77,15 +89,20 @@
                     self.find('option:selected').after(opt);
                     self.val(newvar);
                 }
-                self.find('option:selected').siblings().hide();
+                //self.find('option:selected').siblings().hide();
             });
             this.mouseleave(function (e) {
                 if (self.val() !== '---') {
-                    self.find('option:selected').siblings().hide();
-                }
+                    self.showing(self.val());
+                    self.$toselect().hide();
+                    self.$toshow().show();
+                    //self.find('option:selected').siblings().hide();
+                  }
             });
             this.mouseenter(function (e) {
-                self.find('option:selected').siblings().show();
+                self.$toshow().hide();
+                self.$toselect().show();
+                //self.find('option:selected').siblings().show();
             });
             return this;
         }
@@ -134,11 +151,11 @@
 
         inherited: {
             content: [
-                '(',
+                {ref: "lparen", html: '<span class="paren lparen">(</span>'},
                 {ref: "subject", html: "<span/>"},
                 {ref: "verb", control: Word},
                 {ref: "mods", html: "<span/>"},
-                ')'
+                {ref: "rparen", html: '<span class="paren rparen">)</span>'},
             ]
         },
 
@@ -571,6 +588,7 @@
 
         var kb = KB.create();
         window.kb = kb;
+        window.delay = 0;
         $('#kb').append(kb);
 
     });
