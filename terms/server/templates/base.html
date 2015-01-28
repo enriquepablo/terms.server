@@ -41,19 +41,7 @@
 </head>
 <body>
 
-	<div class="container">
-		<div class="sixteen columns">
-			<h1 class="remove-bottom" style="margin-top: 40px">TERMS</h1>
-			<hr />
-		</div>
-		<div class="twelve columns offset-by-two">
-      <div id="kb"></div>
-      <script type="text/javascript">
-          window.username = '${user}';
-          deform.load();
-      </script>
-		</div>
-	</div>
+  <div id="kb"></div>
 
 <script language="javascript" src="//code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
 <script language="javascript" src="/static/deform.js" type="text/javascript"></script>
@@ -63,5 +51,9 @@
 <script language="javascript" src="/static/jquery.tablesorter.js" type="text/javascript"></script>
 <script language="javascript" src="/static/deform.js" type="text/javascript"></script>
 <script language="javascript" src="/static/terms.js" type="text/javascript"></script>
+<script type="text/javascript">
+  window.username = '${user}';
+  deform.load();
+</script>
 </body>
 </html>

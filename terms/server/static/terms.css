@@ -4,15 +4,15 @@
 }
 
 body {
-    background-color: #f2f59f;
+    background-color: #ddd;
 }
 
 
-body, button, select {
-    font-family: 'Inconsolata', serif;
+body, select {
+    font-family: Arial, Sans-Serif;
 }
 
-button, select {
+select {
     font-size: 1.1em;
     padding: 2px;
 }
@@ -36,7 +36,7 @@ span.subject select {
     color: #113399;
 }
 
-select.verb {
+span.verb > select {
     font-weight: 600;
     color: #773311;
 }
@@ -48,24 +48,25 @@ span.Mod select {
 
 
 div.anchor {
-    cursor: pointer; 
-    background-color: #d0daee;
+    background-color: #65a9d7;
+    border-color: #aaa #777 #777 #aaa;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 2px;
+    color: #eee;
+    cursor: pointer;
+    font-weight: 600;
     height: auto;
-    padding: 8px;
-    border-top: 2px solid #ddd;
-    border-left: 2px solid #ddd;
-    border-bottom: 2px solid #666;
-    border-right: 2px solid #666;
-    border-radius: 2px;
     margin: 2px;
+    padding: 12px;
 }
 
 div.anchor:hover {
-    background-color: #bfc9dd;
-    border-bottom: 2px solid #ddd;
-    border-right: 2px solid #ddd;
-    border-top: 2px solid #666;
-    border-left: 2px solid #666;
+    background-color: #3e779d;
+    border-bottom: 2px solid #aaa;
+    border-right: 2px solid #aaa;
+    border-top: 2px solid #777;
+    border-left: 2px solid #777;
 }
 
 div.divtitle {
@@ -83,24 +84,8 @@ div.divcloser {
     min-width: 1.2em;
 }
 
-span.closer {
-    display:inline-block;
-    text-align: center;
-    font-weight: 800;
-    cursor: default; 
-    background-color: #aaaaf0; 
-    color: rgb(251, 199, 20); 
-    border-radius: 11px;
-    width: 1.1em;
-    text-shadow: 1px 1px #5555a0;
-    border-left: 1px solid #ffffff;
-    border-top: 1px solid #ffffff;
-    border-right: 1px solid #5555a0;
-    border-bottom: 1px solid #5555a0;
-}
-
 .portlet-background {
-    opacity: 0.7;
+    opacity: 1;
     position: fixed;
     left: 0;
     top: 0;
@@ -110,16 +95,18 @@ span.closer {
     background-color: #dddde6;
 }
 
-.portlet-display {
-    position: absolute;
+div.portlet-display {
+    background-color: #e9e9ff;
+    border-radius: 10px;
+    color: #444;
+    height: auto;
     left: 100px;
+    padding: 15px;
+    position: absolute;
     right: 100px;
     top: 100px;
     width: auto;
-    height: auto;
     z-index: 10000;
-    background-color: #FAFFDF;
-    padding: 15px;
 }
 
 .portlet-closer { 
@@ -127,32 +114,46 @@ span.closer {
     position: fixed; 
     top: 45px; 
     right: 45px; 
-    width: 1.1em;
+    width: 1.5em;
     text-align: center; 
-    background-color: #aaaaf0; 
-    color: rgb(251, 199, 20); 
-    font-weight: 800;
-    border-radius: 11px;
-    text-shadow: 1px 1px #5555a0;
-    border-left: 1px solid #ffffff;
-    border-top: 1px solid #ffffff;
-    border-right: 1px solid #5555a0;
-    border-bottom: 1px solid #5555a0;
+    background-color: #65a9d7; 
+    color: #dde; 
+    border-radius: 15px;
+    text-shadow: 1px 1px #77a7e0;
+    border: 1px solid;
+    border-color: #ccccee #77a7e0 #77a7e0 #ccccee;
     z-index: 10000;
 } 
+
+span.closer {
+    display:inline-block;
+    text-align: center;
+    cursor: default; 
+    background-color: #65a9d7; 
+    color: #dde; 
+    border-radius: 15px;
+    text-shadow: 1px 1px #77a7e0;
+    border: 1px solid;
+    border-color: #ccccee #77a7e0 #77a7e0 #ccccee;
+    width: 1.5em;
+}
  
 .portlet-closer:hover, span.closer:hover {
-    color: #F05555; 
-    text-shadow: -1px -1px #ffffff;
-    border-left: 1px solid #5555a0;
-    border-top: 1px solid #5555a0;
-    border-right: 1px solid #ffffff;
-    border-bottom: 1px solid #ffffff;
+    color: #a06666; 
+    text-shadow: -1px -1px #77a7e0;
+    border: 1px solid;
+    border-color: #77a7e0 #bbbbcc #bbbbcc #77a7e0;
 }
 
 div.response {
     width: 100%;
     text-align: center;
+}
+
+div.response > table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 45px;
 }
 
 div.response > table,
@@ -163,24 +164,38 @@ div.response td {
     padding-right: 2em;
     padding-right: 1em;
     padding-bottom: 1em;
-    border: 2px solid rgb(251, 199, 20);
+    border: 2px solid #77a7e0;
 }
 
+div.Fact input,
+div.Fact span,
+div.Name span,
+div.Name input {
+    display: inline-block;
+}
 
 div#terms span.word,
-div#terms span.paren,
+div#terms span.subject,
+div#terms span.isa,
 div#terms span.label {
-    font-size: 1.3em;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+div#terms span.paren {
+    font-size: 2em;
     padding-left: 4px;
     padding-right: 4px;
 }
 
+div#terms span.subject,
 div#terms span.subject span.word {
     font-weight: 600;
     color: #113399;
 }
 
-div#terms span.verb span.word {
+div#terms span.verb span.word,
+div#terms span.isa {
     font-weight: 600;
     color: #773311;
 }
@@ -191,7 +206,67 @@ span.label {
 }
 
 div#terms span.value > span.word,
+div#terms span.classname,
 div#terms span.value > span > span.word {
     font-weight: 600;
     color: #117733;
 }
+
+/* buttons */
+
+button {
+   padding: 7px 12px;
+   margin: 7px 0px;
+   -webkit-border-radius: 6px;
+   -moz-border-radius: 6px;
+   border-radius: 6px;
+   font-size: 11px;
+   font-family: Arial, Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: #eee;
+   }
+
+div.buttons button {
+   border-top: 1px solid #96d1f8;
+   background: #65a9d7;
+   background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+   background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+   background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+   background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+   background: -o-linear-gradient(top, #3e779d, #65a9d7);
+}
+
+div.buttonsRemote button {
+   border-top: 1px solid #96f8d1;
+   background: #65d7a9;
+   background: -webkit-gradient(linear, left top, left bottom, from(#3e9d77), to(#65d7a9));
+   background: -webkit-linear-gradient(top, #3e9d77, #65d7a9);
+   background: -moz-linear-gradient(top, #3e9d77, #65d7a9);
+   background: -ms-linear-gradient(top, #3e9d77, #65d7a9);
+   background: -o-linear-gradient(top, #3e9d77, #65d7a9);
+}
+
+div.buttons button:hover {
+   border-top-color: #3e83ad;
+   background: #3e83ad;
+   color: #ccc;
+   }
+div.buttons button:active {
+   border-top-color: #1b435e;
+   background: #1b435e;
+   }
+
+div.buttonsRemote button:hover {
+   border-top-color: #3ead83;
+   background: #3ead83;
+   color: #ccc;
+   }
+div.buttonsRemote button:active {
+   border-top-color: #1b5e43;
+   background: #1b5e43;
+   }

@@ -129,7 +129,7 @@
     
         className: 'Fact',
 
-        tag: "span",
+        tag: "div",
 
         _factLevel: Control.property(),
 
@@ -153,7 +153,7 @@
             content: [
                 {ref: "lparen", html: '<span class="paren lparen">(</span>'},
                 {ref: "subject", html: "<span/>"},
-                {ref: "verb", control: Word},
+                {ref: "verb", control: Word, class: 'verb'},
                 {ref: "mods", html: "<span/>"},
                 {ref: "rparen", html: '<span class="paren rparen">)</span>'},
             ]
@@ -359,22 +359,30 @@
 
         inherited: {
             content: [
-                {ref: 'buttonsRemote', control: Control, content: [
-                    {ref: 'askButtons', control: Control, class: 'hidden', content: [
-                        {ref: 'askButton', html: '<button> ask </button>'},
-                        {ref: 'newQFact', html: '<button> add fact </button>'}
+                {ref: 'container', control: Control, class: 'container', content: [
+                    {ref: 'allbuttons', control: Control, class: 'row', content: [
+                        {ref: 'buttons', control: Control, class: 'nine columns', content: [
+                            {ref: 'nameButton', html: '<button> new name </button>'},
+                            {ref: 'factButton', html: '<button> new fact </button>'},
+                            {ref: 'pqButton', html: '<button> query past events </button>'},
+                            {ref: 'sqButton', html: '<button> query past states </button>'},
+                            {ref: 'qButton', html: '<button> query </button>'}
+                        ]},
+                        {ref: 'buttonsRemote', control: Control, class: 'three columns', content: [
+                            {ref: 'askButtons', control: Control, class: 'hidden', content: [
+                                {ref: 'askButton', html: '<button> ask </button>'},
+                                {ref: 'newQFact', html: '<button> add fact </button>'}
+                            ]},
+                            {ref: 'tellButton', html: '<button> tell </button>', class: 'hidden'}
+                        ]},
                     ]},
-                    {ref: 'tellButton', html: '<button> tell </button>', class: 'hidden'}
-                ]},
-                {ref: 'buttons', control: Control, content: [
-                    {ref: 'nameButton', html: '<button> new name </button>'},
-                    {ref: 'factButton', html: '<button> new fact </button>'},
-                    {ref: 'pqButton', html: '<button> query the past </button>'},
-                    {ref: 'qButton', html: '<button> query </button>'}
-                ]},
-                {ref: 'terms', html: '<div id="terms"/>'},
-                {ref: 'tiles', html: '<div id="tiles" class="clearfix"/>'}
-            ]
+                        {ref: 'termsrow', control: Control, class: 'row', content: [
+                            {ref: 'terms', html: '<div id="terms" class="twelve columns"/>'},
+                        ]},
+                        {ref: 'tilesrow', control: Control, class: 'row', content: [
+                            {ref: 'tiles', html: '<div id="tiles" class="clearfix twelve columns"/>'}
+                        ]},
+                ]}],
         },
 
         toTerms: Control.chain( "$terms", "content", 'control', 'toTerms' ),
@@ -382,7 +390,7 @@
 
         initialize: function () {
             var self = this;
-            this.ws(new WebSocket("ws://localhost:8080/" + window.username + "/websocket"));
+            this.ws(new WebSocket("ws://" + window.location.host + "/" + window.username + "/websocket"));
         
             this.ws().onmessage = function (e) {
                 var data = JSON.parse(e.data);
@@ -535,7 +543,7 @@
             content: [
                 {ref: 'anchor', control: Control, content: [
                     {ref: 'divcloser', control: Control, content: [
-                        {ref: 'closer', html: '<span>X</span>'}
+                        {ref: 'closer', html: '<span>&#10006;</span>'}
                     ]},
                     {ref: 'divtitle', control: Control, content: [
                         {ref: 'title', html: '<span/>'},
@@ -543,7 +551,7 @@
                 ]},
                 {ref: 'portlet', control: Control, class: 'hidden', content: [
                     {ref: 'portletBackground', html: '<div/>', class: 'portlet-background'},
-                    {ref: 'displayCloser', html: '<span>X</span>', class: 'portlet-closer'},
+                    {ref: 'displayCloser', html: '<span>&#10006;</span>', class: 'portlet-closer'},
                     {ref: 'display', html: '<div/>', class: 'portlet-display'}
                 ]}
             ]

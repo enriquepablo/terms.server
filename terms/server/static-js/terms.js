@@ -344,7 +344,7 @@
         elems.overlay = $('div#overlay');
         elems.overlay_content = $('div#overlay-content');
         initialize();
-        ws = new WebSocket("ws://localhost:8080/websocket");
+        ws = new WebSocket("ws://" + window.location.host + "/websocket");
         ws.onmessage = function (evt) {
             var data = JSON.parse(evt.data);
             html = process_data(data);
