@@ -50,7 +50,7 @@ to has-text is to exclusive-endure, subj a element, of a text.
 (modify-doc Person1, what Content1, how (has-text Element1, of Text1));
 (str-doc Content1, has Element1)
 ->
-(has-text Element1, in Text1).
+(has-text Element1, of Text1).
 
 a element-type is a thing.
 
