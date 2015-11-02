@@ -261,7 +261,7 @@ want-authn-request-signed-attr is a attr-name.
 (is-attr-of-type want-authn-request-signed-attr, of bool-value).
 
 name-format-attr is a attr-name.
-(is-attr-of-type name-format-attr, of uri-value).
+(is-attr-of-type name-format-attr, of url-value).
 name-attr is a attr-name.
 (is-attr-of-type name-attr, of urn-value).
 friendly-name-attr is a attr-name.
