@@ -41,7 +41,7 @@ to has-child is to endure, subj a element, in a element.
 
 to modify-doc is to abs-content-action, how a exist.
 
-(is-protected modify-doc, by edit-permission, for private).
+(is-protected modify-doc, by edit-perm, for private).
 
 a text is a thing.
 
