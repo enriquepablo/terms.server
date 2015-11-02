@@ -186,7 +186,7 @@ signing-use is a use-value.
 encryption-method-elt is a element-type.
 
 key-descriptor-elt is a element-type.
-(can-have-attr key-description-elt, named use-attr).
+(can-have-attr key-descriptor-elt, named use-attr).
 (can-have-child key-descriptor-elt, of-type encryption-method-elt).
 
 a role-description-element-type is a element-type.
