@@ -240,7 +240,6 @@ manage-name-id-service-elt is a endpoint-element-type.
 name-id-format is a element-type.
 
 a sso-descriptor-element-type is a role-description-element-type.
-(initialize admin, obj sso-descriptor-element-type).
 
 (initialize Person1, obj Element-type1);
 Element-type1 is a sso-descriptor-element-type
