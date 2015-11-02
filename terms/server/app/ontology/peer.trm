@@ -56,7 +56,7 @@ a element-type is a thing.
 
 to has-elem-type is to endure, subj a element, of a element-type.
 
-to can-have-child is to endure, subj a element-type, of-type a element-type.
+to can-have-child is to endure, subj a element-type, in a element-type.
 
 (modify-doc Person1, what Content1, how (has-child Element1, in Element2));
 (str-doc Content1, has Element1);
