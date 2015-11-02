@@ -81,7 +81,7 @@ to has-attr is to endure, subj a element, for a attr-name, of a attr-value.
      how Has-attr1:(Has-attrVerb1 Element1, for Attr-name1, of Attr-value1));
 (str-doc Content1, has Element1);
 (has-elem-type Element1, of Element-type1);
-(can-have-attr Elemet-type1, named Attr-name1);
+(can-have-attr Element-type1, named Attr-name1);
 (is-attr-of-type Attr-name1, of Attr-valueNoun1);
 Attr-value1 is a Attr-valueNoun1
 ->
