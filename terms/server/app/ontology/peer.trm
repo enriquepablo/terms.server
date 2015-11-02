@@ -90,12 +90,12 @@ Attr-value1 is a Attr-valueNoun1
 
 
 a id-value is a attr-value.
-a number-value is a attr-value, number.
+a number-value is a attr-value:number.
 a email-value is a attr-value.
 a url-value is a attr-value.
 a url-set-value is a attr-value.
 a urn-value is a attr-value.
-a date-value is a attr-value, number.
+a date-value is a attr-value:number.
 
 a bool-value is a attr-value.
 false is a bool-value.
