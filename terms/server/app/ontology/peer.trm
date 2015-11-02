@@ -1,0 +1,273 @@
+# Copyright (c) 2007-2015 by Enrique Pérez Arnaud <enriquepablo@gmail.com>
+#
+# This file is part of the terms project.
+# https://github.com/enriquepablo/terms
+#
+# The terms project is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# The terms project is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with any part of the terms project.
+# If not, see <http://www.gnu.org/licenses/>.
+<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/peer.trm>
+{{{
+"author": "enrique perez arnaud"
+}}}
+
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>.
+
+
+a domain is a content.
+
+a entity is a content.
+
+a element is a thing.
+
+to str-doc is to endure, subj a content, has a element.
+
+to has-child is to endure, subj a element, in a element.
+
+(str-doc Content1, has Element1);
+(has-child Element1, in Element2)
+->
+(str-doc Content1, has Element2).
+
+to modify-doc is to abs-content-action, how a exist.
+
+(is-protected, what modify-doc, by edit-permission).
+
+a text is a thing.
+
+to has-text is to exclusive-endure, subj a element, of a text.
+
+(modify-doc Person1, what Content1, how (has-text Element1, in Text1));
+(str-doc Content1, has Element1)
+->
+(has-text Element1, in Text1).
+
+a element-type is a thing.
+
+to has-elem-type is to endure, subj a element, of a element-type.
+
+to can-have-child is to endure, subj a element-type, of-type element-type.
+
+(modify-doc Person1, what Content1, how (has-child Element1, in Element2));
+(str-doc Content1, has Element1);
+(has-elem-type Element1, of Element-type1);
+(has-elem-type Element2, of Element-type2);
+(can-have-child Element-type1, in Element-type2)
+->
+(has-child Element1, in Element2).
+
+a attr-name is a thing.
+
+a attr-value is a thing.
+
+# noun here is a subtype of attr-value.
+to is-attr-of-type is to endure, subj a attr-name, of a noun.
+
+to can-have-attr is to endure, subj a element-type, named a attr-name.
+
+to has-attr is to endure, subj a element, for a attr-name, of a attr-value.
+
+(modify-doc Person1, what Content1,
+     how Has-attr1:(Has-attrVerb1 Element1, for Attr-name1, of Attr-value1));
+(str-doc Content1, has Element1);
+(has-elem-type Element1, of Element-type1);
+(can-have-attr Elemet-type1, named Attr-name1);
+(is-attr-of-type Attr-name1, of Attr-valueNoun1);
+Attr-value1 is a Attr-valueNoun1
+->
+(Has-attr1).
+
+
+
+a id-value is a attr-value.
+a number-value is a attr-value, number.
+a email-value is a attr-value.
+a url-value is a attr-value.
+a url-set-value is a attr-value.
+a urn-value is a attr-value.
+a date-value is a attr-value, number.
+
+a bool-value is a attr-value.
+false is a bool-value.
+true is a bool-value.
+
+id-attr is a attr-name.
+(is-attr-of-type id-attr, of id-value).
+valid-until-attr is a attr-name.
+(is-attr-of-type valid-until-attr, of date-value).
+cache-duration-attr is a attr-name.
+(is-attr-of-type cache-duration-attr, of number-value).
+name-attr is a attr-name.
+(is-attr-of-type name-attr, of id-value).
+entity-id-attr is a attr-name.
+(is-attr-of-type entity-id-attr, of url-value).
+protocol-support-enumeration-attr is a attr-name.
+(is-attr-of-type protocol-support-enumeration-attr, of url-set-value).
+error-url-attr is a attr-name.
+(is-attr-of-type error-url-attr, of url-value).
+
+entities-descriptor-elt is a element-type.
+(can-have-attr entities-descriptor-elt, named id-attr).
+(can-have-attr entities-descriptor-elt, named valid-until-attr).
+(can-have-attr entities-descriptor-elt, named cache-duration-attr).
+(can-have-attr entities-descriptor-elt, named name-attr).
+
+(can-have-child entities-descriptor-elt, in entities-descriptor-elt).
+
+entity-descriptor-elt is a element-type).
+(can-have-attr entity-descriptor-elt, named id-attr).
+(can-have-attr entity-descriptor-elt, named valid-until-attr).
+(can-have-attr entity-descriptor-elt, named cache-duration-attr).
+(can-have-attr entity-descriptor-elt, named entity-id-attr).
+
+(can-have-child entities-descriptor-elt, in entity-descriptor-elt).
+
+additional-metadata-location-elt is a element-type.
+
+(can-have-child entity-descriptor-elt, in additional-metadata-location-elt).
+
+organization-elt is a element-type.
+
+(can-have-child entity-descriptor-elt, in organization-elt).
+
+organization-name-elt is a element-type.
+
+(can-have-child organization-elt, in organization-name-elt).
+
+organization-display-name-elt is a element-type.
+
+(can-have-child organization-elt, in organization-display-name-elt).
+
+organization-url-elt is a element-type.
+
+(can-have-child organization-elt, in organization-url-elt).
+
+contact-person-elt is a element-type.
+
+(can-have-child entity-descriptor-elt, in contact-person-elt).
+
+contact-type-attr is a attr-name.
+a contact-type-value is a attr-value.
+technical-contact-type is a contact-type-value.
+support-contact-type is a contact-type-value.
+administrative-contact-type is a contact-type-value.
+billing-contact-type is a contact-type-value.
+other-contact-type is a contact-type-value.
+(is-attr-of-type contact-type-attr, of contact-type-value).
+
+company-elt is a element-type.
+given-name-elt is a element-type.
+surname-elt is a element-type.
+email-address-elt is a element-type.
+telephone-nember-elt is a element-type.
+
+(can-have-child contact-person-elt, in company-elt).
+(can-have-child contact-person-elt, in given-name-elt).
+(can-have-child contact-person-elt, in surname-elt).
+(can-have-child contact-person-elt, in email-address-elt).
+(can-have-child contact-person-elt, in telephone-nember-elt).
+
+use-attr is a attr-name.
+a use-value is a attr-value.
+encryption-use is a use-value.
+signing-use is a use-value.
+(is-attr-of-type use-attr, of use-value).
+
+encryption-method-elt is a element-type.
+
+key-descriptor-elt is a element-type.
+(can-have-attr key-description-elt, named use-attr).
+(can-have-child key-descriptor-elt, in encryption-method-elt).
+
+a role-description-element-type is a element-type.
+
+Element-type1 is a role-descriptor-element-type
+->
+(can-have-attr Element-type1, named valid-until-attr);
+(can-have-attr Element-type1, named cache-duration-attr);
+(can-have-attr Element-type1, named protocol-support-enumeration-attr);
+(can-have-attr Element-type1, named error-url-attr);
+(can-have-child Element-type1, in organization-elt);
+(can-have-child Element-type1, in contact-person-elt);
+(can-have-child Element-type1, in key-descriptor-elt).
+
+a endpoint-element-type is a element-type.
+
+binding-attr is a attr-name.
+(is-attr-of-type binding-attr, of url-value).
+location-attr is a attr-name.
+(is-attr-of-type location-attr, of url-value).
+response-location-attr is a attr-name.
+(is-attr-of-type response-location-attr, of url-value).
+
+Element-type1 is a endpoint-element-type
+->
+(can-have-attr Element-type1, named binding-attr);
+(can-have-attr Element-type1, named location-attr);
+(can-have-attr Element-type1, named response-location-attr).
+
+a indexed-endpoint-element-type is a endpoint-element-type.
+
+index-attr is a attr-name.
+(is-attr-of-type index-attr, of number-value).
+is-default-attr is a attr-name.
+(is-attr-of-type is-default-attr, of bool-value).
+
+Element-type1 is a indexed-endpoint-element-type
+->
+(can-have-attr Element-type1, named index-attr);
+(can-have-attr Element-type1, named is-default-attr).
+
+artifact-resolution-service-elt is a indexed-endpoint-element-type.
+single-logout-service-elt is a endpoint-element-type.
+manage-name-id-service-elt is a endpoint-element-type.
+name-id-format is a element-type.
+
+a sso-descriptor-element-type is a role-descriptor-element-type.
+
+Element-type1 is a sso-descriptor-element-type
+->
+(can-have-child Element-type1, in artifact-resolution-service-elt);
+(can-have-child Element-type1, in single-logout-service-elt);
+(can-have-child Element-type1, in manage-name-id-service-elt);
+(can-have-child Element-type1, in name-id-format).
+
+single-sign-on-service-elt is a endpoint-element-type.
+name-id-mapping-service-elt is a endpoint-element-type.
+assertion-id-request-service-elt is a endpoint-element-type.
+attribute-profile-elt is a element-type.
+
+want-authn-request-signed-attr is a attr-name.
+(is-attr-of-type want-authn-request-signed-attr, of bool-value).
+
+name-format-attr is a attr-name.
+(is-attr-of-type name-format-attr, of uri-value).
+name-attr is a attr-name.
+(is-attr-of-type name-attr, of urn-value).
+friendly-name-attr is a attr-name.
+(is-attr-of-type friendly-name-attr, of id-value).
+
+saml-attribute-value-elt is a element-type.
+saml-attribute-elt is a element-type.
+(can-have-attr saml-attribute-elt, named name-format-attr).
+(can-have-attr saml-attribute-elt, named name-attr).
+(can-have-attr saml-attribute-elt, named friendly-name-attr).
+(can-have-child saml-attribute-elt, in saml-attribute-value-elt).
+
+idp-sso-descriptor-elt is a sso-descriptor-element-type.
+(can-have-attr idp-sso-descriptor-elt, named want-authn-request-signed-attr).
+(can-have-child idp-sso-descriptor-elt, in single-sign-on-service-elt).
+(can-have-child idp-sso-descriptor-elt, in name-id-mapping-service-elt).
+(can-have-child idp-sso-descriptor-elt, in assertion-id-request-service-elt).
+(can-have-child idp-sso-descriptor-elt, in attribute-profile-elt).
+(can-have-child idp-sso-descriptor-elt, in saml-attribute-elt).
