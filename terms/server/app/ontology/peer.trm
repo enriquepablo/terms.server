@@ -41,7 +41,7 @@ to has-child is to endure, subj a element, in a element.
 
 to modify-doc is to abs-content-action, how a exist.
 
-(is-protected, what modify-doc, by edit-permission).
+(is-protected modify-doc, by edit-permission, for private).
 
 a text is a thing.
 
@@ -56,7 +56,7 @@ a element-type is a thing.
 
 to has-elem-type is to endure, subj a element, of a element-type.
 
-to can-have-child is to endure, subj a element-type, of-type element-type.
+to can-have-child is to endure, subj a element-type, of-type a element-type.
 
 (modify-doc Person1, what Content1, how (has-child Element1, in Element2));
 (str-doc Content1, has Element1);
@@ -124,7 +124,7 @@ entities-descriptor-elt is a element-type.
 
 (can-have-child entities-descriptor-elt, in entities-descriptor-elt).
 
-entity-descriptor-elt is a element-type).
+entity-descriptor-elt is a element-type.
 (can-have-attr entity-descriptor-elt, named id-attr).
 (can-have-attr entity-descriptor-elt, named valid-until-attr).
 (can-have-attr entity-descriptor-elt, named cache-duration-attr).
@@ -191,6 +191,7 @@ key-descriptor-elt is a element-type.
 
 a role-description-element-type is a element-type.
 
+(initialize Person1, obj Element-type1);
 Element-type1 is a role-descriptor-element-type
 ->
 (can-have-attr Element-type1, named valid-until-attr);
@@ -210,6 +211,7 @@ location-attr is a attr-name.
 response-location-attr is a attr-name.
 (is-attr-of-type response-location-attr, of url-value).
 
+(initialize Person1, obj Element-type1);
 Element-type1 is a endpoint-element-type
 ->
 (can-have-attr Element-type1, named binding-attr);
@@ -223,18 +225,24 @@ index-attr is a attr-name.
 is-default-attr is a attr-name.
 (is-attr-of-type is-default-attr, of bool-value).
 
+(initialize Person1, obj Element-type1);
 Element-type1 is a indexed-endpoint-element-type
 ->
 (can-have-attr Element-type1, named index-attr);
 (can-have-attr Element-type1, named is-default-attr).
 
 artifact-resolution-service-elt is a indexed-endpoint-element-type.
+(initialize admin, obj artifact-resolution-service-elt).
 single-logout-service-elt is a endpoint-element-type.
+(initialize admin, obj single-logout-service-elt).
 manage-name-id-service-elt is a endpoint-element-type.
+(initialize admin, obj manage-name-id-service-elt).
 name-id-format is a element-type.
 
 a sso-descriptor-element-type is a role-descriptor-element-type.
+(initialize admin, obj sso-descriptor-element-type).
 
+(initialize Person1, obj Element-type1);
 Element-type1 is a sso-descriptor-element-type
 ->
 (can-have-child Element-type1, in artifact-resolution-service-elt);
@@ -243,8 +251,11 @@ Element-type1 is a sso-descriptor-element-type
 (can-have-child Element-type1, in name-id-format).
 
 single-sign-on-service-elt is a endpoint-element-type.
+(initialize admin, obj single-sign-on-service-elt).
 name-id-mapping-service-elt is a endpoint-element-type.
+(initialize admin, obj name-id-mapping-service-elt).
 assertion-id-request-service-elt is a endpoint-element-type.
+(initialize admin, obj assertion-id-request-service-elt).
 attribute-profile-elt is a element-type.
 
 want-authn-request-signed-attr is a attr-name.
@@ -265,6 +276,7 @@ saml-attribute-elt is a element-type.
 (can-have-child saml-attribute-elt, in saml-attribute-value-elt).
 
 idp-sso-descriptor-elt is a sso-descriptor-element-type.
+(initialize admin, obj idp-sso-descriptor-elt).
 (can-have-attr idp-sso-descriptor-elt, named want-authn-request-signed-attr).
 (can-have-child idp-sso-descriptor-elt, in single-sign-on-service-elt).
 (can-have-child idp-sso-descriptor-elt, in name-id-mapping-service-elt).
