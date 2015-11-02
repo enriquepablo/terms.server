@@ -56,13 +56,13 @@ a element-type is a thing.
 
 to has-elem-type is to endure, subj a element, of a element-type.
 
-to can-have-child is to endure, subj a element-type, in a element-type.
+to can-have-child is to endure, subj a element-type, of-type a element-type.
 
 (modify-doc Person1, what Content1, how (has-child Element1, in Element2));
 (str-doc Content1, has Element1);
 (has-elem-type Element1, of Element-type1);
 (has-elem-type Element2, of Element-type2);
-(can-have-child Element-type1, in Element-type2)
+(can-have-child Element-type1, of-type Element-type2)
 ->
 (has-child Element1, in Element2).
 
@@ -122,7 +122,7 @@ entities-descriptor-elt is a element-type.
 (can-have-attr entities-descriptor-elt, named cache-duration-attr).
 (can-have-attr entities-descriptor-elt, named name-attr).
 
-(can-have-child entities-descriptor-elt, in entities-descriptor-elt).
+(can-have-child entities-descriptor-elt, of-type entities-descriptor-elt).
 
 entity-descriptor-elt is a element-type.
 (can-have-attr entity-descriptor-elt, named id-attr).
@@ -130,31 +130,31 @@ entity-descriptor-elt is a element-type.
 (can-have-attr entity-descriptor-elt, named cache-duration-attr).
 (can-have-attr entity-descriptor-elt, named entity-id-attr).
 
-(can-have-child entities-descriptor-elt, in entity-descriptor-elt).
+(can-have-child entities-descriptor-elt, of-type entity-descriptor-elt).
 
 additional-metadata-location-elt is a element-type.
 
-(can-have-child entity-descriptor-elt, in additional-metadata-location-elt).
+(can-have-child entity-descriptor-elt, of-type additional-metadata-location-elt).
 
 organization-elt is a element-type.
 
-(can-have-child entity-descriptor-elt, in organization-elt).
+(can-have-child entity-descriptor-elt, of-type organization-elt).
 
 organization-name-elt is a element-type.
 
-(can-have-child organization-elt, in organization-name-elt).
+(can-have-child organization-elt, of-type organization-name-elt).
 
 organization-display-name-elt is a element-type.
 
-(can-have-child organization-elt, in organization-display-name-elt).
+(can-have-child organization-elt, of-type organization-display-name-elt).
 
 organization-url-elt is a element-type.
 
-(can-have-child organization-elt, in organization-url-elt).
+(can-have-child organization-elt, of-type organization-url-elt).
 
 contact-person-elt is a element-type.
 
-(can-have-child entity-descriptor-elt, in contact-person-elt).
+(can-have-child entity-descriptor-elt, of-type contact-person-elt).
 
 contact-type-attr is a attr-name.
 a contact-type-value is a attr-value.
@@ -171,11 +171,11 @@ surname-elt is a element-type.
 email-address-elt is a element-type.
 telephone-nember-elt is a element-type.
 
-(can-have-child contact-person-elt, in company-elt).
-(can-have-child contact-person-elt, in given-name-elt).
-(can-have-child contact-person-elt, in surname-elt).
-(can-have-child contact-person-elt, in email-address-elt).
-(can-have-child contact-person-elt, in telephone-nember-elt).
+(can-have-child contact-person-elt, of-type company-elt).
+(can-have-child contact-person-elt, of-type given-name-elt).
+(can-have-child contact-person-elt, of-type surname-elt).
+(can-have-child contact-person-elt, of-type email-address-elt).
+(can-have-child contact-person-elt, of-type telephone-nember-elt).
 
 use-attr is a attr-name.
 a use-value is a attr-value.
@@ -187,7 +187,7 @@ encryption-method-elt is a element-type.
 
 key-descriptor-elt is a element-type.
 (can-have-attr key-description-elt, named use-attr).
-(can-have-child key-descriptor-elt, in encryption-method-elt).
+(can-have-child key-descriptor-elt, of-type encryption-method-elt).
 
 a role-description-element-type is a element-type.
 
@@ -198,9 +198,9 @@ Element-type1 is a role-descriptor-element-type
 (can-have-attr Element-type1, named cache-duration-attr);
 (can-have-attr Element-type1, named protocol-support-enumeration-attr);
 (can-have-attr Element-type1, named error-url-attr);
-(can-have-child Element-type1, in organization-elt);
-(can-have-child Element-type1, in contact-person-elt);
-(can-have-child Element-type1, in key-descriptor-elt).
+(can-have-child Element-type1, of-type organization-elt);
+(can-have-child Element-type1, of-type contact-person-elt);
+(can-have-child Element-type1, of-type key-descriptor-elt).
 
 a endpoint-element-type is a element-type.
 
@@ -245,10 +245,10 @@ a sso-descriptor-element-type is a role-descriptor-element-type.
 (initialize Person1, obj Element-type1);
 Element-type1 is a sso-descriptor-element-type
 ->
-(can-have-child Element-type1, in artifact-resolution-service-elt);
-(can-have-child Element-type1, in single-logout-service-elt);
-(can-have-child Element-type1, in manage-name-id-service-elt);
-(can-have-child Element-type1, in name-id-format).
+(can-have-child Element-type1, of-type artifact-resolution-service-elt);
+(can-have-child Element-type1, of-type single-logout-service-elt);
+(can-have-child Element-type1, of-type manage-name-id-service-elt);
+(can-have-child Element-type1, of-type name-id-format).
 
 single-sign-on-service-elt is a endpoint-element-type.
 (initialize admin, obj single-sign-on-service-elt).
@@ -273,13 +273,13 @@ saml-attribute-elt is a element-type.
 (can-have-attr saml-attribute-elt, named name-format-attr).
 (can-have-attr saml-attribute-elt, named name-attr).
 (can-have-attr saml-attribute-elt, named friendly-name-attr).
-(can-have-child saml-attribute-elt, in saml-attribute-value-elt).
+(can-have-child saml-attribute-elt, of-type saml-attribute-value-elt).
 
 idp-sso-descriptor-elt is a sso-descriptor-element-type.
 (initialize admin, obj idp-sso-descriptor-elt).
 (can-have-attr idp-sso-descriptor-elt, named want-authn-request-signed-attr).
-(can-have-child idp-sso-descriptor-elt, in single-sign-on-service-elt).
-(can-have-child idp-sso-descriptor-elt, in name-id-mapping-service-elt).
-(can-have-child idp-sso-descriptor-elt, in assertion-id-request-service-elt).
-(can-have-child idp-sso-descriptor-elt, in attribute-profile-elt).
-(can-have-child idp-sso-descriptor-elt, in saml-attribute-elt).
+(can-have-child idp-sso-descriptor-elt, of-type single-sign-on-service-elt).
+(can-have-child idp-sso-descriptor-elt, of-type name-id-mapping-service-elt).
+(can-have-child idp-sso-descriptor-elt, of-type assertion-id-request-service-elt).
+(can-have-child idp-sso-descriptor-elt, of-type attribute-profile-elt).
+(can-have-child idp-sso-descriptor-elt, of-type saml-attribute-elt).
