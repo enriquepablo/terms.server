@@ -192,7 +192,7 @@ key-descriptor-elt is a element-type.
 a role-description-element-type is a element-type.
 
 (initialize Person1, obj Element-type1);
-Element-type1 is a role-descriptor-element-type
+Element-type1 is a role-description-element-type
 ->
 (can-have-attr Element-type1, named valid-until-attr);
 (can-have-attr Element-type1, named cache-duration-attr);
@@ -239,7 +239,7 @@ manage-name-id-service-elt is a endpoint-element-type.
 (initialize admin, obj manage-name-id-service-elt).
 name-id-format is a element-type.
 
-a sso-descriptor-element-type is a role-descriptor-element-type.
+a sso-descriptor-element-type is a role-description-element-type.
 (initialize admin, obj sso-descriptor-element-type).
 
 (initialize Person1, obj Element-type1);
