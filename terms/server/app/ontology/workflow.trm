@@ -44,7 +44,7 @@ to has-status is to exclusive-endure, subj a content, which a status.
 
 to is-protected is to endure, subj a verb, by a permission, for a status.
 
-(wants Person1, do Abs-content-action1:(Abs-content-actionVerb1 Person1, what Content1));
+(wants Person1, do (Abs-content-actionVerb1 Person1, what Content1));
 (is-protected Abs-content-actionVerb2, by Permission1, for Status1);
 (belongs Person1, where Group1);
 (has-role Group1, which Role1, where Context1);
@@ -53,7 +53,7 @@ to is-protected is to endure, subj a verb, by a permission, for a status.
 (located Content1, in Context1);
 a Abs-content-actionVerb1 is a Abs-content-actionVerb2
 ->
-(Abs-content-action1).
+(Abs-content-actionVerb1 Person1, what Content1).
 
 a transition is a thing.
 
