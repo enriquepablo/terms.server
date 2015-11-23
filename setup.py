@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2007-2012 by Enrique Pérez Arnaud <enriquepablo@gmail.com>
 #
 # This file is part of the terms project.
@@ -42,7 +43,6 @@ setup(
     entry_points = {
         'console_scripts': [
             'webserver = terms.server.scripts.webserver:serve',
-            'initterms = terms.server.scripts.initialize:init_terms',
         ],
     },
     tests_require = [
@@ -55,14 +55,6 @@ setup(
     install_requires = [
         'distribute==0.7.3',
         'bottle==0.12.4',
-        'repoze.who==2.2',
         'gevent==1.0',
-        'gevent-websocket==0.9.3',
-        'py-bcrypt==0.4',
-        'sqlalchemy==0.9.3',
-        'colander==1.0b1',
-        'colanderalchemy==0.3.0',
-        'deform==2.0a2',
-        'mako==0.9.1',
     ],
 )
