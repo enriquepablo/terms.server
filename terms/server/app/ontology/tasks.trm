@@ -30,6 +30,7 @@ task-wf is a workflow.
 
 (is-assigned task-wf, for task, in global).
 
+# more statuses, transitions
 task-closed is a status.
 
 to abs-task-action is to abs-wf-action.

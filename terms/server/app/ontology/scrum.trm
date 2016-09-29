@@ -1,0 +1,98 @@
+# Copyright (c) 2007-2012 by Enrique Pérez Arnaud <enriquepablo@gmail.com>
+#
+# This file is part of the terms project.
+# https://github.com/enriquepablo/terms
+#
+# The terms project is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# The terms project is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with any part of the terms project.
+# If not, see <http://www.gnu.org/licenses/>.
+
+<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/scrum.trm>
+{{{
+"author": "enrique perez arnaud"
+}}}
+
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/tasks.trm>.
+
+a sprint is a task.
+
+a ticket is a document:context.
+
+# for tickets
+a stack is a folder.
+
+to in-sprint is to unique-endure, subj a stack, in a sprint.
+
+a user-story is a document.
+
+to pertain is to endure, subj a ticket, about a user-story.
+
+# for user stories
+a requirement is a folder.
+
+to has-priority is to endure, subj a ticket, of a number.
+
+to is-estimated is to endure, subj a ticket, at a number.
+
+to estimates is to happen, subj a person, obj a ticket, at a number.
+
+a test is a content.
+
+to has-test is to endure, subj a ticket, in a test.
+
+test-wf is a workflow.
+
+(is-assigned test-wf, for test, in global).
+
+test-pending is a status.
+test-passed is a status.
+test-failed is a status.
+
+to abs-test-action is to abs-wf-action.
+
+to pass-test is to abs-test-action.
+to fail-test is to abs-test-action.
+to reset-test is to abs-test-action.
+
+pass-test-tr is a transition.
+(has-transition test-wf, which pass-test-tr).
+(executed pass-test-tr, by pass-test, from test-pending, towards test-passed).
+
+fail-test-tr is a transition.
+(has-transition test-wf, which fail-test-tr).
+(executed fail-test-tr, by fail-test, from test-pending, towards test-failed).
+
+reset-test-tr is a transition.
+(has-transition test-wf, which reset-test-tr).
+(executed reset-test-tr, by reset-test, from test-failed, towards test-pending).
+(executed reset-test-tr, by reset-test, from test-passed, towards test-pending).
+
+(is-protected pass-test, by edit-perm, for test-pending).
+(is-protected fail-test, by edit-perm, for test-pending).
+(is-protected reset-test, by edit-perm, for test-passed).
+(is-protected reset-test, by edit-perm, for test-failed).
+
+# XXX if want to close task and tests pending -> dont close, reset tests
+# XXX implement arbitrary impediments for transitions
+# (non-passed tests are an impediment for close ticket)
+
+# different types of tests.
+# some tests may be passed automatically, with a module that runs them and reports back.
+
+a meeting is a thing.
+a sprint-planning is a meeting.
+a sprint-review is a meeting.
+a daily is a meeting.
+
+to call-meeting is to happen.
+to is-scheduled is to endure, subj a person, for a meeting.
