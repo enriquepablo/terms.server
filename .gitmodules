@@ -3,4 +3,4 @@
 	url = git://github.com/tinymce/tinymce.git
 [submodule "terms/server/static/skeleton"]
 	path = terms/server/static/skeleton
-	url = git@github.com:enriquepablo/Skeleton.git
+	url = git://github.com/enriquepablo/Skeleton.git
