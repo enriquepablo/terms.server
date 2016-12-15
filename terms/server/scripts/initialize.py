@@ -79,10 +79,12 @@ def init_terms():
     session = Session()
     import_ontologies(config, session)
     import_exec_globals(config, session)
-    pass1, pass2 = '', ' '
-    while pass1 != pass2:
-        pass1 = raw_input('Enter a password for the admin user: ')
-        pass2 = raw_input('Repeat it: ')
+    pass1 = 'admin'
+#    we need defaults for automated scripts here
+#    pass1, pass2 = '', ' '
+#    while pass1 != pass2:
+#        pass1 = raw_input('Enter a password for the admin user: ')
+#        pass2 = raw_input('Repeat it: ')
     password = bcrypt.hashpw(pass1, bcrypt.gensalt())
     admin = Person(_id='admin', name='admin', surname='superuser', password=password)
     session.add(admin)
