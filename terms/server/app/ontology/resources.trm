@@ -30,12 +30,18 @@ to book is to abs-content-action, what a resource, from a number, till a number.
 
 to be-booked is to endure, subj a resource, from a number, till a number, by a person.
 
+
+# XXX document conditions (set_condition, compile_condition)
+# test it. Perhaps make a special language for conditions
+# raise between conditions if the `condition` is already False
+# advise caution to use it only when no bulk activations are gonna happen
+
 (wants Person1, do (book Person1, what Resource1, from T1, till T2));
 (book Person1, what Resource1)
 <-
 condition &= runtime.count('(be-booked %(Resource1)s, from {T3: (T3 > %(T1)d) & (T3 < %(T2)d)})' % match) == 0
 condition &= runtime.count('(be-booked %(Resource1)s, till {T3: (T3 > %(T1)d) & (T3 < %(T2)d)})' % match) == 0
-condition &= runtime.count('(be-booked %(Resource1)s, from {T3: T3 < %(T1)d}, till {T4 | T4 > %(T2)d})' % match) == 0
+condition &= runtime.count('(be-booked %(Resource1)s, from {T3: T3 < %(T1)d}, till {T4: T4 > %(T2)d})' % match) == 0
 ->
 (be-booked Resource1, by Person1, from T1, till T2).
 

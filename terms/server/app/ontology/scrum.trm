@@ -28,6 +28,68 @@ a sprint is a task.
 
 a ticket is a document:context.
 
+
+
+
+
+a ticket is a content.
+
+ticket-wf is a workflow.
+
+(is-assigned ticket-wf, for ticket, in global).
+
+# more statuses, transitions
+ticket-closed is a status.
+assigned is a status.
+pending-for-developer is a status.
+pending-for-qa is a status.
+pending-for-staging is a status.
+
+to abs-ticket-action is to abs-wf-action.
+
+to open-ticket is to abs-ticket-action.
+to close-ticket is to abs-ticket-action.
+
+open-ticket-tr is a transition.
+(has-transition ticket-wf, which open-ticket-tr).
+(executed open-ticket-tr, by open-ticket, from ticket-closed, towards public).
+
+close-ticket-tr is a transition.
+(has-transition ticket-wf, which close-ticket-tr).
+(executed close-ticket-tr, by close-ticket, from public, towards ticket-closed).
+
+(is-protected open-ticket, by edit-perm, for ticket-closed).
+(is-protected close-ticket, by edit-perm, for public).
+
+(is-protected edit, by edit-perm, for ticket-closed).
+(is-protected view, by edit-perm, for ticket-closed).
+
+a project is a ticket.
+
+a job is a ticket.
+
+to is-working is to abs-person-action, on a job.
+
+(is-owned Task1, by Person1)
+->
+(has-role Person1, which manager, where Task1).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # for tickets
 a stack is a folder.
 

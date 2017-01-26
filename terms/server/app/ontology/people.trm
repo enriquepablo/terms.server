@@ -37,9 +37,19 @@ to belongs is to endure, subj a person, where a group.
 
 # a primitive abstract verb that has a person subj,
 # and is told back when used in a new sentence
-to abs-person-action is to happen, subj a person.
+to abs-person-action is to happen, subj a group.
+
+# XXX new necessary syntax
+# Abs-person-action1:(Abs-person-actionVerb1 Group1);
+# (belong Group2, where Group1)
+# ->
+# (Abs-person-actionVerb1 Group2, ...Abs-person-action1).
 
 to wants is to happen, subj a person, do a abs-person-action.
+
+to should is to endure, subj a person, do a abs-person-action.
+
+to manage is to abs-person-relation, what a exist.
 
 to abs-person-relation is to endure, subj a person, what a thing.
 
@@ -52,6 +62,11 @@ to establish-relation is to abs-person-action, which a verb, with a person.
 (wants Person1, do (establish-relation Person1, which Abs-person-relationVerb1, with Person2))
 ->
 (Abs-person-relationVerb1 Person1, what Person2).
+
+(should Person1, do Abs-person-action1);
+(Abs-person-action1)
+->
+(finish Person1, what (should Person1, do Abs-person-action1));
 
 to tell is to abs-person-action, who a person, what a exist.
 

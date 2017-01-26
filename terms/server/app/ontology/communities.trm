@@ -55,10 +55,11 @@ V3 = V2 + V1
 (has-voted-poll Person1, what Poll1);
 (poll-has-votes Poll1, many V3).
 
-(wants Person1, do Votes-poll1:(votes-poll Person1, what Poll1));
-(votes-poll Person1, what Poll1)
-->
-(Votes-poll1).
+# XXX No longer necessary I expect
+# (wants Person1, do Votes-poll1:(votes-poll Person1, what Poll1));
+# (votes-poll Person1, what Poll1)
+# ->
+# (Votes-poll1).
 
 to has-consecuence is to endure, subj a poll, which a exist.
 
