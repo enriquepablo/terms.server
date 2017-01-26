@@ -1,4 +1,3 @@
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 (function ($) {
 
@@ -25,13 +24,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         },
 
         inherited: {
-            content: [{ ref: "toshow", html: '<span class="word" />' }, { ref: "toselect", html: "<select/>" }]
+            content: [
+                {ref: "toshow", html: '<span class="word" />'},
+                {ref: "toselect", html: "<select/>"},
+            ]
         },
 
-        showing: Control.chain("$toshow", "content"),
-        append: Control.chain("$toselect", "append"),
-        val: Control.chain("$toselect", "val"),
-        selection: Control.chain("$toselect", "content"),
+        showing: Control.chain( "$toshow", "content" ),
+        append: Control.chain( "$toselect", "append" ),
+        val: Control.chain( "$toselect", "val" ),
+        selection: Control.chain( "$toselect", "content" ),
 
         type: function (name) {
             if (name === undefined) {
@@ -71,7 +73,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             }
             var opts = [];
             names.sort();
-            for (var i = 0, t = names.length; i < t; i++) {
+            for (var i=0, t=names.length; i<t; i++) {
                 if (names[i].toLowerCase() === names[i] && names[i].substr(0, 4) !== 'abs-') {
                     this.append(Option.create(names[i]));
                 }
@@ -95,7 +97,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     self.$toselect().hide();
                     self.$toshow().show();
                     //self.find('option:selected').siblings().hide();
-                }
+                  }
             });
             this.mouseenter(function (e) {
                 self.$toshow().hide();
@@ -124,7 +126,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     });
 
     var Fact = Control.sub({
-
+    
         className: 'Fact',
 
         tag: "div",
@@ -135,7 +137,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             if (level === undefined) {
                 return this._factLevel();
             } else {
-                if (level === 0 && window.kb.building() === 'fact' && window.username !== 'admin') {
+                if (level === 0 &&
+                    window.kb.building() === 'fact' &&
+                    window.username !== 'admin') {
                     this.$verb().subtype('abs-person-action');
                 } else {
                     this.$verb().type('verb');
@@ -146,14 +150,22 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         },
 
         inherited: {
-            content: [{ ref: "lparen", html: '<span class="paren lparen">(</span>' }, { ref: "subject", html: "<span/>" }, { ref: "verb", control: Word, class: 'verb' }, { ref: "mods", html: "<span/>" }, { ref: "rparen", html: '<span class="paren rparen">)</span>' }]
+            content: [
+                {ref: "lparen", html: '<span class="paren lparen">(</span>'},
+                {ref: "subject", html: "<span/>"},
+                {ref: "verb", control: Word, class: 'verb'},
+                {ref: "mods", html: "<span/>"},
+                {ref: "rparen", html: '<span class="paren rparen">)</span>'},
+            ]
         },
 
-        _subject: Control.chain("$subject", "content", "control", "toTerms"),
-        verb: Control.chain("$verb", "toTerms"),
+        _subject: Control.chain( "$subject", "content", "control", "toTerms" ),
+        verb: Control.chain( "$verb", "toTerms" ),
 
         subject: function (value) {
-            if (this.factLevel() > 0 || window.username === 'admin' || window.kb.building().startsWith('question')) {
+            if (this.factLevel() > 0 ||
+                window.username === 'admin' ||
+                window.kb.building().startsWith('question')) {
                 return this._subject(value);
             } else {
                 return window.username;
@@ -173,19 +185,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             var mods = this.$mods().content().control(),
                 tmods = [],
                 mod;
-            if (mods === null || this.verb() === '---') {
-                return '---';
-            }
-            for (var i = 0, t = mods.length; i < t; i++) {
+            if (mods === null || this.verb() === '---') { return '---' }
+            for (var i=0, t=mods.length; i<t ; i++) {
                 mod = $(mods[i]).control();
-                if (mod.tvalue() === '---') {
-                    return '---';
-                }
+                if (mod.tvalue() === '---') { return '---' }
                 tmods.push(mod.toTerms());
             }
-            if (this.subject() === '---') {
-                return '---';
-            }
+            if (this.subject() === '---') { return '---' }
             return '(' + this.verb() + ' ' + this.subject() + ', ' + tmods.join(', ') + ')';
         },
 
@@ -200,7 +206,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         handleModChange: function (e) {
             if (this.factLevel() === 0) {
                 var tfact = this.toTerms();
-                if (!tfact.includes('---')) {
+                if ( ! tfact.includes('---')) {
                     kb.$buttonsRemote().removeClass('hidden');
                 } else {
                     kb.$buttonsRemote().class('hidden');
@@ -210,17 +216,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         },
 
         loadMods: function (data) {
-            var o,
-                subj,
-                mod,
-                self = this;
+            var o, subj, mod, self = this;
             this.$mods().content('');
-            for (var i = 0, t = data.length; i < t; i++) {
+            for (var i=0, t=data.length; i<t ; i++) {
                 o = data[i];
-                if (o[0].charAt(o[0].length - 1) === '_' && window.kb.building() !== 'question-past') {
+                if (o[0].charAt(o[0].length-1) === '_' && window.kb.building() !=='question-past') {
                     continue;
                 } else if (o[0] === 'subj') {
-                    if (this.factLevel() > 0 || window.username === 'admin' || window.kb.building().startsWith('question')) {
+                    if (this.factLevel() > 0 ||
+                        window.username === 'admin' ||
+                        window.kb.building().startsWith('question')) {
                         subj = Word.create().type(o[1]);
                         this.$subject().content(subj);
                         subj.change(function (e) {
@@ -231,16 +236,24 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     }
                 } else {
                     if (o[2]) {
-                        mod = Mod.create().label(o[0]).value(Fact.create().factLevel(this.factLevel() + 1));
+                        mod = Mod.create()
+                                 .label(o[0])
+                                 .value(Fact.create()
+                                            .factLevel(this.factLevel() + 1));
                         this.$mods().append(mod);
                     } else if (o[1] === 'number') {
-                        mod = Mod.create().label(o[0]).value(WNumber.create());
+                        mod = Mod.create()
+                                 .label(o[0])
+                                 .value(WNumber.create());
                         this.$mods().append(mod);
                     } else {
-                        mod = Mod.create().label(o[0]).value(Word.create().type(o[1]));
+                        mod = Mod.create()
+                                 .label(o[0])
+                                 .value(Word.create()
+                                            .type(o[1]));
                         this.$mods().append(mod);
                     }
-                    mod.change(function (e) {
+                    mod.change( function (e) {
                         self.handleModChange(e);
                     });
                 }
@@ -250,18 +263,21 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     });
 
     var Mod = Control.sub({
-
+    
         className: 'Mod',
 
         tag: 'span',
 
         inherited: {
-            content: [{ ref: "label", html: "<span/>" }, { ref: "value", html: "<span/>" }]
+            content: [
+                {ref: "label", html: "<span/>"},
+                {ref: "value", html: "<span/>"}
+            ]
         },
 
-        label: Control.chain("$label", "content"),
-        value: Control.chain("$value", "content"),
-        tvalue: Control.chain("$value", "content", "control", "toTerms"),
+        label: Control.chain( "$label", "content" ),
+        value: Control.chain( "$value", "content" ),
+        tvalue: Control.chain( "$value", "content", "control", "toTerms" ),
 
         toTerms: function () {
             return this.label() + ' ' + this.tvalue();
@@ -274,7 +290,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         className: 'Name',
 
         inherited: {
-            content: [{ ref: 'newname', html: '<input type="text"/>' }, { ref: 'isa', html: '<span> is a </span>' }, { ref: 'classname', control: Word, type: 'noun' }]
+            content: [
+                {ref: 'newname', html: '<input type="text"/>'},
+                {ref: 'isa', html: '<span> is a </span>'},
+                {ref: 'classname', control: Word, type: 'noun'}
+            ]
         },
 
         newname: Control.chain('$newname', 'content'),
@@ -295,7 +315,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         },
 
         handleChange: function (e) {
-            if (this.newname() && this.classname() !== '---') {
+            if (this.newname() && (this.classname() !== '---')) {
                 kb.$tellButton().removeClass('hidden');
                 kb.$askButtons().class('hidden');
                 kb.$buttonsRemote().removeClass('hidden');
@@ -307,11 +327,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     });
 
     var Question = Control.sub({
-
+        
         className: 'Question',
 
         inherited: {
-            content: [{ ref: 'facts', html: '<div id="tiles"/>' }]
+            content: [
+                {ref: 'facts', html: '<div id="tiles"/>'}
+            ]
         },
 
         initialize: function () {
@@ -328,7 +350,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     });
 
     var KB = Control.sub({
-
+        
         className: 'KB',
 
         ws: Control.property(),
@@ -338,11 +360,35 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         building: Control.property(),
 
         inherited: {
-            content: [{ ref: 'container', control: Control, class: 'container', content: [{ ref: 'allbuttons', control: Control, class: 'row', content: [{ ref: 'buttons', control: Control, class: 'nine columns', content: [{ ref: 'nameButton', html: '<button> new name </button>' }, { ref: 'factButton', html: '<button> new fact </button>' }, { ref: 'pqButton', html: '<button> query past events </button>' }, { ref: 'sqButton', html: '<button> query past states </button>' }, { ref: 'qButton', html: '<button> query </button>' }] }, { ref: 'buttonsRemote', control: Control, class: 'three columns', content: [{ ref: 'askButtons', control: Control, class: 'hidden', content: [{ ref: 'askButton', html: '<button> ask </button>' }, { ref: 'newQFact', html: '<button> add fact </button>' }] }, { ref: 'tellButton', html: '<button> tell </button>', class: 'hidden' }] }] }, { ref: 'termsrow', control: Control, class: 'row', content: [{ ref: 'terms', html: '<div id="terms" class="twelve columns"/>' }] }, { ref: 'tilesrow', control: Control, class: 'row', content: [{ ref: 'tiles', html: '<div id="tiles" class="clearfix twelve columns"/>' }] }] }]
+            content: [
+                {ref: 'container', control: Control, class: 'container', content: [
+                    {ref: 'allbuttons', control: Control, class: 'row', content: [
+                        {ref: 'buttons', control: Control, class: 'nine columns', content: [
+                            {ref: 'nameButton', html: '<button> new name </button>'},
+                            {ref: 'factButton', html: '<button> new fact </button>'},
+                            {ref: 'pqButton', html: '<button> query past events </button>'},
+                            {ref: 'sqButton', html: '<button> query past states </button>'},
+                            {ref: 'qButton', html: '<button> query </button>'}
+                        ]},
+                        {ref: 'buttonsRemote', control: Control, class: 'three columns', content: [
+                            {ref: 'askButtons', control: Control, class: 'hidden', content: [
+                                {ref: 'askButton', html: '<button> ask </button>'},
+                                {ref: 'newQFact', html: '<button> add fact </button>'}
+                            ]},
+                            {ref: 'tellButton', html: '<button> tell </button>', class: 'hidden'}
+                        ]},
+                    ]},
+                        {ref: 'termsrow', control: Control, class: 'row', content: [
+                            {ref: 'terms', html: '<div id="terms" class="twelve columns"/>'},
+                        ]},
+                        {ref: 'tilesrow', control: Control, class: 'row', content: [
+                            {ref: 'tiles', html: '<div id="tiles" class="clearfix twelve columns"/>'}
+                        ]},
+                ]}],
         },
 
-        toTerms: Control.chain("$terms", "content", 'control', 'toTerms'),
-        tcontrol: Control.chain("$terms", "content", 'control'),
+        toTerms: Control.chain( "$terms", "content", 'control', 'toTerms' ),
+        tcontrol: Control.chain( "$terms", "content", 'control' ),
 
         initialize: function () {
             var self = this;
@@ -379,20 +425,22 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         },
 
         sleep: function (ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+          return new Promise(resolve => setTimeout(resolve, ms));
         },
 
         wsInit: function () {
             console.log('Initializing WS');
             let self = this;
             self.ws(new WebSocket("ws://" + window.location.host + "/" + window.username + "/websocket"));
-
+        
             this.ws().onmessage = function (e) {
                 console.log('Receiving message from WS');
                 self.wsWaiting = false;
                 var data = JSON.parse(e.data);
                 var content = data['html'];
-                var tile = Tile.create().title(data['fact'] + '.').content(content);
+                var tile = Tile.create()
+                               .title(data['fact'] + '.')
+                               .content(content);
                 self.$tiles().append(tile);
                 if (content === 'OK') {
                     tile.delay(5000).fadeOut();
@@ -404,50 +452,44 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             this.wsWaiting = false;
         },
 
-        wsSend: (() => {
-            var _ref = _asyncToGenerator(function* (msg, nTry = 0) {
-                console.log(nTry + ' attempt to send msg ' + msg);
-                ++nTry;
-                if (nTry > 5) {
-                    console.log('CANNOT CONNECT TO WS!!!');
+        wsSend: async function (msg, nTry=0) {
+            console.log(nTry + ' attempt to send msg ' + msg);
+            ++nTry;
+            if (nTry > 5) {
+                console.log('CANNOT CONNECT TO WS!!!');
+                return;
+            }
+            let n = 0;
+            while (this.ws().readyState === this.ws().CONNECTING) {
+                console.log('In state CONNECTING...');
+                await this.sleep(100);
+                ++n;
+                if (n > 30) {
+                    console.log('CONNECTING FOREVER TO WS!!!');
                     return;
                 }
-                let n = 0;
-                while (this.ws().readyState === this.ws().CONNECTING) {
-                    console.log('In state CONNECTING...');
-                    yield this.sleep(100);
-                    ++n;
-                    if (n > 30) {
-                        console.log('CONNECTING FOREVER TO WS!!!');
-                        return;
-                    }
+            }
+            if (this.ws().readyState === this.ws().OPEN) {
+                console.log('Connection OPEN, sending ' + msg);
+                // set flag wsWaiting
+                this.wsWaiting = true;
+                // send optimistically
+                this.ws().send(msg);
+                // poll the flag every 100 ms for 30 sec
+                for (let n = 0; n < 300; n++) {
+                    await this.sleep(100);
+                    console.log('Waiting for response?');
+                    if (this.wsWaiting === false) return;
+                    console.log('Waiting...');
                 }
-                if (this.ws().readyState === this.ws().OPEN) {
-                    console.log('Connection OPEN, sending ' + msg);
-                    // set flag wsWaiting
-                    this.wsWaiting = true;
-                    // send optimistically
-                    this.ws().send(msg);
-                    // poll the flag every 100 ms for 5 sec
-                    for (let n = 0; n < 50; n++) {
-                        yield this.sleep(100);
-                        console.log('Waiting for response...');
-                        if (this.wsWaiting === false) return;
-                        console.log('And waiting...');
-                    }
-                } else {
-                    console.log('Closing connection');
-                    this.ws().close();
-                }
-                // if timeout ends, reconnect & resend
-                this.wsInit();
-                this.wsSend(msg, nTry);
-            });
-
-            return function wsSend(_x) {
-                return _ref.apply(this, arguments);
-            };
-        })(),
+            } else {
+                console.log('Closing connection');
+                this.ws().close();
+            }
+            // if timeout ends, reconnect & resend
+            this.wsInit();
+            this.wsSend(msg, nTry);
+        },
 
         newName: function () {
             this.$askButtons().class('hidden');
@@ -479,14 +521,20 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
         newQFact: function () {
             this.$buttonsRemote().class('hidden');
-            this.tcontrol().$facts().append(Fact.create().factLevel(0).css('display', 'block'));
+            this.tcontrol()
+                .$facts()
+                .append(Fact.create()
+                            .factLevel(0)
+                            .css('display', 'block'));
         },
 
         ask: function () {
             var self = this,
                 toask = this.toTerms();
             $.get('/facts/' + toask, function (resp) {
-                var tile = Tile.create().title(toask + '?').content(resp);
+                var tile = Tile.create()
+                               .title(toask + '?')
+                               .content(resp);
                 self.$tiles().append(tile);
                 $(tile.$display()).find('table.tablesorter').tablesorter();
             });
@@ -504,7 +552,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             if (trm === undefined) {
                 trm = this.toTerms();
             }
-            var tosend = JSON.stringify({ fact: trm, data: [] });
+            var tosend = JSON.stringify({fact: trm, data: []});
             this.wsSend(tosend);
         },
 
@@ -517,7 +565,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 self.nameTold(data);
                 // initialize: username, ws. 
                 var init = '(initialize ' + window.username + ', obj ' + name + ')';
-                var tosend = JSON.stringify({ fact: init, data: [] });
+                var tosend = JSON.stringify({fact: init, data: []});
                 self.wsSend(tosend);
             });
         },
@@ -528,13 +576,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             var $form = $(form);
             var assertion = $form.find('button[name="assertion"]').val();
             var data = $form.serializeArray();
-            var tosend = JSON.stringify({ fact: assertion, data: data });
+            var tosend = JSON.stringify({fact: assertion, data: data});
             this.wsSend(tosend);
             return false;
         },
 
         nameTold: function (data) {
-            var tile = Tile.create().title(this.toTerms()).content(JSON.stringify(data));
+            var tile = Tile.create()
+                           .title(this.toTerms())
+                           .content(JSON.stringify(data));
             this.$tiles().append(tile);
         }
 
@@ -545,26 +595,40 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         className: 'Tile five columns',
 
         inherited: {
-            content: [{ ref: 'anchor', control: Control, content: [{ ref: 'divcloser', control: Control, content: [{ ref: 'closer', html: '<span>&#10006;</span>' }] }, { ref: 'divtitle', control: Control, content: [{ ref: 'title', html: '<span/>' }] }] }, { ref: 'portlet', control: Control, class: 'hidden', content: [{ ref: 'portletBackground', html: '<div/>', class: 'portlet-background' }, { ref: 'displayCloser', html: '<span>&#10006;</span>', class: 'portlet-closer' }, { ref: 'display', html: '<div/>', class: 'portlet-display' }] }]
+            content: [
+                {ref: 'anchor', control: Control, content: [
+                    {ref: 'divcloser', control: Control, content: [
+                        {ref: 'closer', html: '<span>&#10006;</span>'}
+                    ]},
+                    {ref: 'divtitle', control: Control, content: [
+                        {ref: 'title', html: '<span/>'},
+                    ]}
+                ]},
+                {ref: 'portlet', control: Control, class: 'hidden', content: [
+                    {ref: 'portletBackground', html: '<div/>', class: 'portlet-background'},
+                    {ref: 'displayCloser', html: '<span>&#10006;</span>', class: 'portlet-closer'},
+                    {ref: 'display', html: '<div/>', class: 'portlet-display'}
+                ]}
+            ]
         },
 
-        title: Control.chain('$title', 'html'),
-        content: Control.chain('$display', 'html'),
+        title: Control.chain( '$title', 'html' ),
+        content: Control.chain( '$display', 'html' ),
 
-        /*        content: function (value) {
-                    var self = this;
-                    if (value === undefined) {
-                        return self.$display().html();
-                    } else {
-                        self.$display().html(value)
-                        if (value === 'OK') {
-                            setTimeout(function () {
-                                self.remove();
-                            }, 5000)
-                        }
-                    }
-                },
-        */
+/*        content: function (value) {
+            var self = this;
+            if (value === undefined) {
+                return self.$display().html();
+            } else {
+                self.$display().html(value)
+                if (value === 'OK') {
+                    setTimeout(function () {
+                        self.remove();
+                    }, 5000)
+                }
+            }
+        },
+*/
 
         initialize: function () {
             var self = this;
@@ -583,12 +647,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
     });
 
-    $(document).ready(function () {
+    $(document).ready( function () {
 
         var kb = KB.create();
         window.kb = kb;
         window.delay = 0;
         $('#kb').append(kb);
-    });
-})(jQuery);
 
+    });
+
+})(jQuery);
