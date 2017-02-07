@@ -105,7 +105,7 @@ a environment is a thing.
 
 to has-branch is to endure, subj a repo, which a branch.
 to has-tag is to endure, subj a repo, which a tag.
-to has-pr is to endure, subj a branch, which pull-request.
+to has-pr is to endure, subj a branch, which a pull-request.
 
 to is-deployed is to endure, subj a tag, in a environment.
 

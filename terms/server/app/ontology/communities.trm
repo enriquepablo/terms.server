@@ -74,7 +74,7 @@ condition &= N1 < N2
 
 a membership-application is a poll.
 
-(want Person1, do (put-in-context Person1, what Membership-application1, in Community1))
+(want Person1, do (move Person1, what Membership-application1, from Person1, into Community1))
 ->
 (located Membership-application1, in Community1);
 (has-status Membership-application1, which pending);
