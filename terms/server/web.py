@@ -53,7 +53,7 @@ class TermsWorker(Thread):
         if self.user == 'admin':
             fact += '.'
         else:
-            fact = '(wants %s, do %s).' % (self.user, fact)
+            fact = '(want %s, do %s).' % (self.user, fact)
         kb.send_bytes(fact)
         kb.send_bytes('FINISH-TERMS')
         for fact in iter(kb.recv_bytes, 'END'):
@@ -98,7 +98,7 @@ class TermsServer(object):
         if resp == term:
             un = request.environ.get('REMOTE_USER')
             resp = ask_kb(self.config,
-                          '(wants %s, do (initialize %s, obj %s))' % (un, un, term))
+                          '(want %s, do (initialize %s, obj %s))' % (un, un, term))
         return resp
 
     def get_subterms(self, superterm):
