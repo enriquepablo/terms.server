@@ -52,7 +52,7 @@ to is-protected is to endure, subj a verb, by a permission, for a status.
 (has-role Group1, which Role1, where Context1);
 (has-permission Role1, which Permission1);
 (has-status Content1, which Status1);
-(located Content1, in Context1);
+(located Content1, in Context1)
 # a Abs-content-actionVerb1 is a Abs-content-actionVerb2
 ->
 (Abs-content-action1).
