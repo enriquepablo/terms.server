@@ -60,7 +60,7 @@ to establish-relation is to abs-person-action, which a verb, with a person.
 (should Person1, do Abs-person-action1);
 (Abs-person-action1)
 ->
-(finish Person1, what (should Person1, do Abs-person-action1));
+(finish Person1, what (should Person1, do Abs-person-action1)).
 
 to tell is to abs-person-action, who a person, what a exist.
 
