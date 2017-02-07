@@ -35,8 +35,12 @@ a permission is a thing.
 to has-permission is to endure, subj a role, which a permission.
 
 manager is a role.
+
 manage-perm is a permission.
 (has-permission manager, which manage-perm).
+
+add-perm is a permission.
+(has-permission manager, which add-perm).
 
 (has-role admin, which manager, where global).
 
