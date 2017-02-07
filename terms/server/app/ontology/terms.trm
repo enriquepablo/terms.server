@@ -23,7 +23,7 @@
 
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/context.trm>.
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/people.trm>.
-import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/content.trm>.
+# import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/content.trm>.
 #import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/workflow.trm>.
 #import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/basic-wf.trm>.
 #import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>.
