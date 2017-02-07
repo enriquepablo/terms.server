@@ -34,3 +34,10 @@ to give is to abs-person-action, for a person, what a content.
 (give Person1, what Content1, for Person2)
 ->
 (is-owned Content1, by Person2).
+
+
+(initialize Person1, obj Content1)
+->
+(has-status Content1, which private);
+(is-owned Content1, by Person1);
+(located Content1, in Person1).

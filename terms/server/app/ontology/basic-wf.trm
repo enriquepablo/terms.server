@@ -89,9 +89,3 @@ reject-tr is a transition.
 (executed reject-tr, by reject, from pending, towards private).
 
 (is-assigned basic-wf, for content, in global).
-
-(initialize Person1, obj Content1)
-->
-(has-status Content1, which private);
-(is-owned Content1, by Person1);
-(located Content1, in Person1).
