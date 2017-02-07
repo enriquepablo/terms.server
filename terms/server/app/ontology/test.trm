@@ -1,0 +1,104 @@
+
+
+a person is a thing.
+
+a content is a thing.
+
+to action is to happen, subj a person, what a content.
+
+to edit is to action.
+to view is to action, at a content.
+
+to want is to happen, subj a person, do a action.
+
+doc0 is a content.
+
+(want Person1, do Action1:(ActionVerb1 Person1, what doc0))
+->
+(Action1).
+
+bob is a person.
+
+doc1 is a content.
+
+(want bob, do (view bob, what doc1, at doc1)).
+
+>> (view bob, what doc1, at doc1)?
+false
+
+#-------------------------------------------------------
+
+a person is a thing.
+
+a content is a thing.
+
+to action is to happen, subj a person, what a content.
+
+to edit is to action.
+to view is to action.
+
+to want is to happen, subj a person, do a action.
+
+(want Person1, do (ActionVerb1 Person1, what Content1))
+->
+(ActionVerb1 Person1, what Content1).
+
+bob is a person.
+
+doc1 is a content.
+
+(want bob, do (view bob, what doc1)).
+
+>> (view bob, what doc1)?
+true
+
+#-------------------------------------------------------
+
+a person is a thing.
+
+a content is a thing.
+
+to action is to happen, subj a person, what a content.
+
+to edit is to action.
+to view is to action.
+
+to want is to happen, subj a person, do a action.
+
+(want Person1, do Action1:(ActionVerb1 Person1, what Content1))
+->
+(Action1).
+
+bob is a person.
+
+doc1 is a content.
+
+(want bob, do (action bob, what doc1)).
+
+>> (view bob, what doc1)?
+false
+
+#-------------------------------------------------------
+
+a person is a thing.
+
+a content is a thing.
+
+to action is to happen, subj a person, what a content.
+
+to edit is to action.
+to view is to action.
+
+to want is to happen, subj a person, do a action.
+
+(want Person1, do Action1:(ActionVerb1 Person1, what Content1))
+->
+(ActionVerb1 Person1, what Content1).
+
+bob is a person.
+
+doc1 is a content.
+
+(want bob, do (view bob, what doc1)).
+
+>> (view bob, what doc1)?

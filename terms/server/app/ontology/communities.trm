@@ -26,7 +26,7 @@ import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app
 
 a community is a context:group:content.
 
-(belongs Person1, where Community1)
+(belong Person1, where Community1)
 ->
 (has-role Person1, which editor, where Community1).
 
@@ -56,7 +56,7 @@ V3 = V2 + V1
 (poll-has-votes Poll1, many V3).
 
 # XXX No longer necessary I expect
-# (wants Person1, do Votes-poll1:(votes-poll Person1, what Poll1));
+# (want Person1, do Votes-poll1:(votes-poll Person1, what Poll1));
 # (votes-poll Person1, what Poll1)
 # ->
 # (Votes-poll1).
@@ -74,11 +74,11 @@ condition &= N1 < N2
 
 a membership-application is a poll.
 
-(wants Person1, do (put-in-context Person1, what Membership-application1, in Community1))
+(want Person1, do (put-in-context Person1, what Membership-application1, in Community1))
 ->
 (located Membership-application1, in Community1);
 (has-status Membership-application1, which pending);
-(has-consecuence Membership-application1, which (belongs Person1, where Community1)).
+(has-consecuence Membership-application1, which (belong Person1, where Community1)).
 
 (initialize Person1, obj Poll1)
 ->
@@ -87,5 +87,5 @@ a membership-application is a poll.
 
 (initialize Person1, obj Community1)
 ->
-(belongs Person1, where Community1);
+(belong Person1, where Community1);
 (has-role Person1, which manager, where Community1).

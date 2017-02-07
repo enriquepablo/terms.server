@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with any part of the terms project.
 # If not, see <http://www.gnu.org/licenses/>.
+
 <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>
 {{{
 "author": "enrique perez arnaud"
@@ -27,31 +28,9 @@ import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app
 
 to is-owned is to exclusive-endure, subj a content, by a person.
 
-to gives is to abs-person-action, for a person, what a content.
+to give is to abs-person-action, for a person, what a content.
 
 (is-owned Content1, by Person1);
-(gives Person1, what Content1, for Person2)
+(give Person1, what Content1, for Person2)
 ->
 (is-owned Content1, by Person2).
-
-to put-in-context is to abs-person-action, what a content, in a context.
-
-(wants Person1, do (put-in-context Person1, what Content1, in Context1));
-(has-role Person1, which Role1, where Context1);
-(has-permission Role1, which add-perm);
-(is-owned Content1, by Person1)
-->
-(located Content1, in Context1).
-
-to remove-from-context is to abs-person-action, what a content, from a context.
-
-(wants Person1, do (remove-from-context Person1, what Content1, from Context1));
-(has-role Person1, which Role1, where Context1);
-(has-permission Role1, which manage-perm)
-->
-(finish Person1, what (located Content1, in Context1)).
-
-(initialize Person1, obj Content1)
-->
-(has-status Content1, which private);
-(is-owned Content1, by Person1).

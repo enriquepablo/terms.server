@@ -8,7 +8,7 @@
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# The terms project is distributed in the hope that it will be useful,
+# The terms project is distributed of the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -24,42 +24,33 @@
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>.
 
 
-a folder is a content.
+a label is a content.
 
-to is-placed is to exclusive-endure, subj a content, in a folder.
+to has-label is to endure, subj a content, of a label.
 
-to put-in-folder is to abs-person-action, what a content, in a folder.
+to add-label is to abs-person-action, for a content, of a label.
 
-(wants Person1, do (put-in-folder Person1, what Content1, in Folder1));
-(located Folder1, in Context1);
+(want Person1, do (add-label Person1, for Content1, of Label1));
+(located Label1, in Context1);
 (has-role Person1, which Role1, where Context1);
 (has-permission Role1, which add-perm);
 (is-owned Content1, by Person1)
 ->
-(is-placed Content1, in Folder1).
+(has-label Content1, of Label1).
 
-to remove-from-folder is to abs-person-action, what a content, from a folder.
+to remove-label is to abs-person-action, from a content, of a label.
 
-(wants Person1, do (remove-from-folder Person1, what Content1, from Folder1));
-(located Folder1, in Context1);
+(want Person1, do (remove-label Person1, from Content1, of Label1));
+(located Label1, in Context1);
 (has-role Person1, which Role1, where Context1);
-(has-permission Role1, which manage-perm)
+(has-permission Role1, which manage-perm);
+(is-owned Content1, by Person1)
 ->
-(finish Person1, what (is-placed Content1, in Folder1)).
-
-to move-to-folder is to abs-person-action, what a content, from a folder, into a folder.
-
-(wants Person1, do (move-to-folder Person1, what Content1, from Folder1, into Folder2));
-(located Folder1, in Context1);
-(located Folder2, in Context1);
-(has-role Person1, which Role1, where Context1);
-(has-permission Role1, which move-perm)
-->
-(is-placed Content1, in Folder2).
+(finish Person1, what (has-label Content1, of Label1)).
 
 
-to list-folder is to abs-content-action, what a folder.
+to list-label is to abs-content-action, which a label.
 
-(is-protected list-folder, by edit-perm, for private).
-(is-protected list-folder, by review-perm, for pending).
-(is-protected list-folder, by basic-perm, for public).
+(is-protected list-label, by edit-perm, for private).
+(is-protected list-label, by review-perm, for pending).
+(is-protected list-label, by basic-perm, for public).
