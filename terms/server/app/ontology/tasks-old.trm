@@ -1,0 +1,63 @@
+# Copyright (c) 2007-2012 by Enrique Pérez Arnaud <enriquepablo@gmail.com>
+#
+# This file is part of the terms project.
+# https://github.com/enriquepablo/terms
+#
+# The terms project is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# The terms project is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with any part of the terms project.
+# If not, see <http://www.gnu.org/licenses/>.
+<https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/tasks.trm>
+{{{
+"author": "enrique perez arnaud"
+}}}
+
+import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>.
+
+
+a task is a content:context.
+
+task-wf is a workflow.
+
+(is-assigned task-wf, for task, in global).
+
+# more statuses, transitions
+task-closed is a status.
+
+to abs-task-action is to abs-wf-action.
+
+to open-task is to abs-task-action.
+to close-task is to abs-task-action.
+
+open-task-tr is a transition.
+(has-transition task-wf, which open-task-tr).
+(executed open-task-tr, by open-task, from task-closed, towards public).
+
+close-task-tr is a transition.
+(has-transition task-wf, which close-task-tr).
+(executed close-task-tr, by close-task, from public, towards task-closed).
+
+(is-protected open-task, by edit-perm, for task-closed).
+(is-protected close-task, by edit-perm, for public).
+
+(is-protected edit, by edit-perm, for task-closed).
+(is-protected view, by edit-perm, for task-closed).
+
+a project is a task.
+
+a job is a task.
+
+to is-working is to abs-person-action, on a job.
+
+(is-owned Task1, by Person1)
+->
+(has-role Person1, which manager, where Task1).
