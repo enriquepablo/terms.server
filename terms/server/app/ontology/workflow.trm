@@ -98,12 +98,6 @@ to move is to abs-person-action, what a content, from a context, into a context.
 ->
 (located Content1, in Context1).
 
-(initialize Person1, obj Content1)
-->
-(has-status Content1, which private);
-(is-owned Content1, by Person1);
-(located Content1, in Person1).
-
 
 (initialize Person1, obj Context1)
 ->
