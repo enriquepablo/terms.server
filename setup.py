@@ -42,6 +42,7 @@ setup(
     entry_points = {
         'console_scripts': [
             'webserver = terms.server.scripts.webserver:serve',
+            'client = terms.server.scripts.client:client',
             'initterms = terms.server.scripts.initialize:init_terms',
         ],
     },

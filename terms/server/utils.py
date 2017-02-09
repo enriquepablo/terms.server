@@ -112,3 +112,24 @@ def ask_kb(config, q):
         recv = conn.recv_bytes()
     conn.close()
     return resp
+
+
+def terms_client(config):
+    '''
+    CLI for terms server
+    '''
+    while True:
+        terms = input('>> ')
+        if terms in ('quit', 'q', 'exit'):
+            break
+        conn = Client((config('kb_host'),
+                        int(config('kb_port'))))
+        conn.send_bytes(terms)
+        conn.send_bytes('FINISH-TERMS')
+        recv, resp = '', ''
+        while recv != 'END':
+            resp = recv
+            recv = conn.recv_bytes()
+            print(recv)
+        conn.close()
+    print('bye!')
