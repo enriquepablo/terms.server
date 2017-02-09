@@ -88,6 +88,16 @@ to grant-role is to abs-person-action, which a role, for a person, in a context.
 ->
 (has-role Person2, which Role1, where Context1).
 
+to put-in-context is to abs-person-action, what a content, into a context.
+
+(want Person1, do (put-in-context Person1, what Content1, into Context1));
+(has-role Person1, which Role1, where Context1);
+(has-permission Role1, which add-perm);
+(is-owned Content1, by Person1)
+->
+(located Content1, in Context1).
+
+# XXX this is not working, 2 almost identical premises
 to move is to abs-person-action, what a content, from a context, into a context.
 
 (want Person1, do (move Person1, what Content1, from Context1, into Context2));
