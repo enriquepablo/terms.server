@@ -35,6 +35,14 @@ to give is to abs-person-action, for a person, what a content.
 ->
 (is-owned Content1, by Person2).
 
+to put-in-context is to abs-person-action, what a content, into a context.
+
+(want Person1, do (put-in-context Person1, what Content1, into Context1));
+(has-role Person1, which Role1, where Context1);
+(has-permission Role1, which add-perm);
+(is-owned Content1, by Person1)
+->
+(located Content1, in Context1).
 
 (initialize Person1, obj Content1)
 ->
