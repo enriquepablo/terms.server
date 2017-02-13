@@ -29,7 +29,7 @@ import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/owning.trm>.
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/document.trm>.
 import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/folder.trm>.
-import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/tasks-old.trm>.
+# import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/tasks-old.trm>.
 # import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/threads.trm>.
 #import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/resources.trm>.
-import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/communities.trm>.
+# import <https://raw.github.com/enriquepablo/terms.server/master/terms/server/app/ontology/communities.trm>.
