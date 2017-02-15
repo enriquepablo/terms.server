@@ -1,4 +1,5 @@
 import re
+import readline
 from multiprocessing.connection import Client
 
 
@@ -119,7 +120,7 @@ def terms_client(config):
     CLI for terms server
     '''
     while True:
-        terms = unicode(input('>> '))
+        terms = raw_input('>> ')
         if terms in ('quit', 'q', 'exit'):
             break
         conn = Client((config('kb_host'),
