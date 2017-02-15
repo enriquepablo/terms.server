@@ -119,7 +119,7 @@ def terms_client(config):
     CLI for terms server
     '''
     while True:
-        terms = input('>> ')
+        terms = unicode(input('>> '))
         if terms in ('quit', 'q', 'exit'):
             break
         conn = Client((config('kb_host'),
