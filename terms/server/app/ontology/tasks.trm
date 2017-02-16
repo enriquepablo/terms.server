@@ -72,14 +72,14 @@ customer-role is a role.
 a ticket is a content.
 
 # a sprint is a folder of tickets.
-a sprint is a content:folder.
+a sprint is a content:label.
 
 # user stories are content that are grouped in folder/requirements
-a requirement is a content:folder.
+a requirement is a content:label.
 a user-story is a content.
 
 # a ticket can pertain a user story
-to pertain is to endure, subj a ticket, with a user-story.
+to pertain is to endure, subj a ticket, about a user-story.
 
 # sprints have due dates
 to is-due is to endure, subj a sprint, when a number.
@@ -90,31 +90,31 @@ high-priority is a priority.
 medium-priority is a priority.
 low-priority is a priority.
 
-to has-priority is to endure, subj a ticket, like a priority.
+to has-priority is to endure, subj a ticket, of a priority.
 
 ##################################
 # git
 ##################################
 
-a repo is a thing.
-a branch is a thing.
-a tag is a branch.
-a pull-request is a thing.
-
-a environment is a thing.
-
-to has-branch is to endure, subj a repo, which a branch.
-to has-tag is to endure, subj a repo, which a tag.
-to has-pr is to endure, subj a branch, which a pull-request.
-
-to is-deployed is to endure, subj a tag, in a environment.
-
-to apply-tag is to abs-person-action, from a branch, towards a tag.
-
-(apply-tag Person1, from Branch1, towards Tag1);
-(has-pr Branch1, which Pull-request1)
-->
-(has-pr Tag1, which Pull-request1).
+#  a repo is a thing.
+#  a branch is a thing.
+#  a tag is a branch.
+#  a pull-request is a thing.
+#  
+#  a environment is a thing.
+#  
+#  to has-branch is to endure, subj a repo, which a branch.
+#  to has-tag is to endure, subj a repo, which a tag.
+#  to has-pr is to endure, subj a branch, which a pull-request.
+#  
+#  to is-deployed is to endure, subj a tag, in a environment.
+#  
+#  to apply-tag is to abs-person-action, from a branch, towards a tag.
+#  
+#  (apply-tag Person1, from Branch1, towards Tag1);
+#  (has-pr Branch1, which Pull-request1)
+#  ->
+#  (has-pr Tag1, which Pull-request1).
 
 ##################################
 # ticket workflow
@@ -124,75 +124,75 @@ to apply-tag is to abs-person-action, from a branch, towards a tag.
 ##################################
 
 
-ticket-wf-1 is a workflow.
-
-# statuses
-pending-dev is a status.
-assigned is a status.
-pending-qa is a status.
-in-staging is a status.
-in-production is a status.
-
-# abstract ticket action
-to abs-ticket-action is to abs-wf-action.
-
-# assign ticket transition
-to assign-ticket is to abs-ticket-action, for a person.
-assign-ticket-tr is a transition.
-(has-transition ticket-wf-1, which assign-ticket-tr).
-(executed assign-ticket-tr, by assign-ticket, from pending-dev, towards assigned).
-(executed assign-ticket-tr, by assign-ticket, from pending-qa, towards assigned).
-
-(is-protected assign-ticket, by view-perm, for pending-dev).
-(is-protected assign-ticket, by edit-perm, for pending-qa).
-
-# ticket assignation
-to ticket-is-assigned is to endure, subj a ticket, for a person.
-
-(assign-ticket Person1, which Ticket1, for Person2)
-->
-(ticket-is-assigned Ticket1, for Person2).
-
-# open ticket transition
-to open-ticket is to abs-ticket-action.
-open-ticket-tr is a transition.
-(has-transition ticket-wf-1, which open-ticket-tr).
-(executed open-ticket-tr, by open-ticket, from private, towards pending-dev).
-
-(is-protected open-ticket, by admin-perm, for private).
-
-# submit ticket transition - dev submit to qa
-to submit-ticket is to abs-ticket-action.
-submit-ticket-tr is a transition.
-(has-transition ticket-wf-1, which submit-ticket-tr).
-(executed submit-ticket-tr, by submit-ticket, from assigned, towards pending-qa).
-
-(is-protected submit-ticket, by view-perm, for pending-qa).
-
-# ticket to staging transition
-to stage-ticket is to abs-ticket-action.
-stage-ticket-tr is a transition.
-(has-transition ticket-wf-1, which stage-ticket-tr).
-(executed stage-ticket-tr, by stage-ticket, from assigned, towards in-staging).
-
-(is-protected stage-ticket, by edit-perm, for assigned).
-
-# ticket to production transition
-to to-production-ticket is to abs-ticket-action.
-to-production-ticket-tr is a transition.
-(has-transition ticket-wf-1, which to-production-ticket-tr).
-(executed to-production-ticket-tr, by to-production-ticket, from in-staging, towards in-production).
-
-(is-protected to-production-ticket, by edit-perm, for assigned).
-
-# ticket back to dev transition
-to reject-ticket is to abs-ticket-action.
-reject-ticket-tr is a transition.
-(has-transition ticket-wf-1, which reject-ticket-tr).
-(executed reject-ticket-tr, by reject-ticket, from assigned, towards pending-dev).
-(executed reject-ticket-tr, by reject-ticket, from in-staging, towards pending-dev).
-(executed reject-ticket-tr, by reject-ticket, from in-production, towards pending-dev).
-
-(is-protected reject-ticket, by view-perm, for assigned).
-(is-protected reject-ticket, by edit-perm, for in-staging).
-(is-protected reject-ticket, by admin-perm, for in-production).
+#  ticket-wf-1 is a workflow.
+#  
+#  # statuses
+#  pending-dev is a status.
+#  assigned is a status.
+#  pending-qa is a status.
+#  in-staging is a status.
+#  in-production is a status.
+#  
+#  # abstract ticket action
+#  to abs-ticket-action is to abs-wf-action.
+#  
+#  # assign ticket transition
+#  to assign-ticket is to abs-ticket-action, for a person.
+#  assign-ticket-tr is a transition.
+#  (has-transition ticket-wf-1, which assign-ticket-tr).
+#  (executed assign-ticket-tr, by assign-ticket, from pending-dev, towards assigned).
+#  (executed assign-ticket-tr, by assign-ticket, from pending-qa, towards assigned).
+#  
+#  (is-protected assign-ticket, by view-perm, for pending-dev).
+#  (is-protected assign-ticket, by edit-perm, for pending-qa).
+#  
+#  # ticket assignation
+#  to ticket-is-assigned is to endure, subj a ticket, for a person.
+#  
+#  (assign-ticket Person1, which Ticket1, for Person2)
+#  ->
+#  (ticket-is-assigned Ticket1, for Person2).
+#  
+#  # open ticket transition
+#  to open-ticket is to abs-ticket-action.
+#  open-ticket-tr is a transition.
+#  (has-transition ticket-wf-1, which open-ticket-tr).
+#  (executed open-ticket-tr, by open-ticket, from private, towards pending-dev).
+#  
+#  (is-protected open-ticket, by admin-perm, for private).
+#  
+#  # submit ticket transition - dev submit to qa
+#  to submit-ticket is to abs-ticket-action.
+#  submit-ticket-tr is a transition.
+#  (has-transition ticket-wf-1, which submit-ticket-tr).
+#  (executed submit-ticket-tr, by submit-ticket, from assigned, towards pending-qa).
+#  
+#  (is-protected submit-ticket, by view-perm, for pending-qa).
+#  
+#  # ticket to staging transition
+#  to stage-ticket is to abs-ticket-action.
+#  stage-ticket-tr is a transition.
+#  (has-transition ticket-wf-1, which stage-ticket-tr).
+#  (executed stage-ticket-tr, by stage-ticket, from assigned, towards in-staging).
+#  
+#  (is-protected stage-ticket, by edit-perm, for assigned).
+#  
+#  # ticket to production transition
+#  to to-production-ticket is to abs-ticket-action.
+#  to-production-ticket-tr is a transition.
+#  (has-transition ticket-wf-1, which to-production-ticket-tr).
+#  (executed to-production-ticket-tr, by to-production-ticket, from in-staging, towards in-production).
+#  
+#  (is-protected to-production-ticket, by edit-perm, for assigned).
+#  
+#  # ticket back to dev transition
+#  to reject-ticket is to abs-ticket-action.
+#  reject-ticket-tr is a transition.
+#  (has-transition ticket-wf-1, which reject-ticket-tr).
+#  (executed reject-ticket-tr, by reject-ticket, from assigned, towards pending-dev).
+#  (executed reject-ticket-tr, by reject-ticket, from in-staging, towards pending-dev).
+#  (executed reject-ticket-tr, by reject-ticket, from in-production, towards pending-dev).
+#  
+#  (is-protected reject-ticket, by view-perm, for assigned).
+#  (is-protected reject-ticket, by edit-perm, for in-staging).
+#  (is-protected reject-ticket, by admin-perm, for in-production).
