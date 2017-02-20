@@ -95,9 +95,12 @@ to move is to abs-person-action, what a content, from a context, into a context.
 (has-role Person1, which Role1, where Context1);
 (has-permission Role1, which add-perm);
 (has-role Person1, which Role2, where Context2);
-(has-permission Role2, which manage-perm)
+(has-permission Role2, which manage-perm);
+(located Content1, in Context1);
+(is-owned Content1, by Person1)
 ->
-(located Content1, in Context1).
+(finish Person1, what (located Content1, in Context1));
+(located Content1, in Context2).
 
 
 (initialize Person1, obj Context1)
