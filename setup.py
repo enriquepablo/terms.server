@@ -20,7 +20,7 @@
 
 from setuptools import setup, find_packages
 
-VERSION = '0.1.0a1dev1'
+VERSION = '0.1.0a2'
 
 setup(
     name = 'terms.server',
@@ -47,23 +47,23 @@ setup(
         ],
     },
     tests_require = [
-        'Nose',
-        'coverage',
+        'nose == 1.3.7',
+        'coverage == 4.3.4',
     ],
     extras_require = {
-        'PG': ['psycopg2 == 2.6.2',],
+        'PG': ['psycopg2 == 2.7.1',],
         },
     install_requires = [
-        'setuptools==28.8.0',
-        'bottle==0.12.10',
+        'setuptools==34.3.3',
+        'bottle==0.12.13',
         'repoze.who==2.3',
-        'gevent==1.1.2',
-        'gevent-websocket==0.9.5',
+        'gevent==1.2.1',
+        'gevent-websocket==0.10.1',
         'py-bcrypt==0.4',
-        'sqlalchemy==1.1.4',
-        'colander==1.3.1',
+        'sqlalchemy==1.1.7',
+        'colander==1.3.2',
         'colanderalchemy==0.3.3',
-        'deform==2.0.3',
+        'deform==2.0.4',
         'mako==1.0.6',
     ],
 )
